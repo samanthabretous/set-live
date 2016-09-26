@@ -1,7 +1,10 @@
-import React from "react"
-import ReactDOM from "react-dom"
+import React from "react";
+import ReactDOM from "react-dom";
+import {cards} from "./card_deck.js";
 
 // require("../css/style.css");
+
+console.log(cards)
 
 var App = React.createClass({
   render() {
@@ -12,3 +15,4 @@ var App = React.createClass({
 })
 
 ReactDOM.render(<App />, document.getElementById('root'))
+
