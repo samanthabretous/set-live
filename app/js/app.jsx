@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import io from "socket.io-client" 
-// import {cards} from "./card_deck.js";
+import io from 'socket.io-client';
+import {cards} from "./card_deck.js";
+
+var socket = io("http://localhost:3000");
 
 // require("../css/style.css");
-
-// console.log(cards)
 
 let App = React.createClass({
   render() {
@@ -22,10 +22,10 @@ let ChatBar = React.createClass({
   getInitialState(){
     return {
       messages: [], 
-      socket: window.io('http://localhost:3000')}
+      socket: socket}
   },
   componentDidMount(){
-    
+    this.state.socket.emit('test')
   },
   render(){
     return(

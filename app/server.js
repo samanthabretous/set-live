@@ -2,16 +2,7 @@ var express = require('express'),
     app = express(),
     path = require('path'),
     server = require('http').createServer(app),
-    io = require('socket.io').listen(server),
-    users = [];
-
-//Set the view engine
-// app.set('views', __dirname + '/views');
-// app.set('view engine', 'jade');
-// app.engine('jade', require('jade').__express)
-
-// //Set static path
-// app.use(express.static(path.join(__dirname, 'public')))
+    io = require('socket.io').listen(server);
 
 //Connect to the socket
 io.sockets.on('connection', function(socket){
@@ -20,6 +11,10 @@ io.sockets.on('connection', function(socket){
   socket.on('new message', function(msg){
     console.log(msg);
     io.emit('received message', msg)
+  })
+
+  socket.on('test', function(){
+    console.log('mounted')
   })
 
 })
