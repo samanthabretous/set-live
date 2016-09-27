@@ -25,11 +25,29 @@ let ChatBar = React.createClass({
       socket: socket}
   },
   componentDidMount(){
-    this.state.socket.emit('test')
+    var self = this;
+    this.state.socket.on('received message', function(msg) {
+      console.log(msg)
+      self.setState({messages: self.state.messages.concat(msg)})
+    })
+  },
+  submitMessage(){
+    var message = document.getElementById('message').value;
+    this.state.socket.emit('new message', message)
   },
   render(){
+    var self = this;
+    var messages = this.state.messages.map(function(msg,i){
+      return <li key={i}>{msg}</li>
+    })
     return(
-      <div>Chat application</div>
+      <div>
+        <ul>
+          {messages}
+        </ul>
+        <input id="message" type="text"/>
+        <button onClick={self.submitMessage}>Send message</button>
+      </div>
     )
   }
 })

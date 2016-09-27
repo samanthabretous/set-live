@@ -90,13 +90,39 @@
 	      socket: socket };
 	  },
 	  componentDidMount: function componentDidMount() {
-	    this.state.socket.emit('test');
+	    var self = this;
+	    this.state.socket.on('received message', function (msg) {
+	      console.log(msg);
+	      self.setState({ messages: self.state.messages.concat(msg) });
+	    });
+	  },
+	  submitMessage: function submitMessage() {
+	    var message = document.getElementById('message').value;
+	    this.state.socket.emit('new message', message);
 	  },
 	  render: function render() {
+	    var self = this;
+	    var messages = this.state.messages.map(function (msg, i) {
+	      return _react2.default.createElement(
+	        "li",
+	        { key: i },
+	        msg
+	      );
+	    });
 	    return _react2.default.createElement(
 	      "div",
 	      null,
-	      "Chat application"
+	      _react2.default.createElement(
+	        "ul",
+	        null,
+	        messages
+	      ),
+	      _react2.default.createElement("input", { id: "message", type: "text" }),
+	      _react2.default.createElement(
+	        "button",
+	        { onClick: self.submitMessage },
+	        "Send message"
+	      )
 	    );
 	  }
 	});
