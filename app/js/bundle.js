@@ -60,6 +60,8 @@
 	
 	var _card_deck = __webpack_require__(221);
 	
+	var _shuffled_deck = __webpack_require__(173);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var socket = (0, _socket2.default)("http://localhost:3000");
@@ -29552,6 +29554,47 @@
 	};
 	
 	exports.cards = cards;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Shuffled = undefined;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(34);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _card_deck = __webpack_require__(172);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Shuffled = _react2.default.createClass({
+	  displayName: "Shuffled",
+	
+	  render: function render(cards) {
+	    var shuffled = [];
+	    var keys = Object.keys(cards);
+	    for (var i = keys.length; i > 0; i--) {
+	      var randomInd = Math.floor(Math.random() * keys.length);
+	      var randomCard = cards[keys[randomInd]];
+	      shuffled.push(randomCard);
+	      keys.splice(randomInd, 1);
+	    }
+	    return shuffled;
+	  }
+	});
+	
+	exports.Shuffled = Shuffled;
 
 /***/ }
 /******/ ]);

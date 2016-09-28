@@ -2,12 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import io from 'socket.io-client';
 import {cards} from "./card_deck.js";
+import {shuffleCards} from './shuffled_deck.js';
 
 var socket = io("http://localhost:3000");
 
 // require("../css/style.css");
 
-let App = React.createClass({
+const App = React.createClass({
+  getInitialState() {
+    deck: 
+  },
+
   render() {
     return (
       <div>
