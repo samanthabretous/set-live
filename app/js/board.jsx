@@ -1,6 +1,6 @@
 import React from 'react'
 
-let Game = React.createClass({
+const board = React.createClass({
   getInitialState() {
 
   },

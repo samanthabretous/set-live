@@ -9,7 +9,6 @@ io.sockets.on('connection', function(socket){
   console.log('we have a connection')
   //set username
   socket.on('new message', function(msg){
-    console.log(msg);
     io.emit('received message', msg)
   })
 
@@ -32,5 +31,6 @@ app.get('/js/bundle.js', function(req, res){
   res.sendFile(__dirname + '/js/bundle.js');
 });
 
-server.listen(3000)
-console.log('server started 3000')
+server.listen(3000, function(){
+  console.log('server started 3000')
+})

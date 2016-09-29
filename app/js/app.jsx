@@ -47,6 +47,8 @@ let ChatBar = React.createClass({
         </ul>
         <input id="message" type="text"/>
         <button onClick={self.submitMessage}>Send message</button>
+        <input id="username" type="text" placeholder="choose username" />
+        <button onClick={self.submitMessage}>Enter Username</button>
       </div>
     )
   }

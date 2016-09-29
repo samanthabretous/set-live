@@ -122,6 +122,12 @@
 	        "button",
 	        { onClick: self.submitMessage },
 	        "Send message"
+	      ),
+	      _react2.default.createElement("input", { id: "username", type: "text", placeholder: "choose username" }),
+	      _react2.default.createElement(
+	        "button",
+	        { onClick: self.submitMessage },
+	        "Enter Username"
 	      )
 	    );
 	  }
