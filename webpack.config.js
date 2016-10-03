@@ -1,7 +1,7 @@
 module.exports = {
-  entry: "./app/js/app.jsx",
+  entry: "./app-client.js",
   output: {
-    path: "./app/js/",
+    path: "public/",
     filename: "bundle.js",
   },
   //what is bundle.js doing?
@@ -11,9 +11,10 @@ module.exports = {
         test: [/\.jsx?$/, /\.js?$/],
         //what problem is this solving?
         //what is regex?
-        exclude: /(node_modules)/,
+        exclude: /(node_modules|app-server.js)/,
         loader: 'babel',
         query: {
+          cacheDirectory: true,
           presets: ['es2015', 'react']
           //transpiling & compilation
         }

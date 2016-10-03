@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "webpack --watch && node app/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prestart":"webpack",
+    "start": "node app-server.js"
   },
   "keywords": [],
   "author": "Samantha Bretous <sam@samanthabretous.com>, Melanie Williams",
@@ -21,6 +21,7 @@
     "react-router": "^2.8.1",
     "socket.io": "^1.4.8",
     "socket.io-client": "^1.4.8",
+    "underscore": "^1.8.3",
     "webpack": "^1.13.2"
   },
   "devDependencies": {
