@@ -60,11 +60,11 @@
 	
 	var _app2 = _interopRequireDefault(_app);
 	
-	var _WaitingForPlayers = __webpack_require__(285);
+	var _WaitingForPlayers = __webpack_require__(286);
 	
 	var _WaitingForPlayers2 = _interopRequireDefault(_WaitingForPlayers);
 	
-	var _Game = __webpack_require__(288);
+	var _Game = __webpack_require__(289);
 	
 	var _Game2 = _interopRequireDefault(_Game);
 	
@@ -72,7 +72,7 @@
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRouter.Router,
-	  { history: _reactRouter.hashHistory },
+	  { history: _reactRouter.browserHistory },
 	  _react2.default.createElement(
 	    _reactRouter.Route,
 	    { path: '/', component: _app2.default },
@@ -27121,6 +27121,10 @@
 	
 	var _socket2 = _interopRequireDefault(_socket);
 	
+	var _card_deck = __webpack_require__(285);
+	
+	var _card_deck2 = _interopRequireDefault(_card_deck);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	//import "../css/style.css";
@@ -27128,7 +27132,81 @@
 	
 	var App = _react2.default.createClass({
 	  displayName: 'App',
+	  getInitialState: function getInitialState() {
+	    return {
+	      cards: _card_deck2.default,
+	      board: [],
+	      amountOfCardsOnBoard: 12,
+	      generateBoard: this.generateBoard,
+	      handleClick: this.handleClick,
+	      status: 'disconnected',
+	      member: {},
+	      players: [],
+	      emit: this.emit
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    this.socket = (0, _socket2.default)("http://localhost:3000");
+	    this.socket.on('connect', this.connect);
+	    this.socket.on('disconnect', this.disconnect);
+	    this.socket.on('welcome', this.updateState);
+	    this.socket.on('players', this.updateAudience);
+	    this.socket.on('joined', this.joined);
+	  },
+	  emit: function emit(eventName, payload) {
+	    this.socket.emit(eventName, payload);
+	  },
+	
+	
+	  //alert user that they are connected
+	  connect: function connect() {
+	
+	    //check to see if the member had refreshed
+	    var member = sessionStorage.member ? JSON.parse(sessionStorage.member) : null;
+	    console.log(member);
+	    if (member && member.type === "audience") {
+	      console.log('enter');
+	      this.emit('joined', member);
+	    }
+	
+	    this.setState({ status: 'connected' });
+	  },
+	  disconnect: function disconnect() {
+	    this.setState({
+	      status: 'disconnected'
+	    });
+	  },
+	  updateState: function updateState(serverState) {
+	    this.setState(serverState);
+	  },
+	  joined: function joined(member) {
+	
+	    //save member in browser history
+	    sessionStorage.member = JSON.stringify(member);
+	    this.setState({ member: member });
+	  },
+	  updatePlayers: function updatePlayers(newPlayer) {
+	    this.setState({ players: newPlayer });
+	  },
+	  generateBoard: function generateBoard(board) {
+	    console.log("generateBoard");
+	    console.log(board);
+	    var newBoard = board.map(function (row) {
+	      return row.map(function (slot) {
+	        return null === slot ? "slot" : "filled";
+	      });
+	    });
+	    this.setState({ board: newBoard });
+	  },
+	  handleClick: function handleClick() {
+	    console.log("click from app");
+	  },
 	  render: function render() {
+	    var that = this;
+	    var children = _react2.default.Children.map(this.props.children, function (child) {
+	      return _react2.default.cloneElement(child, Object.assign({}, that.state));
+	    });
+	    console.log("app board", this.state.board);
 	    return _react2.default.createElement(
 	      'div',
 	      null,
@@ -27137,7 +27215,7 @@
 	        null,
 	        'Set Game'
 	      ),
-	      this.props.children
+	      children
 	    );
 	  }
 	});
@@ -34589,6 +34667,621 @@
 
 /***/ },
 /* 285 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var cards = {
+	  card1: {
+	    number: 1,
+	    color: 'red',
+	    shade: 'solid',
+	    shape: 'squiggles'
+	  },
+	
+	  card2: {
+	    number: 2,
+	    color: 'red',
+	    shade: 'solid',
+	    shape: 'squiggles'
+	  },
+	
+	  card3: {
+	    number: 3,
+	    color: 'red',
+	    shade: 'solid',
+	    shape: 'squiggles'
+	  },
+	
+	  // SOLID GREEN squigglesS
+	  card4: {
+	    number: 1,
+	    color: 'green',
+	    shade: 'solid',
+	    shape: 'squiggles'
+	  },
+	
+	  card5: {
+	    number: 2,
+	    color: 'green',
+	    shade: 'solid',
+	    shape: 'squiggles'
+	  },
+	
+	  card6: {
+	    number: 3,
+	    color: 'green',
+	    shade: 'solid',
+	    shape: 'squiggles'
+	  },
+	
+	  // SOLID PURPLE squigglesS
+	  card7: {
+	    number: 1,
+	    color: 'purple',
+	    shade: 'solid',
+	    shape: 'squiggles'
+	  },
+	
+	  card8: {
+	    number: 2,
+	    color: 'purple',
+	    shade: 'solid',
+	    shape: 'squiggles'
+	  },
+	
+	  card9: {
+	    number: 3,
+	    color: 'purple',
+	    shade: 'solid',
+	    shape: 'squiggles'
+	  },
+	
+	  // SOLID RED DIAMONDS
+	
+	  card10: {
+	    number: 1,
+	    color: 'red',
+	    shade: 'solid',
+	    shape: 'diamond'
+	  },
+	
+	  card11: {
+	    number: 2,
+	    color: 'red',
+	    shade: 'solid',
+	    shape: 'diamond'
+	  },
+	
+	  card12: {
+	    number: 3,
+	    color: 'red',
+	    shade: 'solid',
+	    shape: 'diamond'
+	  },
+	
+	  // SOLID GREEN DIAMONDS
+	
+	  card13: {
+	    number: 1,
+	    color: 'green',
+	    shade: 'solid',
+	    shape: 'diamond'
+	  },
+	
+	  card14: {
+	    number: 2,
+	    color: 'green',
+	    shade: 'solid',
+	    shape: 'diamond'
+	  },
+	
+	  card15: {
+	    number: 3,
+	    color: 'green',
+	    shade: 'solid',
+	    shape: 'diamond'
+	  },
+	
+	  // SOLID PURPLE DIAMONDS
+	
+	  card16: {
+	    number: 1,
+	    color: 'purple',
+	    shade: 'solid',
+	    shape: 'diamond'
+	  },
+	
+	  card17: {
+	    number: 2,
+	    color: 'purple',
+	    shade: 'solid',
+	    shape: 'diamond'
+	  },
+	
+	  card18: {
+	    number: 3,
+	    color: 'purple',
+	    shade: 'solid',
+	    shape: 'diamond'
+	  },
+	
+	  // SOLID RED OVAL
+	
+	  card19: {
+	    number: 1,
+	    color: 'red',
+	    shade: 'solid',
+	    shape: 'oval'
+	  },
+	
+	  card20: {
+	    number: 2,
+	    color: 'red',
+	    shade: 'solid',
+	    shape: 'oval'
+	  },
+	
+	  card21: {
+	    number: 3,
+	    color: 'red',
+	    shade: 'solid',
+	    shape: 'oval'
+	  },
+	
+	  // SOLID GREEN OVAL
+	
+	  card22: {
+	    number: 1,
+	    color: 'green',
+	    shade: 'solid',
+	    shape: 'oval'
+	  },
+	
+	  card23: {
+	    number: 2,
+	    color: 'green',
+	    shade: 'solid',
+	    shape: 'oval'
+	  },
+	
+	  card24: {
+	    number: 3,
+	    color: 'green',
+	    shade: 'solid',
+	    shape: 'oval'
+	  },
+	
+	  // SOLID PURPLE OVAL
+	
+	  card25: {
+	    number: 1,
+	    color: 'purple',
+	    shade: 'solid',
+	    shape: 'oval'
+	  },
+	
+	  card26: {
+	    number: 2,
+	    color: 'purple',
+	    shade: 'solid',
+	    shape: 'oval'
+	  },
+	
+	  card27: {
+	    number: 3,
+	    color: 'purple',
+	    shade: 'solid',
+	    shape: 'oval'
+	  },
+	
+	  // STRIPED RED squiggles
+	
+	  card28: {
+	    number: 1,
+	    color: 'red',
+	    shade: 'striped',
+	    shape: 'squiggles'
+	  },
+	
+	  card29: {
+	    number: 2,
+	    color: 'red',
+	    shade: 'striped',
+	    shape: 'squiggles'
+	  },
+	
+	  card30: {
+	    number: 3,
+	    color: 'red',
+	    shade: 'striped',
+	    shape: 'squiggles'
+	  },
+	
+	  // STRIPED GREEN squiggles
+	
+	  card31: {
+	    number: 1,
+	    color: 'green',
+	    shade: 'striped',
+	    shape: 'squiggles'
+	  },
+	
+	  card32: {
+	    number: 2,
+	    color: 'green',
+	    shade: 'striped',
+	    shape: 'squiggles'
+	  },
+	
+	  card33: {
+	    number: 3,
+	    color: 'green',
+	    shade: 'striped',
+	    shape: 'squiggles'
+	  },
+	
+	  // STRIPED PURPLE squiggles
+	
+	  card34: {
+	    number: 1,
+	    color: 'purple',
+	    shade: 'striped',
+	    shape: 'squiggles'
+	  },
+	
+	  card35: {
+	    number: 2,
+	    color: 'purple',
+	    shade: 'striped',
+	    shape: 'squiggles'
+	  },
+	
+	  card36: {
+	    number: 3,
+	    color: 'purple',
+	    shade: 'striped',
+	    shape: 'squiggles'
+	  },
+	
+	  // STRIPED RED DIAMOND
+	
+	  card37: {
+	    number: 1,
+	    color: 'red',
+	    shade: 'striped',
+	    shape: 'diamond'
+	  },
+	
+	  card38: {
+	    number: 2,
+	    color: 'red',
+	    shade: 'striped',
+	    shape: 'diamond'
+	  },
+	
+	  card39: {
+	    number: 3,
+	    color: 'red',
+	    shade: 'striped',
+	    shape: 'diamond'
+	  },
+	
+	  // STRIPED GREEN DIAMOND
+	
+	  card40: {
+	    number: 1,
+	    color: 'green',
+	    shade: 'striped',
+	    shape: 'diamond'
+	  },
+	
+	  card41: {
+	    number: 2,
+	    color: 'green',
+	    shade: 'striped',
+	    shape: 'diamond'
+	  },
+	
+	  card42: {
+	    number: 3,
+	    color: 'green',
+	    shade: 'striped',
+	    shape: 'diamond'
+	  },
+	
+	  // PURPLE STRIPED DIAMOND
+	
+	  card43: {
+	    number: 1,
+	    color: 'purple',
+	    shade: 'striped',
+	    shape: 'diamond'
+	  },
+	
+	  card44: {
+	    number: 2,
+	    color: 'purple',
+	    shade: 'striped',
+	    shape: 'diamond'
+	  },
+	
+	  card45: {
+	    number: 3,
+	    color: 'purple',
+	    shade: 'striped',
+	    shape: 'diamond'
+	  },
+	
+	  // RED STRIPED OVAL
+	
+	  card46: {
+	    number: 1,
+	    color: 'red',
+	    shade: 'striped',
+	    shape: 'oval'
+	  },
+	
+	  card47: {
+	    number: 2,
+	    color: 'red',
+	    shade: 'striped',
+	    shape: 'oval'
+	  },
+	
+	  card48: {
+	    number: 3,
+	    color: 'red',
+	    shade: 'striped',
+	    shape: 'oval'
+	  },
+	
+	  // GREEN STRIPED OVAL
+	
+	  card49: {
+	    number: 1,
+	    color: 'green',
+	    shade: 'striped',
+	    shape: 'oval'
+	  },
+	
+	  card50: {
+	    number: 2,
+	    color: 'green',
+	    shade: 'striped',
+	    shape: 'oval'
+	  },
+	
+	  card51: {
+	    number: 3,
+	    color: 'green',
+	    shade: 'striped',
+	    shape: 'oval'
+	  },
+	
+	  // PURPLE STRIPED OVAL
+	
+	  card52: {
+	    number: 1,
+	    color: 'purple',
+	    shade: 'striped',
+	    shape: 'oval'
+	  },
+	
+	  card53: {
+	    number: 2,
+	    color: 'purple',
+	    shade: 'striped',
+	    shape: 'oval'
+	  },
+	
+	  card54: {
+	    number: 3,
+	    color: 'purple',
+	    shade: 'striped',
+	    shape: 'oval'
+	  },
+	
+	  // ------------squiggless outline------------
+	  card55: {
+	    color: "red",
+	    shade: "outline",
+	    number: 1,
+	    shape: "squiggles"
+	  },
+	
+	  card56: {
+	    color: "red",
+	    shade: "outline",
+	    number: 2,
+	    shape: "squiggles"
+	  },
+	
+	  card57: {
+	    color: "red",
+	    shade: "outline",
+	    number: 3,
+	    shape: "squiggles"
+	  },
+	
+	  card58: {
+	    color: "red",
+	    shade: "outline",
+	    number: 1,
+	    shape: "squiggles"
+	  },
+	
+	  card59: {
+	    color: "green",
+	    shade: "outline",
+	    number: 2,
+	    shape: "squiggles"
+	  },
+	
+	  card60: {
+	    color: "green",
+	    shade: "outline",
+	    number: 3,
+	    shape: "squiggles"
+	  },
+	
+	  card61: {
+	    color: "purple",
+	    shade: "outline",
+	    number: 1,
+	    shape: "squiggles"
+	  },
+	
+	  card62: {
+	    color: "purple",
+	    shade: "outline",
+	    number: 2,
+	    shape: "squiggles"
+	  },
+	
+	  card63: {
+	    color: "purple",
+	    shade: "outline",
+	    number: 3,
+	    shape: "squiggles"
+	  },
+	
+	  // ----------------diamond outline---------------
+	  card64: {
+	    color: "red",
+	    shade: "outline",
+	    number: 1,
+	    shape: "diamond"
+	  },
+	
+	  card65: {
+	    color: "red",
+	    shade: "outline",
+	    number: 2,
+	    shape: "diamond"
+	  },
+	
+	  card66: {
+	    color: "red",
+	    shade: "outline",
+	    number: 3,
+	    shape: "diamond"
+	  },
+	
+	  card67: {
+	    color: "red",
+	    shade: "outline",
+	    number: 1,
+	    shape: "diamond"
+	  },
+	
+	  card68: {
+	    color: "green",
+	    shade: "outline",
+	    number: 2,
+	    shape: "diamond"
+	  },
+	
+	  card69: {
+	    color: "green",
+	    shade: "outline",
+	    number: 3,
+	    shape: "diamond"
+	  },
+	
+	  card70: {
+	    color: "purple",
+	    shade: "outline",
+	    number: 1,
+	    shape: "diamond"
+	  },
+	
+	  card71: {
+	    color: "purple",
+	    shade: "outline",
+	    number: 2,
+	    shape: "diamond"
+	  },
+	
+	  card72: {
+	    color: "purple",
+	    shade: "outline",
+	    number: 3,
+	    shape: "diamond"
+	  },
+	
+	  //------------------oval outline---------------
+	  card73: {
+	    color: "red",
+	    shade: "outline",
+	    number: 1,
+	    shape: "oval"
+	  },
+	
+	  card74: {
+	    color: "red",
+	    shade: "outline",
+	    number: 2,
+	    shape: "oval"
+	  },
+	
+	  card75: {
+	    color: "red",
+	    shade: "outline",
+	    number: 3,
+	    shape: "oval"
+	  },
+	
+	  card76: {
+	    color: "red",
+	    shade: "outline",
+	    number: 1,
+	    shape: "oval"
+	  },
+	
+	  card77: {
+	    color: "green",
+	    shade: "outline",
+	    number: 2,
+	    shape: "oval"
+	  },
+	
+	  card78: {
+	    color: "green",
+	    shade: "outline",
+	    number: 3,
+	    shape: "oval"
+	  },
+	
+	  card79: {
+	    color: "purple",
+	    shade: "outline",
+	    number: 1,
+	    shape: "oval"
+	  },
+	
+	  card80: {
+	    color: "purple",
+	    shade: "outline",
+	    number: 2,
+	    shape: "oval"
+	  },
+	
+	  card81: {
+	    color: "purple",
+	    shade: "outline",
+	    number: 3,
+	    shape: "oval"
+	  }
+	};
+	
+	exports.cards = cards;
+
+/***/ },
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34601,13 +35294,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _display = __webpack_require__(286);
+	var _display = __webpack_require__(287);
 	
 	var _display2 = _interopRequireDefault(_display);
 	
-	var _join = __webpack_require__(287);
+	var _join = __webpack_require__(288);
 	
 	var _join2 = _interopRequireDefault(_join);
+	
+	var _reactRouter = __webpack_require__(172);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -34621,6 +35316,12 @@
 	        'h1',
 	        null,
 	        'Waiting For Players'
+	      ),
+	      _react2.default.createElement('input', null),
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: '/game' },
+	        'Go to Game'
 	      )
 	    );
 	  }
@@ -34629,7 +35330,7 @@
 	exports.default = WaitingForPlayers;
 
 /***/ },
-/* 286 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34658,13 +35359,13 @@
 	exports.default = Display;
 
 /***/ },
-/* 287 */
+/* 288 */
 /***/ function(module, exports) {
 
 	"use strict";
 
 /***/ },
-/* 288 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34677,19 +35378,19 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _display = __webpack_require__(286);
+	var _display = __webpack_require__(287);
 	
 	var _display2 = _interopRequireDefault(_display);
 	
-	var _join = __webpack_require__(287);
+	var _join = __webpack_require__(288);
 	
 	var _join2 = _interopRequireDefault(_join);
 	
-	var _board = __webpack_require__(289);
+	var _board = __webpack_require__(292);
 	
 	var _board2 = _interopRequireDefault(_board);
 	
-	var _chatBar = __webpack_require__(290);
+	var _chatBar = __webpack_require__(293);
 	
 	var _chatBar2 = _interopRequireDefault(_chatBar);
 	
@@ -34706,6 +35407,12 @@
 	        null,
 	        'Game'
 	      ),
+	      _react2.default.createElement(_board2.default, {
+	        board: this.props.board,
+	        cards: this.props.cards,
+	        amountOfCardsOnBoard: this.props.amountOfCardsOnBoard,
+	        generateBoard: this.props.generateBoard,
+	        handleClick: this.props.handleClick }),
 	      _react2.default.createElement(_chatBar2.default, null)
 	    );
 	  }
@@ -34714,10 +35421,12 @@
 	exports.default = Game;
 
 /***/ },
-/* 289 */
+/* 290 */,
+/* 291 */,
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -34730,12 +35439,13 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Board = _react2.default.createClass({
-	  displayName: "Board",
-	  getInitialState: function getInitialState() {},
-	  generateBoard: function generateBoard() {
-	
+	  displayName: 'Board',
+	  getInitialState: function getInitialState() {
+	    return { gameBoard: [], name: '' };
+	  },
+	  makeBoard: function makeBoard() {
 	    //find the width, based on the user input of cards
-	    var amountDisplay = this.props.parentApp.state.amountCardsDisplay;
+	    var amountDisplay = this.props.amountOfCardsOnBoard;
 	    var boardWidth = Math.floor(amountDisplay / 3);
 	
 	    //make an empty matrix
@@ -34746,33 +35456,23 @@
 	        board[i].push(null);
 	      }
 	    }
-	    this.props.parentAppSetState({ board: board });
-	    console.log("board1", board);
-	    this.fillBoard();
+	    this.props.generateBoard(board);
 	  },
-	  fillBoard: function fillBoard() {
-	    console.log("fill");
-	    var newBoard = this.props.parentApp.state.board.map(function (row) {
-	      row.map(function (slot) {
-	        if (slot == null) {
-	          return "filled slot";
-	        } else {
-	          return "slot";
-	        }
-	      });
-	    });
-	    this.props.parentApp.setState({ board: newBoard });
-	    console.log(this.props.parentApp.state.board);
-	  },
-	  componentDidMount: function componentDidMount() {
-	    console.log("did mount");
-	    this.generateBoard();
+	  componentWillMount: function componentWillMount() {
+	    console.log("will mount");
+	    this.makeBoard();
 	  },
 	  render: function render() {
+	    console.log("render");
+	    console.log(this.props.board);
 	    return _react2.default.createElement(
-	      "div",
+	      'div',
 	      null,
-	      "Board"
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        'Board'
+	      )
 	    );
 	  }
 	});
@@ -34780,7 +35480,7 @@
 	exports.default = Board;
 
 /***/ },
-/* 290 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

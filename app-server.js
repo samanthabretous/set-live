@@ -29,8 +29,8 @@ io.sockets.on('connection', function(socket){
     let member = _.findWhere(players,{id:this.id});
     if(member){
       players.splice(players.indexOf(member, 1))
-      io.sockets.emit('audience', players);
-      console.log('Left %s (%s audience member)', member.name, players.length)
+      io.sockets.emit('players', players);
+      console.log('Left %s (%s players)', member.name, players.length)
     }
 
     connections.splice(connections.indexOf(socket),1);
