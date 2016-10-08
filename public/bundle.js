@@ -27137,7 +27137,7 @@
 	      cards: _card_deck2.default,
 	      board: [],
 	      amountOfCardsOnBoard: 12,
-	      generateBoard: this.generateBoard,
+	      fillBoard: this.fillBoard,
 	      handleClick: this.handleClick,
 	      status: 'disconnected',
 	      member: {},
@@ -27188,13 +27188,9 @@
 	  updatePlayers: function updatePlayers(newPlayer) {
 	    this.setState({ players: newPlayer });
 	  },
-	  generateBoard: function generateBoard(board) {
-	    console.log("generateBoard");
-	    console.log(board);
-	    var newBoard = board.map(function (row) {
-	      return row.map(function (slot) {
-	        return null === slot ? "slot" : "filled";
-	      });
+	  fillBoard: function fillBoard(board) {
+	    var newBoard = board.map(function (slot) {
+	      return null === slot ? "slot" : "filled";
 	    });
 	    this.setState({ board: newBoard });
 	  },
@@ -27206,7 +27202,6 @@
 	    var children = _react2.default.Children.map(this.props.children, function (child) {
 	      return _react2.default.cloneElement(child, Object.assign({}, that.state));
 	    });
-	    console.log("app board", this.state.board);
 	    return _react2.default.createElement(
 	      'div',
 	      null,
@@ -35386,11 +35381,11 @@
 	
 	var _join2 = _interopRequireDefault(_join);
 	
-	var _board = __webpack_require__(292);
+	var _board = __webpack_require__(290);
 	
 	var _board2 = _interopRequireDefault(_board);
 	
-	var _chatBar = __webpack_require__(293);
+	var _chatBar = __webpack_require__(291);
 	
 	var _chatBar2 = _interopRequireDefault(_chatBar);
 	
@@ -35411,7 +35406,7 @@
 	        board: this.props.board,
 	        cards: this.props.cards,
 	        amountOfCardsOnBoard: this.props.amountOfCardsOnBoard,
-	        generateBoard: this.props.generateBoard,
+	        fillBoard: this.props.fillBoard,
 	        handleClick: this.props.handleClick }),
 	      _react2.default.createElement(_chatBar2.default, null)
 	    );
@@ -35421,9 +35416,7 @@
 	exports.default = Game;
 
 /***/ },
-/* 290 */,
-/* 291 */,
-/* 292 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35443,28 +35436,32 @@
 	  getInitialState: function getInitialState() {
 	    return { gameBoard: [], name: '' };
 	  },
-	  makeBoard: function makeBoard() {
+	  generateBoard: function generateBoard() {
 	    //find the width, based on the user input of cards
 	    var amountDisplay = this.props.amountOfCardsOnBoard;
-	    var boardWidth = Math.floor(amountDisplay / 3);
 	
 	    //make an empty matrix
 	    var board = [];
-	    for (var i = 0; i < boardWidth; i++) {
-	      board.push([]);
-	      for (var j = 0; j < 3; j++) {
-	        board[i].push(null);
-	      }
+	    for (var i = 0; i < amountDisplay; i++) {
+	      board.push(null);
 	    }
-	    this.props.generateBoard(board);
+	    this.props.fillBoard(board);
 	  },
 	  componentWillMount: function componentWillMount() {
 	    console.log("will mount");
-	    this.makeBoard();
+	    this.generateBoard();
 	  },
 	  render: function render() {
+	    var _this = this;
+	
 	    console.log("render");
-	    console.log(this.props.board);
+	    var boardOfCards = this.props.board.map(function (slot, i) {
+	      return _react2.default.createElement(
+	        'article',
+	        { onClick: _this.props.handleClick, key: i, className: 'cards' },
+	        slot
+	      );
+	    });
 	    return _react2.default.createElement(
 	      'div',
 	      null,
@@ -35472,6 +35469,11 @@
 	        'div',
 	        null,
 	        'Board'
+	      ),
+	      _react2.default.createElement(
+	        'section',
+	        { className: 'board' },
+	        boardOfCards
 	      )
 	    );
 	  }
@@ -35480,7 +35482,7 @@
 	exports.default = Board;
 
 /***/ },
-/* 293 */
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

@@ -4,32 +4,31 @@ const Board = React.createClass({
   getInitialState(){
     return {gameBoard: [], name: ''}
   },
-  makeBoard(){
+  generateBoard(){
     //find the width, based on the user input of cards
     let amountDisplay = this.props.amountOfCardsOnBoard
-    let boardWidth = Math.floor(amountDisplay/3)
 
     //make an empty matrix
     let board = []
-    for(let i = 0; i < boardWidth; i++){
-      board.push([])
-      for(let j = 0; j < 3; j++){
-        board[i].push(null)
-      }
+    for(let i = 0; i < amountDisplay; i++){
+      board.push(null)
     }
-    this.props.generateBoard(board)
+    this.props.fillBoard(board)
 
   },
   componentWillMount(){
     console.log("will mount")
-    this.makeBoard()
+    this.generateBoard()
   },
   render() {
     console.log("render")
-    console.log(this.props.board)
+    let boardOfCards = this.props.board.map((slot,i) => <article onClick={this.props.handleClick} key={i} className="cards">{slot}</article>)
     return (
       <div>
         <div>Board</div>
+        <section className="board">
+          {boardOfCards}
+        </section>
       </div>
     )
   }

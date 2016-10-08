@@ -13,7 +13,7 @@ const App = React.createClass({
       cards: cards,
       board: [],
       amountOfCardsOnBoard: 12,
-      generateBoard: this.generateBoard,
+      fillBoard: this.fillBoard,
       handleClick: this.handleClick,
       status: 'disconnected',
       member: {},
@@ -69,10 +69,8 @@ const App = React.createClass({
     this.setState({players: newPlayer})
   },
 
-  generateBoard(board) {
-    console.log("generateBoard")
-    console.log(board)
-    let newBoard = board.map(row => row.map(slot => null === slot ? "slot" : "filled"))
+  fillBoard(board) {
+    let newBoard = board.map(slot => null === slot ? "slot" : "filled")
     this.setState({board: newBoard})
   },
   handleClick(){
@@ -83,7 +81,6 @@ const App = React.createClass({
     var children = React.Children.map(this.props.children, function(child) {
         return React.cloneElement(child, Object.assign({}, that.state));
     });
-    console.log("app board", this.state.board)
     return (
       <div>
         <h1>Set Game</h1>

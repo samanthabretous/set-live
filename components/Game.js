@@ -13,7 +13,7 @@ const Game = React.createClass({
           board={this.props.board} 
           cards={this.props.cards} 
           amountOfCardsOnBoard={this.props.amountOfCardsOnBoard}
-          generateBoard={this.props.generateBoard}
+          fillBoard={this.props.fillBoard}
           handleClick={this.props.handleClick}/>
         <ChatBar />
       </div>
