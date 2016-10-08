@@ -1,19 +1,22 @@
- const cards = {
-  card1 : {
+ const cards = [
+  {
+    card: 1,
     number: 1,
     color: 'red',
     shade: 'solid',
     shape: 'squiggles'
-    },
+  },
 
-   card2 : {
+  {
+    card: 2,
     number: 2,
     color: 'red',
     shade: 'solid',
     shape: 'squiggles'
   },
 
-   card3 : {
+  {
+    card: 3,
     number: 3,
     color: 'red',
     shade: 'solid',
@@ -21,21 +24,24 @@
   },
 
   // SOLID GREEN squigglesS
-   card4 : {
+  {
+    card: 4,
     number: 1,
     color: 'green',
     shade: 'solid',
     shape: 'squiggles'
   },
 
-   card5 : {
+  {
+    card: 5,
     number: 2,
     color: 'green',
     shade: 'solid',
     shape: 'squiggles'
   },
 
-   card6 : {
+  {
+    card: 6,
     number: 3,
     color: 'green',
     shade: 'solid',
@@ -43,21 +49,24 @@
   },
 
   // SOLID PURPLE squigglesS
-   card7 : {
+  {
+    card: 7,
     number: 1,
     color: 'purple',
     shade: 'solid',
     shape: 'squiggles'
   },
 
-   card8 : {
+  {
+    card: 8,
     number: 2,
     color: 'purple',
     shade: 'solid',
     shape: 'squiggles'
   },
 
-   card9 : {
+  {
+    card: 9,
     number: 3,
     color: 'purple',
     shade: 'solid',
@@ -66,21 +75,24 @@
 
   // SOLID RED DIAMONDS
 
-   card10 : {
+   {
+    card: 10,
     number: 1,
     color: 'red',
     shade: 'solid',
     shape: 'diamond'
   },
 
-   card11 : {
+   {
+    card: 11,
     number: 2,
     color: 'red',
     shade: 'solid',
     shape: 'diamond'
   },
 
-   card12 : {
+   {
+    card: 12,
     number: 3,
     color: 'red',
     shade: 'solid',
@@ -89,21 +101,24 @@
 
   // SOLID GREEN DIAMONDS
 
-   card13 : {
+   {
+    card: 13,
     number: 1,
     color: 'green',
     shade: 'solid',
     shape: 'diamond'
   },
 
-   card14 : {
+   {
+    card: 14,
     number: 2,
     color: 'green',
     shade: 'solid',
     shape: 'diamond'
   },
 
-   card15 : {
+   {
+    card: 15,
     number: 3,
     color: 'green',
     shade: 'solid',
@@ -112,21 +127,24 @@
 
   // SOLID PURPLE DIAMONDS
 
-   card16 : {
+   {
+    card: 16,
     number: 1,
     color: 'purple',
     shade: 'solid',
     shape: 'diamond'
   },
 
-   card17 : {
+   {
+    card: 17,
     number: 2,
     color: 'purple',
     shade: 'solid',
     shape: 'diamond'
   },
 
-   card18 : {
+   {
+    card: 18,
     number: 3,
     color: 'purple',
     shade: 'solid',
@@ -135,21 +153,24 @@
 
   // SOLID RED OVAL
 
-   card19 : {
+   {
+    card: 19,
     number: 1,
     color: 'red',
     shade: 'solid',
     shape: 'oval'
   },
 
-   card20 : {
+   {
+    card: 20,
     number: 2,
     color: 'red',
     shade: 'solid',
     shape: 'oval'
   },
 
-   card21 : {
+   {
+    card: 21,
     number: 3,
     color: 'red',
     shade: 'solid',
@@ -158,21 +179,24 @@
 
   // SOLID GREEN OVAL
 
-   card22 : {
+   {
+    card: 22,
     number: 1,
     color: 'green',
     shade: 'solid',
     shape: 'oval'
   },
 
-   card23 : {
+   {
+    card: 23,
     number: 2,
     color: 'green',
     shade: 'solid',
     shape: 'oval'
   },
 
-   card24 : {
+   {
+    card: 24,
     number: 3,
     color: 'green',
     shade: 'solid',
@@ -181,21 +205,24 @@
 
   // SOLID PURPLE OVAL
 
-   card25 : {
+   {
+    card: 25,
     number: 1,
     color: 'purple',
     shade: 'solid',
     shape: 'oval'
   },
 
-   card26 : {
+   {
+    card: 26,
     number: 2,
     color: 'purple',
     shade: 'solid',
     shape: 'oval'
   },
 
-   card27 : {
+   {
+    card: 27,
     number: 3,
     color: 'purple',
     shade: 'solid',
@@ -204,21 +231,24 @@
 
   // STRIPED RED squiggles
 
-   card28 : {
+   {
+    card: 28,
     number: 1,
     color: 'red',
     shade: 'striped',
     shape: 'squiggles'
   },
 
-   card29 : {
+   {
+    card: 29,
     number: 2,
     color: 'red',
     shade: 'striped',
     shape: 'squiggles'
   },
 
-   card30 : {
+   {
+    card: 30,
     number: 3,
     color: 'red',
     shade: 'striped',
@@ -227,21 +257,24 @@
 
   // STRIPED GREEN squiggles
 
-   card31 : {
+   {
+    card: 31,
     number: 1,
     color: 'green',
     shade: 'striped',
     shape: 'squiggles'
   },
 
-   card32 : {
+   {
+    card: 32,
     number: 2,
     color: 'green',
     shade: 'striped',
     shape: 'squiggles'
   },
 
-   card33 : {
+   {
+    card: 33,
     number: 3,
     color: 'green',
     shade: 'striped',
@@ -250,21 +283,24 @@
 
   // STRIPED PURPLE squiggles
 
-   card34 : {
+   {
+    card: 34,
     number: 1,
     color: 'purple',
     shade: 'striped',
     shape: 'squiggles'
   },
 
-   card35 : {
+   {
+    card: 35,
     number: 2,
     color: 'purple',
     shade: 'striped',
     shape: 'squiggles'
   },
 
-   card36 : {
+   {
+    card: 36,
     number: 3,
     color: 'purple',
     shade: 'striped',
@@ -273,21 +309,24 @@
 
   // STRIPED RED DIAMOND
 
-   card37 : {
+   {
+    card: 37,
     number: 1,
     color: 'red',
     shade: 'striped',
     shape: 'diamond'
   },
 
-   card38 : {
+   {
+    card: 38,
     number: 2,
     color: 'red',
     shade: 'striped',
     shape: 'diamond'
   },
 
-   card39 : {
+   {
+    card: 39,
     number: 3,
     color: 'red',
     shade: 'striped',
@@ -296,21 +335,24 @@
 
   // STRIPED GREEN DIAMOND
 
-   card40 : {
+   {
+    card: 40,
     number: 1,
     color: 'green',
     shade: 'striped',
     shape: 'diamond'
   },
 
-   card41 : {
+   {
+    card: 41,
     number: 2,
     color: 'green',
     shade: 'striped',
     shape: 'diamond'
   },
 
-   card42 : {
+   {
+    card: 42,
     number: 3,
     color: 'green',
     shade: 'striped',
@@ -319,21 +361,24 @@
 
   // PURPLE STRIPED DIAMOND
 
-   card43 : {
+   {
+    card: 43,
     number: 1,
     color: 'purple',
     shade: 'striped',
     shape: 'diamond'
   },
 
-   card44 : {
+   {
+    card: 44,
     number: 2,
     color: 'purple',
     shade: 'striped',
     shape: 'diamond'
   },
 
-   card45 : {
+   {
+    card: 45,
     number: 3,
     color: 'purple',
     shade: 'striped',
@@ -342,21 +387,24 @@
 
   // RED STRIPED OVAL
 
-   card46 : {
+   {
+    card: 46,
     number: 1,
     color: 'red',
     shade: 'striped',
     shape: 'oval'
   },
 
-   card47 : {
+   {
+    card: 47,
     number: 2,
     color: 'red',
     shade: 'striped',
     shape: 'oval'
   },
 
-   card48 : {
+   {
+    card: 48,
     number: 3,
     color: 'red',
     shade: 'striped',
@@ -365,21 +413,24 @@
 
   // GREEN STRIPED OVAL
 
-   card49 : {
+   {
+    card: 49,
     number: 1,
     color: 'green',
     shade: 'striped',
     shape: 'oval'
   },
 
-   card50 : {
+   {
+    card: 50,
     number: 2,
     color: 'green',
     shade: 'striped',
     shape: 'oval'
   },
 
-   card51 : {
+   {
+    card: 51,
     number: 3,
     color: 'green',
     shade: 'striped',
@@ -388,21 +439,24 @@
 
   // PURPLE STRIPED OVAL
 
-   card52 : {
+   {
+    card: 52,
     number: 1,
     color: 'purple',
     shade: 'striped',
     shape: 'oval'
   },
 
-   card53 : {
+   {
+    card: 53,
     number: 2,
     color: 'purple',
     shade: 'striped',
     shape: 'oval'
   },
 
-   card54 : {
+   {
+    card: 54,
     number: 3,
     color: 'purple',
     shade: 'striped',
@@ -410,196 +464,223 @@
   },
 
   // ------------squiggless outline------------
-  card55 : {
+  {
+    card: 55,
+    number: 1,
     color: "red",
     shade: "outline",
-    number: 1,
     shape: "squiggles"
   },
 
-  card56 : {
-    color: "red",
-    shade: "outline",
+  {
+    card: 56,
     number: 2,
+    color: "red",
+    shade: "outline",
     shape: "squiggles"
   },
 
-  card57 : {
-    color: "red",
-    shade: "outline",
+  {
+    card: 57,
     number: 3,
-    shape: "squiggles"
-  },
-
-  card58 : {
     color: "red",
     shade: "outline",
-    number: 1,
     shape: "squiggles"
   },
 
-  card59 : {
+  {
+    card: 58,
+    number: 1,
+    color: "red",
+    shade: "outline",
+    shape: "squiggles"
+  },
+
+  {
+    card: 59,
+    number: 2,
     color: "green",
     shade: "outline",
-    number: 2,
     shape: "squiggles"
   },
 
-  card60 : {
+  {
+    card: 60,
+    number: 3,
     color: "green",
     shade: "outline",
-    number: 3,
     shape: "squiggles"
   },
 
-  card61 : {
-    color: "purple",
-    shade: "outline",
+  {
+    card: 61,
     number: 1,
+    color: "purple",
+    shade: "outline",
     shape: "squiggles"
   },
 
-  card62 : {
-    color: "purple",
-    shade: "outline",
+  {
+    card: 62,
     number: 2,
+    color: "purple",
+    shade: "outline",
     shape: "squiggles"
   },
 
-  card63 : {
+  {
+    card: 63,
+    number: 3,
     color: "purple",
     shade: "outline",
-    number: 3,
     shape: "squiggles"
   },
 
   // ----------------diamond outline---------------
-  card64 : {
+  {
+    card: 64,
+    number: 1,
     color: "red",
     shade: "outline",
-    number: 1,
     shape: "diamond"
   },
 
-  card65 : {
-    color: "red",
-    shade: "outline",
+  {
+    card: 65,
     number: 2,
+    color: "red",
+    shade: "outline",
     shape: "diamond"
   },
 
-  card66 : {
-    color: "red",
-    shade: "outline",
+  {
+    card: 66,
     number: 3,
-    shape: "diamond"
-  },
-
-  card67 : {
     color: "red",
     shade: "outline",
-    number: 1,
     shape: "diamond"
   },
 
-  card68 : {
+  {
+    card: 67,
+    number: 1,
+    color: "red",
+    shade: "outline",
+    shape: "diamond"
+  },
+
+  {
+    card: 68,
+    number: 2,
     color: "green",
     shade: "outline",
-    number: 2,
     shape: "diamond"
   },
 
-  card69 : {
+  {
+    card: 69,
+    number: 3,
     color: "green",
     shade: "outline",
-    number: 3,
     shape: "diamond"
   },
 
-  card70 : {
-    color: "purple",
-    shade: "outline",
+  {
+    card: 70,
     number: 1,
+    color: "purple",
+    shade: "outline",
     shape: "diamond"
   },
 
-  card71 : {
-    color: "purple",
-    shade: "outline",
+  {
+    card: 71,
     number: 2,
+    color: "purple",
+    shade: "outline",
     shape: "diamond"
   },
 
-  card72 : {
+  {
+    card: 72,
+    number: 3,
     color: "purple",
     shade: "outline",
-    number: 3,
     shape: "diamond"
   },
 
   //------------------oval outline---------------
-  card73 : {
+  {
+    card: 73,
+    number: 1,
     color: "red",
     shade: "outline",
-    number: 1,
     shape: "oval"
   },
 
-  card74 : {
-    color: "red",
-    shade: "outline",
+  {
+    card: 74,
     number: 2,
+    color: "red",
+    shade: "outline",
     shape: "oval"
   },
 
-  card75 : {
-    color: "red",
-    shade: "outline",
+  {
+    card: 75,
     number: 3,
-    shape: "oval"
-  },
-
-  card76 : {
     color: "red",
     shade: "outline",
-    number: 1,
     shape: "oval"
   },
 
-  card77 : {
+  {
+    card: 76,
+    number: 1,
+    color: "red",
+    shade: "outline",
+    shape: "oval"
+  },
+
+  {
+    card: 77,
+    number: 2,
     color: "green",
     shade: "outline",
-    number: 2,
     shape: "oval"
   },
 
-  card78 : {
+  {
+    card: 78,
+    number: 3,
     color: "green",
     shade: "outline",
-    number: 3,
     shape: "oval"
   },
 
-  card79 : {
-    color: "purple",
-    shade: "outline",
+  {
+    card: 79,
     number: 1,
+    color: "purple",
+    shade: "outline",
     shape: "oval"
   },
 
-  card80 : {
-    color: "purple",
-    shade: "outline",
+  {
+    card: 80,
     number: 2,
+    color: "purple",
+    shade: "outline",
     shape: "oval"
   },
 
-  card81 : {
+  {
+    card: 81,
+    number: 3,
     color: "purple",
     shade: "outline",
-    number: 3,
     shape: "oval"
   }
-}
+]
 
-export {cards}
+export default cards

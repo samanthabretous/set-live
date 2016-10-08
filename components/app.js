@@ -11,6 +11,7 @@ const App = React.createClass({
   getInitialState(){
     return {
       cards: cards,
+      shuffledCards: cards,
       board: [],
       amountOfCardsOnBoard: 12,
       fillBoard: this.fillBoard,
@@ -70,13 +71,22 @@ const App = React.createClass({
   },
 
   fillBoard(board) {
-    let newBoard = board.map(slot => null === slot ? "slot" : "filled")
+    let newBoard = board.map(slot => {
+      if (null === slot) {
+        var firstCard = this.state.shuffledCards[0]
+        this.setState({shuffledCards: this.state.shuffledCards.splice(0,1)})
+        return firstCard
+      } else {
+        return slot
+      }
+    })
     this.setState({board: newBoard})
   },
   handleClick(){
     console.log("click from app")
   },
   render() {
+    console.log("render")
     var that = this
     var children = React.Children.map(this.props.children, function(child) {
         return React.cloneElement(child, Object.assign({}, that.state));

@@ -22,7 +22,7 @@ const Board = React.createClass({
   },
   render() {
     console.log("render")
-    let boardOfCards = this.props.board.map((slot,i) => <article onClick={this.props.handleClick} key={i} className="cards">{slot}</article>)
+    let boardOfCards = this.props.board.map((slot,i) => <article onClick={this.props.handleClick} key={i} className="cards">{slot.card}</article>)
     return (
       <div>
         <div>Board</div>
