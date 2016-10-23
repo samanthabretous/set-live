@@ -5,10 +5,12 @@ const app = express();
 let connections = [];
 let players = [];
 
-app.use(express.static('./public'))
+app.use(express.static('../client/src/public'))
 
 const server = app.listen(3000)
-const io = require('socket.io').listen(server)
+const io = require('socket.io').listen(server, function(){
+  console.log('SET is running on port 3000') 
+})
 
 //Connect to the socket
 io.sockets.on('connection', function(socket){
@@ -60,4 +62,4 @@ io.sockets.on('connection', function(socket){
 
 })
 
-console.log('SET is running on port 3000')  
+ 

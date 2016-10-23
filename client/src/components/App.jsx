@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import io from 'socket.io-client';
-import cards from './parts/card_deck' 
+import cards from '../card_deck' 
+import store from '../store'
+import { addMemberAction } from '../actions/index.js';
 
 
 //import "../css/style.css";
@@ -24,7 +26,7 @@ const App = React.createClass({
   },
 
   componentWillMount(){
-    this.socket= io("http://localhost:3000");
+    this.socket = io("http://localhost:3000");
     this.socket.on('connect', this.connect);
     this.socket.on('disconnect', this.disconnect)
     this.socket.on('welcome', this.updateState);
@@ -63,7 +65,7 @@ const App = React.createClass({
 
     //save member in browser history
     sessionStorage.member = JSON.stringify(member)
-    this.setState({member: member})
+    addMemberAction(member)
   },
 
   updatePlayers(newPlayer){
@@ -86,7 +88,7 @@ const App = React.createClass({
     console.log("click from app")
   },
   render() {
-    console.log("render")
+    console.log(this.props.member)
     var that = this
     var children = React.Children.map(this.props.children, function(child) {
         return React.cloneElement(child, Object.assign({}, that.state));

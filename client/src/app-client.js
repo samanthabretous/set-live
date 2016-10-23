@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, browserHistory} from 'react-router'
-import { createStore } from 'redux';
-import reducer from './reducers/MainReducer'
+import {Provider} from 'react-redux'
+import store from './store'
+import routes from './routes'
 
-
-const store = createStore(reducer)
 
 
 ReactDOM.render(  
