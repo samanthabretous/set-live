@@ -1,0 +1,14 @@
+.board{
+  width: 80vw;
+  height: 80vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: stretch;
+}
+.cards{
+  width: 30%;
+  border: 1px black solid;
+  border-radius: 10px;
+
+}

@@ -1,0 +1,31 @@
+{
+  "name": "set-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "webpack --watch"
+  },
+  "keywords": [],
+  "author": "Samantha Bretous <sam@samanthabretous.com>",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.8.1",
+    "redux": "^3.6.0",
+    "socket.io-client": "^1.4.8",
+    "underscore": "^1.8.3",
+    "webpack": "^1.13.2"
+  },
+  "devDependencies": {
+    "css-loader": "^0.25.0",
+    "http": "0.0.0",
+    "style-loader": "^0.13.1"
+  }
+}
