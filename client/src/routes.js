@@ -9,13 +9,13 @@ import { Route, IndexRoute } from 'react-router';
 // of our website.
 //====================
 import AppContainer from './middleware/AppContainer'
-import WaitingForPlayers from './components/WaitingForPlayers'
+import WaitingForPlayersContainer from './middleware/WaitingForPlayers'
 import Game from './components/Game'
 
 
 export default (
   <Route path="/" component={AppContainer}>
-    <IndexRoute component={WaitingForPlayers}/>
-    <Route path='game' component={Game}></Route>
+    <IndexRoute component={WaitingForPlayersContainer}/>
   </Route> 
 );
+    // <Route path='game' component={Game}></Route>

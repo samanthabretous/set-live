@@ -62,11 +62,17 @@
 	
 	var _store2 = _interopRequireDefault(_store);
 	
-	var _routes = __webpack_require__(260);
+	var _routes = __webpack_require__(261);
 	
 	var _routes2 = _interopRequireDefault(_routes);
 	
+	var _connections = __webpack_require__(319);
+	
+	var _connections2 = _interopRequireDefault(_connections);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	(0, _connections2.default)(_store2.default);
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
@@ -28616,6 +28622,10 @@
 	  switch (action.type) {
 	    case _types.ADD_MEMBER:
 	      return Object.assign({}, state, { member: action.member });
+	    case _types.CHANGE_STATUS:
+	      return Object.assign({}, state, { status: action.status });
+	    case _types.PLAYERS:
+	      return Object.assign({}, state, { players: action.player });
 	  }
 	  return state;
 	};
@@ -28624,18 +28634,13 @@
 	
 	var _card_deck2 = _interopRequireDefault(_card_deck);
 	
-	var _types = __webpack_require__(317);
+	var _types = __webpack_require__(260);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var INTIAL_STATE = {
-	  cards: _card_deck2.default,
-	  shuffledCards: _card_deck2.default,
-	  board: [],
-	  amountOfCardsOnBoard: 12,
-	  status: 'disconnected',
 	  member: {},
-	  players: []
+	  status: 'disconnected'
 	};
 
 /***/ },
@@ -29214,48 +29219,21 @@
 
 /***/ },
 /* 260 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(172);
-	
-	var _AppContainer = __webpack_require__(261);
-	
-	var _AppContainer2 = _interopRequireDefault(_AppContainer);
-	
-	var _WaitingForPlayers = __webpack_require__(262);
-	
-	var _WaitingForPlayers2 = _interopRequireDefault(_WaitingForPlayers);
-	
-	var _Game = __webpack_require__(265);
-	
-	var _Game2 = _interopRequireDefault(_Game);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = _react2.default.createElement(
-	  _reactRouter.Route,
-	  { path: '/', component: _AppContainer2.default },
-	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _WaitingForPlayers2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'game', component: _Game2.default })
-	);
-	
-	//====================
-	// Import the different components that will represent the different pages
-	// of our website.
-	//====================
-	//====================
-	// Import React and the dependencies we need to make react router work
-	//====================
+	/**
+	 * export our different types so that our actions and components can use them
+	 */
+	var ADD_MEMBER = exports.ADD_MEMBER = 'add_member';
+	var CHANGE_STATUS = exports.CHANGE_STATUS = 'change_status';
+	var SHOW_BOARD = exports.SHOW_BOARD = 'show_board';
+	var PLAYERS = exports.PLAYERS = 'players';
+	var JOIN_MEMBER = exports.JOIN_MEMBER = 'join_member';
 
 /***/ },
 /* 261 */
@@ -29267,27 +29245,41 @@
 	  value: true
 	});
 	
-	var _App = __webpack_require__(315);
+	var _react = __webpack_require__(1);
 	
-	var _App2 = _interopRequireDefault(_App);
+	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRedux = __webpack_require__(235);
+	var _reactRouter = __webpack_require__(172);
+	
+	var _AppContainer = __webpack_require__(262);
+	
+	var _AppContainer2 = _interopRequireDefault(_AppContainer);
+	
+	var _WaitingForPlayers = __webpack_require__(312);
+	
+	var _WaitingForPlayers2 = _interopRequireDefault(_WaitingForPlayers);
+	
+	var _Game = __webpack_require__(316);
+	
+	var _Game2 = _interopRequireDefault(_Game);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var appToState = function appToState(state) {
-	  return {
-	    cards: state.cards,
-	    shuffledCards: state.shuffledCards,
-	    board: state.board,
-	    amountOfCardsOnBoard: state.amountOfCardsOnBoard,
-	    status: state.status,
-	    member: state.member,
-	    players: state.players
-	  };
-	};
+	exports.default = _react2.default.createElement(
+	  _reactRouter.Route,
+	  { path: '/', component: _AppContainer2.default },
+	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _WaitingForPlayers2.default })
+	);
+	// <Route path='game' component={Game}></Route>
 	
-	exports.default = (0, _reactRedux.connect)(appToState)(_App2.default);
+	
+	//====================
+	// Import the different components that will represent the different pages
+	// of our website.
+	//====================
+	//====================
+	// Import React and the dependencies we need to make react router work
+	//====================
 
 /***/ },
 /* 262 */
@@ -29299,53 +29291,21 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(1);
+	var _App = __webpack_require__(263);
 	
-	var _react2 = _interopRequireDefault(_react);
+	var _App2 = _interopRequireDefault(_App);
 	
-	var _display = __webpack_require__(263);
-	
-	var _display2 = _interopRequireDefault(_display);
-	
-	var _join = __webpack_require__(264);
-	
-	var _join2 = _interopRequireDefault(_join);
-	
-	var _reactRouter = __webpack_require__(172);
+	var _reactRedux = __webpack_require__(235);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var WaitingForPlayers = _react2.default.createClass({
-	  displayName: 'WaitingForPlayers',
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      _react2.default.createElement(
-	        _display2.default,
-	        { 'if': this.props.status === 'connected' },
-	        _react2.default.createElement(_display2.default, { 'if': this.props.member.name }),
-	        _react2.default.createElement(
-	          _display2.default,
-	          { 'if': !this.props.member.name },
-	          _react2.default.createElement(
-	            'h1',
-	            null,
-	            'Join the session'
-	          ),
-	          _react2.default.createElement(_join2.default, { emit: this.props.emit })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouter.Link,
-	        { to: '/game' },
-	        'Go to Game'
-	      )
-	    );
-	  }
-	});
+	var appToState = function appToState(state) {
+	  return {
+	    status: state.status
+	  };
+	};
 	
-	exports.default = WaitingForPlayers;
+	exports.default = (0, _reactRedux.connect)(appToState)(_App2.default);
 
 /***/ },
 /* 263 */
@@ -29361,303 +29321,78 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _reactDom = __webpack_require__(34);
 	
-	var Display = _react2.default.createClass({
-	  displayName: 'Display',
-	  render: function render() {
-	    return this.props.if ? _react2.default.createElement(
-	      'div',
-	      null,
-	      this.props.children
-	    ) : null;
-	  }
-	});
+	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	exports.default = Display;
-
-/***/ },
-/* 264 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
+	var _socket = __webpack_require__(264);
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	var _socket2 = _interopRequireDefault(_socket);
 	
-	var _react = __webpack_require__(1);
+	var _card_deck = __webpack_require__(259);
 	
-	var _react2 = _interopRequireDefault(_react);
+	var _card_deck2 = _interopRequireDefault(_card_deck);
 	
-	var _reactRouter = __webpack_require__(172);
+	var _store = __webpack_require__(257);
+	
+	var _store2 = _interopRequireDefault(_store);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Join = _react2.default.createClass({
-	  displayName: 'Join',
-	  join: function join() {
+	//import "../css/style.css";
 	
-	    this.props.emit('join', { name: this.refs.name.value });
+	var App = _react2.default.createClass({
+	  displayName: 'App',
+	  componentDidMount: function componentDidMount() {
+	    //changeStatusAction('connected')
+	    //changeStatusAction('disconnected')
+	
+	  },
+	  fillBoard: function fillBoard(board) {
+	    var _this = this;
+	
+	    var newBoard = board.map(function (slot) {
+	      if (null === slot) {
+	        var firstCard = _this.state.shuffledCards[0];
+	        _this.setState({ shuffledCards: _this.state.shuffledCards.splice(0, 1) });
+	        return firstCard;
+	      } else {
+	        return slot;
+	      }
+	    });
+	    this.setState({ board: newBoard });
+	  },
+	  handleClick: function handleClick() {
+	    console.log("click from app");
 	  },
 	  render: function render() {
-	    return _react2.default.createElement(
-	      'form',
-	      { action: 'javascript:void(0)', onSubmit: this.join },
-	      _react2.default.createElement(
-	        'label',
-	        null,
-	        ' Full name '
-	      ),
-	      _react2.default.createElement('input', {
-	        ref: 'name',
-	        className: 'userName',
-	        placeholder: 'enter your full name...',
-	        required: true }),
-	      _react2.default.createElement(
-	        'button',
-	        { className: 'btn btn-primary' },
-	        'Join'
-	      )
-	    );
-	  }
-	});
-	
-	exports.default = Join;
-
-/***/ },
-/* 265 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _display = __webpack_require__(263);
-	
-	var _display2 = _interopRequireDefault(_display);
-	
-	var _join = __webpack_require__(264);
-	
-	var _join2 = _interopRequireDefault(_join);
-	
-	var _board = __webpack_require__(266);
-	
-	var _board2 = _interopRequireDefault(_board);
-	
-	var _chatBar = __webpack_require__(267);
-	
-	var _chatBar2 = _interopRequireDefault(_chatBar);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Game = _react2.default.createClass({
-	  displayName: 'Game',
-	  render: function render() {
+	    var that = this;
+	    var children = _react2.default.Children.map(this.props.children, function (child) {
+	      return _react2.default.cloneElement(child, Object.assign({}, that.state));
+	    });
+	    console.log(this.props.status);
 	    return _react2.default.createElement(
 	      'div',
 	      null,
 	      _react2.default.createElement(
 	        'h1',
 	        null,
-	        'Game'
+	        'Set Game'
 	      ),
-	      _react2.default.createElement(_board2.default, {
-	        board: this.props.board,
-	        cards: this.props.cards,
-	        amountOfCardsOnBoard: this.props.amountOfCardsOnBoard,
-	        fillBoard: this.props.fillBoard,
-	        handleClick: this.props.handleClick }),
-	      _react2.default.createElement(_chatBar2.default, null)
-	    );
-	  }
-	});
-	
-	exports.default = Game;
-
-/***/ },
-/* 266 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Board = _react2.default.createClass({
-	  displayName: 'Board',
-	  getInitialState: function getInitialState() {
-	    return { gameBoard: [], name: '' };
-	  },
-	  generateBoard: function generateBoard() {
-	    //find the width, based on the user input of cards
-	    var amountDisplay = this.props.amountOfCardsOnBoard;
-	
-	    //make an empty matrix
-	    var board = [];
-	    for (var i = 0; i < amountDisplay; i++) {
-	      board.push(null);
-	    }
-	    this.props.fillBoard(board);
-	  },
-	  componentWillMount: function componentWillMount() {
-	    console.log("will mount");
-	    this.generateBoard();
-	  },
-	  render: function render() {
-	    var _this = this;
-	
-	    console.log("render");
-	    var boardOfCards = this.props.board.map(function (slot, i) {
-	      return _react2.default.createElement(
-	        'article',
-	        { onClick: _this.props.handleClick, key: i, className: 'cards' },
-	        slot.card
-	      );
-	    });
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      _react2.default.createElement(
-	        'div',
+	      this.props.status == 'connected' ? _react2.default.createElement(
+	        'h1',
 	        null,
-	        'Board'
-	      ),
-	      _react2.default.createElement(
-	        'section',
-	        { className: 'board' },
-	        boardOfCards
-	      )
+	        'Connected'
+	      ) : null,
+	      children
 	    );
 	  }
 	});
 	
-	exports.default = Board;
+	exports.default = App;
 
 /***/ },
-/* 267 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _socket = __webpack_require__(268);
-	
-	var _socket2 = _interopRequireDefault(_socket);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	var socket = (0, _socket2.default)("http://localhost:3000");
-	
-	var ChatBar = _react2.default.createClass({
-	  displayName: 'ChatBar',
-	  getInitialState: function getInitialState() {
-	    return {
-	      messages: [],
-	      socket: socket,
-	      username: "",
-	      mess: ""
-	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    var self = this;
-	    this.state.socket.on('received message', function (msg) {
-	      console.log(msg);
-	      self.setState({ messages: self.state.messages.concat(msg) });
-	    });
-	  },
-	  handleChange: function handleChange(event) {
-	    this.setState(_defineProperty({}, event.target.className, event.target.value));
-	  },
-	  submitMessage: function submitMessage() {
-	    var message = {
-	      body: this.state.mess,
-	      user: this.state.username || "guest"
-	    };
-	    this.setState({ mess: "" });
-	    this.state.socket.emit('new message', message);
-	  },
-	  render: function render() {
-	    var self = this;
-	    if (this.state.messages) {
-	      var messages = this.state.messages.map(function (msg, i) {
-	        return _react2.default.createElement(
-	          'li',
-	          { key: i },
-	          _react2.default.createElement(
-	            'strong',
-	            null,
-	            msg.user
-	          ),
-	          ' ',
-	          _react2.default.createElement(
-	            'span',
-	            null,
-	            msg.body
-	          )
-	        );
-	      });
-	    }
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      _react2.default.createElement(
-	        'ul',
-	        null,
-	        messages
-	      ),
-	      _react2.default.createElement('input', {
-	        className: 'mess',
-	        type: 'text',
-	        placeholder: 'enter message',
-	        value: this.state.mess,
-	        onChange: this.handleChange }),
-	      _react2.default.createElement(
-	        'button',
-	        { onClick: self.submitMessage },
-	        'Send message'
-	      ),
-	      _react2.default.createElement('br', null),
-	      _react2.default.createElement('input', {
-	        className: 'username',
-	        type: 'text',
-	        placeholder: 'choose username',
-	        value: this.state.username,
-	        onChange: this.handleChange }),
-	      _react2.default.createElement(
-	        'button',
-	        { onClick: self.handleChange },
-	        'Enter Username'
-	      )
-	    );
-	  }
-	});
-	exports.default = ChatBar;
-
-/***/ },
-/* 268 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -29665,10 +29400,10 @@
 	 * Module dependencies.
 	 */
 	
-	var url = __webpack_require__(269);
-	var parser = __webpack_require__(274);
-	var Manager = __webpack_require__(281);
-	var debug = __webpack_require__(271)('socket.io-client');
+	var url = __webpack_require__(265);
+	var parser = __webpack_require__(270);
+	var Manager = __webpack_require__(277);
+	var debug = __webpack_require__(267)('socket.io-client');
 	
 	/**
 	 * Module exports.
@@ -29767,12 +29502,12 @@
 	 * @api public
 	 */
 	
-	exports.Manager = __webpack_require__(281);
-	exports.Socket = __webpack_require__(308);
+	exports.Manager = __webpack_require__(277);
+	exports.Socket = __webpack_require__(304);
 
 
 /***/ },
-/* 269 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -29780,8 +29515,8 @@
 	 * Module dependencies.
 	 */
 	
-	var parseuri = __webpack_require__(270);
-	var debug = __webpack_require__(271)('socket.io-client:url');
+	var parseuri = __webpack_require__(266);
+	var debug = __webpack_require__(267)('socket.io-client:url');
 	
 	/**
 	 * Module exports.
@@ -29854,7 +29589,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 270 */
+/* 266 */
 /***/ function(module, exports) {
 
 	/**
@@ -29899,7 +29634,7 @@
 
 
 /***/ },
-/* 271 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -29909,7 +29644,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(272);
+	exports = module.exports = __webpack_require__(268);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -30073,7 +29808,7 @@
 
 
 /***/ },
-/* 272 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -30089,7 +29824,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(273);
+	exports.humanize = __webpack_require__(269);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -30276,7 +30011,7 @@
 
 
 /***/ },
-/* 273 */
+/* 269 */
 /***/ function(module, exports) {
 
 	/**
@@ -30407,7 +30142,7 @@
 
 
 /***/ },
-/* 274 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -30415,12 +30150,12 @@
 	 * Module dependencies.
 	 */
 	
-	var debug = __webpack_require__(271)('socket.io-parser');
-	var json = __webpack_require__(275);
-	var isArray = __webpack_require__(277);
-	var Emitter = __webpack_require__(278);
-	var binary = __webpack_require__(279);
-	var isBuf = __webpack_require__(280);
+	var debug = __webpack_require__(267)('socket.io-parser');
+	var json = __webpack_require__(271);
+	var isArray = __webpack_require__(273);
+	var Emitter = __webpack_require__(274);
+	var binary = __webpack_require__(275);
+	var isBuf = __webpack_require__(276);
 	
 	/**
 	 * Protocol version.
@@ -30813,14 +30548,14 @@
 
 
 /***/ },
-/* 275 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! JSON v3.3.2 | http://bestiejs.github.io/json3 | Copyright 2012-2014, Kit Cambridge | http://kit.mit-license.org */
 	;(function () {
 	  // Detect the `define` function exposed by asynchronous module loaders. The
 	  // strict `define` check is necessary for compatibility with `r.js`.
-	  var isLoader = "function" === "function" && __webpack_require__(276);
+	  var isLoader = "function" === "function" && __webpack_require__(272);
 	
 	  // A set of types used to distinguish objects from primitives.
 	  var objectTypes = {
@@ -31722,7 +31457,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(250)(module), (function() { return this; }())))
 
 /***/ },
-/* 276 */
+/* 272 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -31730,7 +31465,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 277 */
+/* 273 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -31739,7 +31474,7 @@
 
 
 /***/ },
-/* 278 */
+/* 274 */
 /***/ function(module, exports) {
 
 	
@@ -31909,7 +31644,7 @@
 
 
 /***/ },
-/* 279 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -31918,8 +31653,8 @@
 	 * Module requirements
 	 */
 	
-	var isArray = __webpack_require__(277);
-	var isBuf = __webpack_require__(280);
+	var isArray = __webpack_require__(273);
+	var isBuf = __webpack_require__(276);
 	
 	/**
 	 * Replaces every Buffer | ArrayBuffer in packet with a numbered placeholder.
@@ -32057,7 +31792,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 280 */
+/* 276 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -32077,7 +31812,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 281 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -32085,15 +31820,15 @@
 	 * Module dependencies.
 	 */
 	
-	var eio = __webpack_require__(282);
-	var Socket = __webpack_require__(308);
-	var Emitter = __webpack_require__(309);
-	var parser = __webpack_require__(274);
-	var on = __webpack_require__(311);
-	var bind = __webpack_require__(312);
-	var debug = __webpack_require__(271)('socket.io-client:manager');
-	var indexOf = __webpack_require__(306);
-	var Backoff = __webpack_require__(314);
+	var eio = __webpack_require__(278);
+	var Socket = __webpack_require__(304);
+	var Emitter = __webpack_require__(305);
+	var parser = __webpack_require__(270);
+	var on = __webpack_require__(307);
+	var bind = __webpack_require__(308);
+	var debug = __webpack_require__(267)('socket.io-client:manager');
+	var indexOf = __webpack_require__(302);
+	var Backoff = __webpack_require__(310);
 	
 	/**
 	 * IE6+ hasOwnProperty
@@ -32643,19 +32378,19 @@
 
 
 /***/ },
-/* 282 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	module.exports = __webpack_require__(283);
+	module.exports = __webpack_require__(279);
 
 
 /***/ },
-/* 283 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	module.exports = __webpack_require__(284);
+	module.exports = __webpack_require__(280);
 	
 	/**
 	 * Exports parser
@@ -32663,25 +32398,25 @@
 	 * @api public
 	 *
 	 */
-	module.exports.parser = __webpack_require__(291);
+	module.exports.parser = __webpack_require__(287);
 
 
 /***/ },
-/* 284 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var transports = __webpack_require__(285);
-	var Emitter = __webpack_require__(299);
-	var debug = __webpack_require__(271)('engine.io-client:socket');
-	var index = __webpack_require__(306);
-	var parser = __webpack_require__(291);
-	var parseuri = __webpack_require__(270);
-	var parsejson = __webpack_require__(307);
-	var parseqs = __webpack_require__(300);
+	var transports = __webpack_require__(281);
+	var Emitter = __webpack_require__(295);
+	var debug = __webpack_require__(267)('engine.io-client:socket');
+	var index = __webpack_require__(302);
+	var parser = __webpack_require__(287);
+	var parseuri = __webpack_require__(266);
+	var parsejson = __webpack_require__(303);
+	var parseqs = __webpack_require__(296);
 	
 	/**
 	 * Module exports.
@@ -32797,9 +32532,9 @@
 	 */
 	
 	Socket.Socket = Socket;
-	Socket.Transport = __webpack_require__(290);
-	Socket.transports = __webpack_require__(285);
-	Socket.parser = __webpack_require__(291);
+	Socket.Transport = __webpack_require__(286);
+	Socket.transports = __webpack_require__(281);
+	Socket.parser = __webpack_require__(287);
 	
 	/**
 	 * Creates transport of the given type.
@@ -33393,17 +33128,17 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 285 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(286);
-	var XHR = __webpack_require__(288);
-	var JSONP = __webpack_require__(303);
-	var websocket = __webpack_require__(304);
+	var XMLHttpRequest = __webpack_require__(282);
+	var XHR = __webpack_require__(284);
+	var JSONP = __webpack_require__(299);
+	var websocket = __webpack_require__(300);
 	
 	/**
 	 * Export transports.
@@ -33453,7 +33188,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 286 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// browser shim for xmlhttprequest module
@@ -33461,7 +33196,7 @@
 	// Indicate to eslint that ActiveXObject is global
 	/* global ActiveXObject */
 	
-	var hasCORS = __webpack_require__(287);
+	var hasCORS = __webpack_require__(283);
 	
 	module.exports = function (opts) {
 	  var xdomain = opts.xdomain;
@@ -33499,7 +33234,7 @@
 
 
 /***/ },
-/* 287 */
+/* 283 */
 /***/ function(module, exports) {
 
 	
@@ -33522,18 +33257,18 @@
 
 
 /***/ },
-/* 288 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module requirements.
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(286);
-	var Polling = __webpack_require__(289);
-	var Emitter = __webpack_require__(299);
-	var inherit = __webpack_require__(301);
-	var debug = __webpack_require__(271)('engine.io-client:polling-xhr');
+	var XMLHttpRequest = __webpack_require__(282);
+	var Polling = __webpack_require__(285);
+	var Emitter = __webpack_require__(295);
+	var inherit = __webpack_require__(297);
+	var debug = __webpack_require__(267)('engine.io-client:polling-xhr');
 	
 	/**
 	 * Module exports.
@@ -33941,19 +33676,19 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 289 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(290);
-	var parseqs = __webpack_require__(300);
-	var parser = __webpack_require__(291);
-	var inherit = __webpack_require__(301);
-	var yeast = __webpack_require__(302);
-	var debug = __webpack_require__(271)('engine.io-client:polling');
+	var Transport = __webpack_require__(286);
+	var parseqs = __webpack_require__(296);
+	var parser = __webpack_require__(287);
+	var inherit = __webpack_require__(297);
+	var yeast = __webpack_require__(298);
+	var debug = __webpack_require__(267)('engine.io-client:polling');
 	
 	/**
 	 * Module exports.
@@ -33966,7 +33701,7 @@
 	 */
 	
 	var hasXHR2 = (function () {
-	  var XMLHttpRequest = __webpack_require__(286);
+	  var XMLHttpRequest = __webpack_require__(282);
 	  var xhr = new XMLHttpRequest({ xdomain: false });
 	  return null != xhr.responseType;
 	})();
@@ -34192,15 +33927,15 @@
 
 
 /***/ },
-/* 290 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(291);
-	var Emitter = __webpack_require__(299);
+	var parser = __webpack_require__(287);
+	var Emitter = __webpack_require__(295);
 	
 	/**
 	 * Module exports.
@@ -34353,22 +34088,22 @@
 
 
 /***/ },
-/* 291 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var keys = __webpack_require__(292);
-	var hasBinary = __webpack_require__(293);
-	var sliceBuffer = __webpack_require__(294);
-	var after = __webpack_require__(295);
-	var utf8 = __webpack_require__(296);
+	var keys = __webpack_require__(288);
+	var hasBinary = __webpack_require__(289);
+	var sliceBuffer = __webpack_require__(290);
+	var after = __webpack_require__(291);
+	var utf8 = __webpack_require__(292);
 	
 	var base64encoder;
 	if (global.ArrayBuffer) {
-	  base64encoder = __webpack_require__(297);
+	  base64encoder = __webpack_require__(293);
 	}
 	
 	/**
@@ -34426,7 +34161,7 @@
 	 * Create a blob api even for blob builder when vendor prefixes exist
 	 */
 	
-	var Blob = __webpack_require__(298);
+	var Blob = __webpack_require__(294);
 	
 	/**
 	 * Encodes a packet.
@@ -34966,7 +34701,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 292 */
+/* 288 */
 /***/ function(module, exports) {
 
 	
@@ -34991,7 +34726,7 @@
 
 
 /***/ },
-/* 293 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -34999,7 +34734,7 @@
 	 * Module requirements.
 	 */
 	
-	var isArray = __webpack_require__(277);
+	var isArray = __webpack_require__(273);
 	
 	/**
 	 * Module exports.
@@ -35056,7 +34791,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 294 */
+/* 290 */
 /***/ function(module, exports) {
 
 	/**
@@ -35091,7 +34826,7 @@
 
 
 /***/ },
-/* 295 */
+/* 291 */
 /***/ function(module, exports) {
 
 	module.exports = after
@@ -35125,7 +34860,7 @@
 
 
 /***/ },
-/* 296 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/wtf8 v1.0.0 by @mathias */
@@ -35364,7 +35099,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(250)(module), (function() { return this; }())))
 
 /***/ },
-/* 297 */
+/* 293 */
 /***/ function(module, exports) {
 
 	/*
@@ -35437,7 +35172,7 @@
 
 
 /***/ },
-/* 298 */
+/* 294 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -35540,7 +35275,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 299 */
+/* 295 */
 /***/ function(module, exports) {
 
 	
@@ -35710,7 +35445,7 @@
 
 
 /***/ },
-/* 300 */
+/* 296 */
 /***/ function(module, exports) {
 
 	/**
@@ -35753,7 +35488,7 @@
 
 
 /***/ },
-/* 301 */
+/* 297 */
 /***/ function(module, exports) {
 
 	
@@ -35765,7 +35500,7 @@
 	};
 
 /***/ },
-/* 302 */
+/* 298 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -35839,7 +35574,7 @@
 
 
 /***/ },
-/* 303 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -35847,8 +35582,8 @@
 	 * Module requirements.
 	 */
 	
-	var Polling = __webpack_require__(289);
-	var inherit = __webpack_require__(301);
+	var Polling = __webpack_require__(285);
+	var inherit = __webpack_require__(297);
 	
 	/**
 	 * Module exports.
@@ -36077,19 +35812,19 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 304 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(290);
-	var parser = __webpack_require__(291);
-	var parseqs = __webpack_require__(300);
-	var inherit = __webpack_require__(301);
-	var yeast = __webpack_require__(302);
-	var debug = __webpack_require__(271)('engine.io-client:websocket');
+	var Transport = __webpack_require__(286);
+	var parser = __webpack_require__(287);
+	var parseqs = __webpack_require__(296);
+	var inherit = __webpack_require__(297);
+	var yeast = __webpack_require__(298);
+	var debug = __webpack_require__(267)('engine.io-client:websocket');
 	var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 	
 	/**
@@ -36101,7 +35836,7 @@
 	var WebSocket = BrowserWebSocket;
 	if (!WebSocket && typeof window === 'undefined') {
 	  try {
-	    WebSocket = __webpack_require__(305);
+	    WebSocket = __webpack_require__(301);
 	  } catch (e) { }
 	}
 	
@@ -36375,13 +36110,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 305 */
+/* 301 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 306 */
+/* 302 */
 /***/ function(module, exports) {
 
 	
@@ -36396,7 +36131,7 @@
 	};
 
 /***/ },
-/* 307 */
+/* 303 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -36434,7 +36169,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 308 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -36442,13 +36177,13 @@
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(274);
-	var Emitter = __webpack_require__(309);
-	var toArray = __webpack_require__(310);
-	var on = __webpack_require__(311);
-	var bind = __webpack_require__(312);
-	var debug = __webpack_require__(271)('socket.io-client:socket');
-	var hasBin = __webpack_require__(313);
+	var parser = __webpack_require__(270);
+	var Emitter = __webpack_require__(305);
+	var toArray = __webpack_require__(306);
+	var on = __webpack_require__(307);
+	var bind = __webpack_require__(308);
+	var debug = __webpack_require__(267)('socket.io-client:socket');
+	var hasBin = __webpack_require__(309);
 	
 	/**
 	 * Module exports.
@@ -36859,7 +36594,7 @@
 
 
 /***/ },
-/* 309 */
+/* 305 */
 /***/ function(module, exports) {
 
 	
@@ -37026,7 +36761,7 @@
 
 
 /***/ },
-/* 310 */
+/* 306 */
 /***/ function(module, exports) {
 
 	module.exports = toArray
@@ -37045,7 +36780,7 @@
 
 
 /***/ },
-/* 311 */
+/* 307 */
 /***/ function(module, exports) {
 
 	
@@ -37075,7 +36810,7 @@
 
 
 /***/ },
-/* 312 */
+/* 308 */
 /***/ function(module, exports) {
 
 	/**
@@ -37104,7 +36839,7 @@
 
 
 /***/ },
-/* 313 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -37112,7 +36847,7 @@
 	 * Module requirements.
 	 */
 	
-	var isArray = __webpack_require__(277);
+	var isArray = __webpack_require__(273);
 	
 	/**
 	 * Module exports.
@@ -37170,7 +36905,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 314 */
+/* 310 */
 /***/ function(module, exports) {
 
 	
@@ -37261,6 +36996,114 @@
 
 
 /***/ },
+/* 311 */,
+/* 312 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _WaitingForPlayers = __webpack_require__(313);
+	
+	var _WaitingForPlayers2 = _interopRequireDefault(_WaitingForPlayers);
+	
+	var _reactRedux = __webpack_require__(235);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var appToState = function appToState(state) {
+	  console.log(state);
+	  return {
+	    status: state.status
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(appToState)(_WaitingForPlayers2.default);
+
+/***/ },
+/* 313 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _display = __webpack_require__(314);
+	
+	var _display2 = _interopRequireDefault(_display);
+	
+	var _join = __webpack_require__(315);
+	
+	var _join2 = _interopRequireDefault(_join);
+	
+	var _reactRouter = __webpack_require__(172);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var WaitingForPlayers = function WaitingForPlayers(props) {
+	  console.log(props.status);
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      _display2.default,
+	      { 'if': props.status === 'connected' },
+	      _react2.default.createElement(
+	        'h1',
+	        null,
+	        'Join the session'
+	      ),
+	      _react2.default.createElement(_join2.default, null)
+	    ),
+	    _react2.default.createElement(
+	      _reactRouter.Link,
+	      { to: '/game' },
+	      'Go to Game'
+	    )
+	  );
+	};
+	
+	exports.default = WaitingForPlayers;
+
+/***/ },
+/* 314 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Display = _react2.default.createClass({
+	  displayName: 'Display',
+	  render: function render() {
+	    return this.props.if ? _react2.default.createElement(
+	      'div',
+	      null,
+	      this.props.children
+	    ) : null;
+	  }
+	});
+	
+	exports.default = Display;
+
+/***/ },
 /* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -37274,125 +37117,49 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(34);
+	var _reactRouter = __webpack_require__(172);
 	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _socket = __webpack_require__(268);
-	
-	var _socket2 = _interopRequireDefault(_socket);
-	
-	var _card_deck = __webpack_require__(259);
-	
-	var _card_deck2 = _interopRequireDefault(_card_deck);
-	
-	var _store = __webpack_require__(257);
-	
-	var _store2 = _interopRequireDefault(_store);
-	
-	var _index = __webpack_require__(316);
+	var _connections = __webpack_require__(319);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	//import "../css/style.css";
-	
-	
-	var App = _react2.default.createClass({
-	  displayName: 'App',
+	var Join = _react2.default.createClass({
+	  displayName: 'Join',
 	  getInitialState: function getInitialState() {
 	    return {
-	      cards: _card_deck2.default,
-	      shuffledCards: _card_deck2.default,
-	      board: [],
-	      amountOfCardsOnBoard: 12,
-	      fillBoard: this.fillBoard,
-	      handleClick: this.handleClick,
-	      status: 'disconnected',
-	      member: {},
-	      players: [],
-	      emit: this.emit
+	      name: ''
 	    };
 	  },
-	  componentWillMount: function componentWillMount() {
-	    this.socket = (0, _socket2.default)("http://localhost:3000");
-	    this.socket.on('connect', this.connect);
-	    this.socket.on('disconnect', this.disconnect);
-	    this.socket.on('welcome', this.updateState);
-	    this.socket.on('players', this.updateAudience);
-	    this.socket.on('joined', this.joined);
+	  handleChange: function handleChange(event) {
+	    this.setState({ name: event.target.value });
 	  },
-	  emit: function emit(eventName, payload) {
-	    this.socket.emit(eventName, payload);
-	  },
-	
-	
-	  //alert user that they are connected
-	  connect: function connect() {
-	
-	    //check to see if the member had refreshed
-	    var member = sessionStorage.member ? JSON.parse(sessionStorage.member) : null;
-	    console.log(member);
-	    if (member && member.type === "audience") {
-	      console.log('enter');
-	      this.emit('joined', member);
-	    }
-	
-	    this.setState({ status: 'connected' });
-	  },
-	  disconnect: function disconnect() {
-	    this.setState({
-	      status: 'disconnected'
-	    });
-	  },
-	  updateState: function updateState(serverState) {
-	    this.setState(serverState);
-	  },
-	  joined: function joined(member) {
-	
-	    //save member in browser history
-	    sessionStorage.member = JSON.stringify(member);
-	    (0, _index.addMemberAction)(member);
-	  },
-	  updatePlayers: function updatePlayers(newPlayer) {
-	    this.setState({ players: newPlayer });
-	  },
-	  fillBoard: function fillBoard(board) {
-	    var _this = this;
-	
-	    var newBoard = board.map(function (slot) {
-	      if (null === slot) {
-	        var firstCard = _this.state.shuffledCards[0];
-	        _this.setState({ shuffledCards: _this.state.shuffledCards.splice(0, 1) });
-	        return firstCard;
-	      } else {
-	        return slot;
-	      }
-	    });
-	    this.setState({ board: newBoard });
-	  },
-	  handleClick: function handleClick() {
-	    console.log("click from app");
+	  join: function join() {
+	    _connections.socket.emit('join', { name: this.state.name });
 	  },
 	  render: function render() {
-	    console.log(this.props.member);
-	    var that = this;
-	    var children = _react2.default.Children.map(this.props.children, function (child) {
-	      return _react2.default.cloneElement(child, Object.assign({}, that.state));
-	    });
 	    return _react2.default.createElement(
-	      'div',
-	      null,
+	      'form',
+	      { action: 'javascript:void(0)', onSubmit: this.join },
 	      _react2.default.createElement(
-	        'h1',
+	        'label',
 	        null,
-	        'Set Game'
+	        ' Full name '
 	      ),
-	      children
+	      _react2.default.createElement('input', {
+	        onChange: this.handleChange,
+	        className: 'userName',
+	        placeholder: 'enter your full name...',
+	        required: true }),
+	      _react2.default.createElement(
+	        'button',
+	        { className: 'btn btn-primary' },
+	        'Join'
+	      )
 	    );
 	  }
 	});
 	
-	exports.default = App;
+	exports.default = Join;
 
 /***/ },
 /* 316 */
@@ -37403,36 +37170,283 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.addMemberAction = addMemberAction;
 	
-	var _types = __webpack_require__(317);
+	var _react = __webpack_require__(1);
 	
-	var _store = __webpack_require__(257);
+	var _react2 = _interopRequireDefault(_react);
 	
-	var _store2 = _interopRequireDefault(_store);
+	var _display = __webpack_require__(314);
+	
+	var _display2 = _interopRequireDefault(_display);
+	
+	var _join = __webpack_require__(315);
+	
+	var _join2 = _interopRequireDefault(_join);
+	
+	var _board = __webpack_require__(317);
+	
+	var _board2 = _interopRequireDefault(_board);
+	
+	var _chatBar = __webpack_require__(318);
+	
+	var _chatBar2 = _interopRequireDefault(_chatBar);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function addMemberAction(member) {
-	  _store2.default.dispatch({
-	    type: _types.ADD_MEMBER,
-	    member: member
-	  });
-	}
+	var Game = _react2.default.createClass({
+	  displayName: 'Game',
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'h1',
+	        null,
+	        'Game'
+	      ),
+	      _react2.default.createElement(_board2.default, {
+	        board: this.props.board,
+	        cards: this.props.cards,
+	        amountOfCardsOnBoard: this.props.amountOfCardsOnBoard,
+	        fillBoard: this.props.fillBoard,
+	        handleClick: this.props.handleClick }),
+	      _react2.default.createElement(_chatBar2.default, null)
+	    );
+	  }
+	});
+	
+	exports.default = Game;
 
 /***/ },
 /* 317 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	/**
-	 * export our different types so that our actions and components can use them
-	 */
-	var ADD_MEMBER = exports.ADD_MEMBER = 'add_member';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Board = _react2.default.createClass({
+	  displayName: 'Board',
+	  getInitialState: function getInitialState() {
+	    return { gameBoard: [], name: '' };
+	  },
+	  generateBoard: function generateBoard() {
+	    //find the width, based on the user input of cards
+	    var amountDisplay = this.props.amountOfCardsOnBoard;
+	
+	    //make an empty matrix
+	    var board = [];
+	    for (var i = 0; i < amountDisplay; i++) {
+	      board.push(null);
+	    }
+	    this.props.fillBoard(board);
+	  },
+	  componentWillMount: function componentWillMount() {
+	    console.log("will mount");
+	    this.generateBoard();
+	  },
+	  render: function render() {
+	    var _this = this;
+	
+	    console.log("render");
+	    var boardOfCards = this.props.board.map(function (slot, i) {
+	      return _react2.default.createElement(
+	        'article',
+	        { onClick: _this.props.handleClick, key: i, className: 'cards' },
+	        slot.card
+	      );
+	    });
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        'Board'
+	      ),
+	      _react2.default.createElement(
+	        'section',
+	        { className: 'board' },
+	        boardOfCards
+	      )
+	    );
+	  }
+	});
+	
+	exports.default = Board;
+
+/***/ },
+/* 318 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _socket = __webpack_require__(264);
+	
+	var _socket2 = _interopRequireDefault(_socket);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	//const socket = io("http://localhost:3000");
+	
+	var ChatBar = _react2.default.createClass({
+	  displayName: 'ChatBar',
+	  getInitialState: function getInitialState() {
+	    return {
+	      messages: [],
+	      socket: socket,
+	      username: "",
+	      mess: ""
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var self = this;
+	    this.state.socket.on('received message', function (msg) {
+	      console.log(msg);
+	      self.setState({ messages: self.state.messages.concat(msg) });
+	    });
+	  },
+	  handleChange: function handleChange(event) {
+	    this.setState(_defineProperty({}, event.target.className, event.target.value));
+	  },
+	  submitMessage: function submitMessage() {
+	    var message = {
+	      body: this.state.mess,
+	      user: this.state.username || "guest"
+	    };
+	    this.setState({ mess: "" });
+	    this.state.socket.emit('new message', message);
+	  },
+	  render: function render() {
+	    var self = this;
+	    if (this.state.messages) {
+	      var messages = this.state.messages.map(function (msg, i) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: i },
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            msg.user
+	          ),
+	          ' ',
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            msg.body
+	          )
+	        );
+	      });
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'ul',
+	        null,
+	        messages
+	      ),
+	      _react2.default.createElement('input', {
+	        className: 'mess',
+	        type: 'text',
+	        placeholder: 'enter message',
+	        value: this.state.mess,
+	        onChange: this.handleChange }),
+	      _react2.default.createElement(
+	        'button',
+	        { onClick: self.submitMessage },
+	        'Send message'
+	      ),
+	      _react2.default.createElement('br', null),
+	      _react2.default.createElement('input', {
+	        className: 'username',
+	        type: 'text',
+	        placeholder: 'choose username',
+	        value: this.state.username,
+	        onChange: this.handleChange }),
+	      _react2.default.createElement(
+	        'button',
+	        { onClick: self.handleChange },
+	        'Enter Username'
+	      )
+	    );
+	  }
+	});
+	exports.default = ChatBar;
+
+/***/ },
+/* 319 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.socket = undefined;
+	
+	exports.default = function (store) {
+	  socket.on('connect', function () {
+	    console.log(socket.id);
+	    store.dispatch({
+	      type: _types.CHANGE_STATUS,
+	      status: 'connected'
+	    });
+	  });
+	  socket.on('disconnect', function () {
+	    //console.log('disconnected')
+	    store.dispatch({
+	      type: _types.CHANGE_STATUS,
+	      status: 'disconnected'
+	    });
+	  });
+	  socket.on('board', function () {
+	    //come back to this
+	    store.dispatch({
+	      type: _types.SHOW_BOARD
+	    });
+	  });
+	  socket.on('joined', function (member) {
+	    console.log("joining");
+	    store.dispatch({
+	      type: _types.ADD_MEMBER,
+	      member: member
+	    });
+	  });
+	  socket.on('joined', function () {
+	    store.dispatch({
+	      type: 'connection:joined'
+	    });
+	  });
+	};
+	
+	var _types = __webpack_require__(260);
+	
+	var _socket = __webpack_require__(264);
+	
+	var _socket2 = _interopRequireDefault(_socket);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var socket = exports.socket = (0, _socket2.default)("http://localhost:3000");
 
 /***/ }
 /******/ ]);

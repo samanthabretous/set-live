@@ -1,12 +1,21 @@
 import React from 'react'
 import {Link} from 'react-router'
 
+import {socket} from '../../actions/socket-listeners/connections'
 
 const Join = React.createClass({
+  getInitialState(){
+    return {
+      name: ''
+    }
+  },
+
+  handleChange(event){
+    this.setState({name: event.target.value})
+  }, 
 
   join(){
-    
-    this.props.emit('join', {name:this.refs.name.value})
+    socket.emit('join', {name: this.state.name});
   },
 
   render() {
@@ -14,7 +23,7 @@ const Join = React.createClass({
       <form action="javascript:void(0)" onSubmit={this.join}>
         <label> Full name </label>
         <input 
-          ref="name"
+          onChange={this.handleChange}
           className="userName" 
           placeholder="enter your full name..."
           required />
