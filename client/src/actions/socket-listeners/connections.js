@@ -5,14 +5,12 @@ export const socket = io("http://localhost:3000");
 
 export default function (store){
   socket.on('connect', () =>{
-    console.log(socket.id)
     store.dispatch({
       type: CHANGE_STATUS,
       status: 'connected'
     })
   });
   socket.on('disconnect', () => {
-    //console.log('disconnected')
     store.dispatch({
       type: CHANGE_STATUS,
       status: 'disconnected'
@@ -25,15 +23,16 @@ export default function (store){
     })
   })
   socket.on('joined', (member) =>{
-    console.log("joining")
     store.dispatch({
       type: ADD_MEMBER,
       member
     })
   });
-  socket.on('joined', ()=>{
+  socket.on('players', (players)=>{
+    console.log(players, "players")
     store.dispatch({
-      type: 'connection:joined'
+      type: PLAYERS,
+      players
     })
   })
 }

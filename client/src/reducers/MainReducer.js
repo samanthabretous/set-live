@@ -3,6 +3,7 @@ import { ADD_MEMBER, CHANGE_STATUS, PLAYERS } from '../actions/types';
 
 const INTIAL_STATE = {
   member: {},
+  players: [],
   status: 'disconnected'
 }
 
@@ -13,7 +14,8 @@ export default function(state = INTIAL_STATE, action) {
     case CHANGE_STATUS: 
       return Object.assign({}, state, {status:action.status});
     case PLAYERS: 
-      return Object.assign({}, state, {players:action.player});
+    console.log(action.players)
+      return Object.assign({}, state, {players:action.players});
   }
   return state
 }

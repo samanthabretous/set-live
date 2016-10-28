@@ -8,12 +8,6 @@ import store from '../store'
 
 const App = React.createClass({
 
-  componentDidMount(){
-    //changeStatusAction('connected')
-    //changeStatusAction('disconnected')
-
-  },
-
   fillBoard(board) {
     let newBoard = board.map(slot => {
       if (null === slot) {

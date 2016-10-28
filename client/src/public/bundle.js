@@ -28625,7 +28625,8 @@
 	    case _types.CHANGE_STATUS:
 	      return Object.assign({}, state, { status: action.status });
 	    case _types.PLAYERS:
-	      return Object.assign({}, state, { players: action.player });
+	      console.log(action.players);
+	      return Object.assign({}, state, { players: action.players });
 	  }
 	  return state;
 	};
@@ -28640,6 +28641,7 @@
 	
 	var INTIAL_STATE = {
 	  member: {},
+	  players: [],
 	  status: 'disconnected'
 	};
 
@@ -29343,11 +29345,6 @@
 	
 	var App = _react2.default.createClass({
 	  displayName: 'App',
-	  componentDidMount: function componentDidMount() {
-	    //changeStatusAction('connected')
-	    //changeStatusAction('disconnected')
-	
-	  },
 	  fillBoard: function fillBoard(board) {
 	    var _this = this;
 	
@@ -37017,7 +37014,9 @@
 	var appToState = function appToState(state) {
 	  console.log(state);
 	  return {
-	    status: state.status
+	    status: state.status,
+	    member: state.member,
+	    players: state.players
 	  };
 	};
 	
@@ -37058,11 +37057,38 @@
 	      _display2.default,
 	      { 'if': props.status === 'connected' },
 	      _react2.default.createElement(
-	        'h1',
-	        null,
-	        'Join the session'
+	        _display2.default,
+	        { 'if': props.member.name },
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Joined ',
+	          props.member.name
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          props.players.length,
+	          ' audience members connected'
+	        ),
+	        props.players.map(function (player, index) {
+	          return _react2.default.createElement(
+	            'p',
+	            { key: index },
+	            player.name
+	          );
+	        })
 	      ),
-	      _react2.default.createElement(_join2.default, null)
+	      _react2.default.createElement(
+	        _display2.default,
+	        { 'if': !props.member.name },
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Join the session'
+	        ),
+	        _react2.default.createElement(_join2.default, null)
+	      )
 	    ),
 	    _react2.default.createElement(
 	      _reactRouter.Link,
@@ -37405,14 +37431,12 @@
 	
 	exports.default = function (store) {
 	  socket.on('connect', function () {
-	    console.log(socket.id);
 	    store.dispatch({
 	      type: _types.CHANGE_STATUS,
 	      status: 'connected'
 	    });
 	  });
 	  socket.on('disconnect', function () {
-	    //console.log('disconnected')
 	    store.dispatch({
 	      type: _types.CHANGE_STATUS,
 	      status: 'disconnected'
@@ -37425,15 +37449,16 @@
 	    });
 	  });
 	  socket.on('joined', function (member) {
-	    console.log("joining");
 	    store.dispatch({
 	      type: _types.ADD_MEMBER,
 	      member: member
 	    });
 	  });
-	  socket.on('joined', function () {
+	  socket.on('players', function (players) {
+	    console.log(players, "players");
 	    store.dispatch({
-	      type: 'connection:joined'
+	      type: _types.PLAYERS,
+	      players: players
 	    });
 	  });
 	};

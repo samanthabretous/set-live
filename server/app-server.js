@@ -3,7 +3,8 @@ const _ = require ('underscore')
 const app = express();
 
 let connections = [];
-var board = 'This will be the board'
+var board = 'This will be the board';
+let players = []
 
 app.use(express.static('../client/src/public'))
 
@@ -19,19 +20,32 @@ io.sockets.on('connection', function(socket){
   // })
 
   socket.once('disconnect', function() {
+    var member = _.findWhere(players, { id: this.id });
+    if (member) {
+      players.splice(players.indexOf(member), 1);
+      io.sockets.emit('players', players);
+      console.log("Left: %s (%s players members)", member.name, players.length)
+    }
     connections.splice(connections.indexOf(socket), 1);
     socket.disconnect();
     console.log("Disconnected: %s sockets remaining.", connections.length);
   });
 
-  socket.on('join', function(payload) {
-    var newMember = {
-      id: this.id,
-      name: payload.name
-    };
-    this.emit('joined', newMember);
-    console.log("Player Joined: %s", payload.name);
-  });
+  if(players.length < 2){
+    console.log(players.length)
+    socket.on('join', function(payload) {
+      var newMember = {
+        id: this.id,
+        name: payload.name
+      };
+      this.emit('joined', newMember);
+      players.push(newMember);
+      io.sockets.emit('players', players);
+      console.log("Players Joined: %s", payload.name);
+    });
+  } else {
+    console.log('waiting')
+  }
 
   //come back to this
   socket.emit('board', {

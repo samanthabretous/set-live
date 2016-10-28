@@ -5,6 +5,8 @@ const appToState = state => {
   console.log(state)
   return {
     status: state.status,
+    member: state.member,
+    players: state.players
   }
 }
 
