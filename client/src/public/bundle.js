@@ -28624,9 +28624,12 @@
 	      return Object.assign({}, state, { member: action.member });
 	    case _types.CHANGE_STATUS:
 	      return Object.assign({}, state, { status: action.status });
+	    case _types.WAITING_PLAYERS:
+	      return Object.assign({}, state, { waitingPlayers: action.players });
 	    case _types.PLAYERS:
-	      console.log(action.players);
 	      return Object.assign({}, state, { players: action.players });
+	    case _types.CONNECTIONS:
+	      return Object.assign({}, state, { amountOfConnections: action.amountOfConnections });
 	  }
 	  return state;
 	};
@@ -28640,7 +28643,9 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var INTIAL_STATE = {
+	  amountOfConnections: [],
 	  member: {},
+	  waitingPlayers: [],
 	  players: [],
 	  status: 'disconnected'
 	};
@@ -29235,6 +29240,8 @@
 	var CHANGE_STATUS = exports.CHANGE_STATUS = 'change_status';
 	var SHOW_BOARD = exports.SHOW_BOARD = 'show_board';
 	var PLAYERS = exports.PLAYERS = 'players';
+	var WAITING_PLAYERS = exports.WAITING_PLAYERS = 'waitingPlayers';
+	var CONNECTIONS = exports.CONNECTIONS = 'connections';
 	var JOIN_MEMBER = exports.JOIN_MEMBER = 'join_member';
 
 /***/ },
@@ -29359,15 +29366,11 @@
 	    });
 	    this.setState({ board: newBoard });
 	  },
-	  handleClick: function handleClick() {
-	    console.log("click from app");
-	  },
 	  render: function render() {
 	    var that = this;
 	    var children = _react2.default.Children.map(this.props.children, function (child) {
 	      return _react2.default.cloneElement(child, Object.assign({}, that.state));
 	    });
-	    console.log(this.props.status);
 	    return _react2.default.createElement(
 	      'div',
 	      null,
@@ -37012,10 +37015,11 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var appToState = function appToState(state) {
-	  console.log(state);
 	  return {
+	    amountOfConnections: state.amountOfConnections,
 	    status: state.status,
 	    member: state.member,
+	    waitingPlayers: state.waitingPlayers,
 	    players: state.players
 	  };
 	};
@@ -37046,10 +37050,11 @@
 	
 	var _reactRouter = __webpack_require__(172);
 	
+	var _connections = __webpack_require__(319);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var WaitingForPlayers = function WaitingForPlayers(props) {
-	  console.log(props.status);
 	  return _react2.default.createElement(
 	    'div',
 	    null,
@@ -37068,14 +37073,28 @@
 	        _react2.default.createElement(
 	          'p',
 	          null,
-	          props.players.length,
-	          ' audience members connected'
+	          props.amountOfConnections,
+	          ' players connected'
+	        ),
+	        props.waitingPlayers.map(function (player, index) {
+	          return _react2.default.createElement(
+	            'p',
+	            { key: index },
+	            'WAITING',
+	            player.name
+	          );
+	        }),
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Going to the game room'
 	        ),
 	        props.players.map(function (player, index) {
 	          return _react2.default.createElement(
 	            'p',
 	            { key: index },
-	            player.name
+	            'PLAYER ',
+	            index + player.name
 	          );
 	        })
 	      ),
@@ -37449,16 +37468,28 @@
 	    });
 	  });
 	  socket.on('joined', function (member) {
+	    sessionStorage.member = JSON.stringify(member);
 	    store.dispatch({
 	      type: _types.ADD_MEMBER,
 	      member: member
 	    });
 	  });
+	  socket.on('waitingPlayers', function (players) {
+	    store.dispatch({
+	      type: _types.WAITING_PLAYERS,
+	      players: players
+	    });
+	  });
 	  socket.on('players', function (players) {
-	    console.log(players, "players");
 	    store.dispatch({
 	      type: _types.PLAYERS,
 	      players: players
+	    });
+	  });
+	  socket.on('connections', function (amountOfConnections) {
+	    store.dispatch({
+	      type: _types.CONNECTIONS,
+	      amountOfConnections: amountOfConnections
 	    });
 	  });
 	};
@@ -37472,6 +37503,10 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var socket = exports.socket = (0, _socket2.default)("http://localhost:3000");
+	
+	socket.on('message', function (data) {
+	  console.log('Incoming message:', data);
+	});
 
 /***/ }
 /******/ ]);

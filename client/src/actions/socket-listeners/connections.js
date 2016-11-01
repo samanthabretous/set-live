@@ -1,7 +1,8 @@
-import { ADD_MEMBER, CHANGE_STATUS, SHOW_BOARD, PLAYERS } from '../types';
+import { ADD_MEMBER, CHANGE_STATUS, SHOW_BOARD, WAITING_PLAYERS, PLAYERS, CONNECTIONS } from '../types';
 
 import io from 'socket.io-client';
 export const socket = io("http://localhost:3000");
+
 
 export default function (store){
   socket.on('connect', () =>{
@@ -23,16 +24,32 @@ export default function (store){
     })
   })
   socket.on('joined', (member) =>{
+    sessionStorage.member = JSON.stringify(member);
     store.dispatch({
       type: ADD_MEMBER,
       member
     })
   });
+  socket.on('waitingPlayers', (players)=>{
+    store.dispatch({
+      type: WAITING_PLAYERS,
+      players
+    })
+  })
   socket.on('players', (players)=>{
-    console.log(players, "players")
     store.dispatch({
       type: PLAYERS,
       players
     })
   })
+  socket.on('connections', (amountOfConnections)=>{
+    store.dispatch({
+      type: CONNECTIONS,
+      amountOfConnections
+    })
+  })
 }
+
+socket.on('message', function(data) {
+   console.log('Incoming message:', data);
+});

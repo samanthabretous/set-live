@@ -5,4 +5,6 @@ export const ADD_MEMBER = 'add_member';
 export const CHANGE_STATUS = 'change_status';
 export const SHOW_BOARD = 'show_board';
 export const PLAYERS = 'players';
+export const WAITING_PLAYERS = 'waitingPlayers';
+export const CONNECTIONS = 'connections';
 export const JOIN_MEMBER = 'join_member';

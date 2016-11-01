@@ -20,15 +20,11 @@ const App = React.createClass({
     })
     this.setState({board: newBoard})
   },
-  handleClick(){
-    console.log("click from app")
-  },
   render() {
     var that = this
     var children = React.Children.map(this.props.children, function(child) {
         return React.cloneElement(child, Object.assign({}, that.state));
     });
-    console.log(this.props.status)
     return (
       <div>
         <h1>Set Game</h1>
