@@ -5,8 +5,11 @@ import {Provider} from 'react-redux'
 import store from './store'
 import routes from './routes'
 
-import TodoSocketListeners from './actions/socket-listeners/connections'
-TodoSocketListeners(store)
+import ConnectionsSocketListeners from './actions/socket-listeners/connections'
+import BoardSocketListeners from './actions/socket-listeners/board'
+
+ConnectionsSocketListeners(store)
+BoardSocketListeners(store)
 
 ReactDOM.render(  
   <Provider store={store}>

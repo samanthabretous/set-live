@@ -8,3 +8,9 @@ export const PLAYERS = 'players';
 export const WAITING_PLAYERS = 'waitingPlayers';
 export const CONNECTIONS = 'connections';
 export const JOIN_MEMBER = 'join_member';
+
+
+export const UPDATE_CARDS = 'cards';
+export const BOARD = 'board';
+
+

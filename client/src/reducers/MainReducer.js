@@ -1,12 +1,15 @@
 import cards from '../card_deck'
-import { ADD_MEMBER, CHANGE_STATUS, WAITING_PLAYERS, PLAYERS, CONNECTIONS } from '../actions/types';
+import { ADD_MEMBER, CHANGE_STATUS, WAITING_PLAYERS, PLAYERS, CONNECTIONS, UPDATE_CARDS, BOARD } from '../actions/types';
 
 const INTIAL_STATE = {
   amountOfConnections: [],
   member: {},
   waitingPlayers:[],
   players: [],
-  status: 'disconnected'
+  status: 'disconnected', 
+  cards: cards, 
+  board: [], 
+  amountOfCardsOnBoard: 12
 }
 
 export default function(state = INTIAL_STATE, action) {
@@ -21,6 +24,10 @@ export default function(state = INTIAL_STATE, action) {
       return Object.assign({}, state, {players: action.players});
     case CONNECTIONS: 
       return Object.assign({}, state, {amountOfConnections: action.amountOfConnections});
+    case UPDATE_CARDS: 
+      return Object.assign({}, state, {cards: action.cards});
+    case BOARD: 
+      return Object.assign({}, state, {board: action.board});
   }
   return state
 }

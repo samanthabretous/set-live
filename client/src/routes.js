@@ -10,12 +10,13 @@ import { Route, IndexRoute } from 'react-router';
 //====================
 import AppContainer from './middleware/AppContainer'
 import WaitingForPlayersContainer from './middleware/WaitingForPlayers'
+import GameContainer from './middleware/Game'
 import Game from './components/Game'
 
 
 export default (
   <Route path="/" component={AppContainer}>
     <IndexRoute component={WaitingForPlayersContainer}/>
+    <Route path='game' component={GameContainer} />
   </Route> 
 );
-    // <Route path='game' component={Game}></Route>

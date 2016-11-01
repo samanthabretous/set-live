@@ -7,6 +7,7 @@ let connections = [];
 let board = 'This will be the board';
 let waitingPlayers = []
 let players = []
+let playingCards = []
 
 app.use(express.static('../client/src/public'))
 
@@ -19,9 +20,6 @@ let waitingRoom = 'waitingRoom'
 //Connect to the socket
 io.sockets.on('connection', function(socket){
   //set username
-  // socket.on('new message', function(msg){
-  //   io.emit('received message', msg)
-  // })
 
   socket.once('disconnect', function() {
     var member = _.findWhere(players, { id: this.id });
@@ -84,16 +82,25 @@ io.sockets.on('connection', function(socket){
     }
   })
 
+  //refactor this to work with the newMember variable
+  socket.on('new message', (msg) => {
+    io.emit('received message', msg)
+  })
 
   //come back to this
   socket.emit('board', {
     board: board
   })
+  
+  socket.on('cards', (cards) => {
+    playingCards.push(...cards.cards)
+    //console.log(cards.cards)
+    io.sockets.emit('updateCards', {cards: playingCards})
+  })
 
   // when a new client window is connected
   connections.push(socket)
   console.log("Connected: %s sockets connections", connections.length)
-
 })
 
 console.log('SET is running on port 3000') 

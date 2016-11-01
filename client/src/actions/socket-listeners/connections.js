@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 export const socket = io("http://localhost:3000");
 
 
-export default function (store){
+export default (store) => {
   socket.on('connect', () =>{
     store.dispatch({
       type: CHANGE_STATUS,

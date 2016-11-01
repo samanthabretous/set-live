@@ -66,13 +66,18 @@
 	
 	var _routes2 = _interopRequireDefault(_routes);
 	
-	var _connections = __webpack_require__(319);
+	var _connections = __webpack_require__(315);
 	
 	var _connections2 = _interopRequireDefault(_connections);
+	
+	var _board = __webpack_require__(320);
+	
+	var _board2 = _interopRequireDefault(_board);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	(0, _connections2.default)(_store2.default);
+	(0, _board2.default)(_store2.default);
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
@@ -28630,6 +28635,10 @@
 	      return Object.assign({}, state, { players: action.players });
 	    case _types.CONNECTIONS:
 	      return Object.assign({}, state, { amountOfConnections: action.amountOfConnections });
+	    case _types.UPDATE_CARDS:
+	      return Object.assign({}, state, { cards: action.cards });
+	    case _types.BOARD:
+	      return Object.assign({}, state, { board: action.board });
 	  }
 	  return state;
 	};
@@ -28647,7 +28656,10 @@
 	  member: {},
 	  waitingPlayers: [],
 	  players: [],
-	  status: 'disconnected'
+	  status: 'disconnected',
+	  cards: _card_deck2.default,
+	  board: [],
+	  amountOfCardsOnBoard: 12
 	};
 
 /***/ },
@@ -29243,6 +29255,9 @@
 	var WAITING_PLAYERS = exports.WAITING_PLAYERS = 'waitingPlayers';
 	var CONNECTIONS = exports.CONNECTIONS = 'connections';
 	var JOIN_MEMBER = exports.JOIN_MEMBER = 'join_member';
+	
+	var UPDATE_CARDS = exports.UPDATE_CARDS = 'cards';
+	var BOARD = exports.BOARD = 'board';
 
 /***/ },
 /* 261 */
@@ -29264,7 +29279,7 @@
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
-	var _WaitingForPlayers = __webpack_require__(312);
+	var _WaitingForPlayers = __webpack_require__(311);
 	
 	var _WaitingForPlayers2 = _interopRequireDefault(_WaitingForPlayers);
 	
@@ -29272,15 +29287,11 @@
 	
 	var _Game2 = _interopRequireDefault(_Game);
 	
+	var _Game3 = __webpack_require__(317);
+	
+	var _Game4 = _interopRequireDefault(_Game3);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = _react2.default.createElement(
-	  _reactRouter.Route,
-	  { path: '/', component: _AppContainer2.default },
-	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _WaitingForPlayers2.default })
-	);
-	// <Route path='game' component={Game}></Route>
-	
 	
 	//====================
 	// Import the different components that will represent the different pages
@@ -29289,6 +29300,12 @@
 	//====================
 	// Import React and the dependencies we need to make react router work
 	//====================
+	exports.default = _react2.default.createElement(
+	  _reactRouter.Route,
+	  { path: '/', component: _AppContainer2.default },
+	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _WaitingForPlayers2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'game', component: _Game2.default })
+	);
 
 /***/ },
 /* 262 */
@@ -29352,20 +29369,6 @@
 	
 	var App = _react2.default.createClass({
 	  displayName: 'App',
-	  fillBoard: function fillBoard(board) {
-	    var _this = this;
-	
-	    var newBoard = board.map(function (slot) {
-	      if (null === slot) {
-	        var firstCard = _this.state.shuffledCards[0];
-	        _this.setState({ shuffledCards: _this.state.shuffledCards.splice(0, 1) });
-	        return firstCard;
-	      } else {
-	        return slot;
-	      }
-	    });
-	    this.setState({ board: newBoard });
-	  },
 	  render: function render() {
 	    var that = this;
 	    var children = _react2.default.Children.map(this.props.children, function (child) {
@@ -36996,8 +36999,7 @@
 
 
 /***/ },
-/* 311 */,
-/* 312 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37006,7 +37008,7 @@
 	  value: true
 	});
 	
-	var _WaitingForPlayers = __webpack_require__(313);
+	var _WaitingForPlayers = __webpack_require__(312);
 	
 	var _WaitingForPlayers2 = _interopRequireDefault(_WaitingForPlayers);
 	
@@ -37027,7 +37029,7 @@
 	exports.default = (0, _reactRedux.connect)(appToState)(_WaitingForPlayers2.default);
 
 /***/ },
-/* 313 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37040,17 +37042,17 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _display = __webpack_require__(314);
+	var _display = __webpack_require__(313);
 	
 	var _display2 = _interopRequireDefault(_display);
 	
-	var _join = __webpack_require__(315);
+	var _join = __webpack_require__(314);
 	
 	var _join2 = _interopRequireDefault(_join);
 	
 	var _reactRouter = __webpack_require__(172);
 	
-	var _connections = __webpack_require__(319);
+	var _connections = __webpack_require__(315);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -37120,7 +37122,7 @@
 	exports.default = WaitingForPlayers;
 
 /***/ },
-/* 314 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37149,7 +37151,7 @@
 	exports.default = Display;
 
 /***/ },
-/* 315 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37164,7 +37166,7 @@
 	
 	var _reactRouter = __webpack_require__(172);
 	
-	var _connections = __webpack_require__(319);
+	var _connections = __webpack_require__(315);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -37207,6 +37209,77 @@
 	exports.default = Join;
 
 /***/ },
+/* 315 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.socket = undefined;
+	
+	var _types = __webpack_require__(260);
+	
+	var _socket = __webpack_require__(264);
+	
+	var _socket2 = _interopRequireDefault(_socket);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var socket = exports.socket = (0, _socket2.default)("http://localhost:3000");
+	
+	exports.default = function (store) {
+	  socket.on('connect', function () {
+	    store.dispatch({
+	      type: _types.CHANGE_STATUS,
+	      status: 'connected'
+	    });
+	  });
+	  socket.on('disconnect', function () {
+	    store.dispatch({
+	      type: _types.CHANGE_STATUS,
+	      status: 'disconnected'
+	    });
+	  });
+	  socket.on('board', function () {
+	    //come back to this
+	    store.dispatch({
+	      type: _types.SHOW_BOARD
+	    });
+	  });
+	  socket.on('joined', function (member) {
+	    sessionStorage.member = JSON.stringify(member);
+	    store.dispatch({
+	      type: _types.ADD_MEMBER,
+	      member: member
+	    });
+	  });
+	  socket.on('waitingPlayers', function (players) {
+	    store.dispatch({
+	      type: _types.WAITING_PLAYERS,
+	      players: players
+	    });
+	  });
+	  socket.on('players', function (players) {
+	    store.dispatch({
+	      type: _types.PLAYERS,
+	      players: players
+	    });
+	  });
+	  socket.on('connections', function (amountOfConnections) {
+	    store.dispatch({
+	      type: _types.CONNECTIONS,
+	      amountOfConnections: amountOfConnections
+	    });
+	  });
+	};
+	
+	socket.on('message', function (data) {
+	  console.log('Incoming message:', data);
+	});
+
+/***/ },
 /* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -37216,51 +37289,24 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(1);
+	var _Game = __webpack_require__(317);
 	
-	var _react2 = _interopRequireDefault(_react);
+	var _Game2 = _interopRequireDefault(_Game);
 	
-	var _display = __webpack_require__(314);
-	
-	var _display2 = _interopRequireDefault(_display);
-	
-	var _join = __webpack_require__(315);
-	
-	var _join2 = _interopRequireDefault(_join);
-	
-	var _board = __webpack_require__(317);
-	
-	var _board2 = _interopRequireDefault(_board);
-	
-	var _chatBar = __webpack_require__(318);
-	
-	var _chatBar2 = _interopRequireDefault(_chatBar);
+	var _reactRedux = __webpack_require__(235);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Game = _react2.default.createClass({
-	  displayName: 'Game',
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      _react2.default.createElement(
-	        'h1',
-	        null,
-	        'Game'
-	      ),
-	      _react2.default.createElement(_board2.default, {
-	        board: this.props.board,
-	        cards: this.props.cards,
-	        amountOfCardsOnBoard: this.props.amountOfCardsOnBoard,
-	        fillBoard: this.props.fillBoard,
-	        handleClick: this.props.handleClick }),
-	      _react2.default.createElement(_chatBar2.default, null)
-	    );
-	  }
-	});
+	var appToState = function appToState(state) {
+	  return {
+	    players: state.players,
+	    board: state.board,
+	    cards: state.cards,
+	    amountOfCardsOnBoard: state.amountOfCardsOnBoard
+	  };
+	};
 	
-	exports.default = Game;
+	exports.default = (0, _reactRedux.connect)(appToState)(_Game2.default);
 
 /***/ },
 /* 317 */
@@ -37275,6 +37321,62 @@
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _display = __webpack_require__(313);
+	
+	var _display2 = _interopRequireDefault(_display);
+	
+	var _join = __webpack_require__(314);
+	
+	var _join2 = _interopRequireDefault(_join);
+	
+	var _board = __webpack_require__(318);
+	
+	var _board2 = _interopRequireDefault(_board);
+	
+	var _chatBar = __webpack_require__(319);
+	
+	var _chatBar2 = _interopRequireDefault(_chatBar);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Game = function Game(props) {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'h1',
+	      null,
+	      'Game'
+	    ),
+	    _react2.default.createElement(_board2.default, {
+	      board: props.board,
+	      cards: props.cards,
+	      amountOfCardsOnBoard: props.amountOfCardsOnBoard
+	    }),
+	    _react2.default.createElement(_chatBar2.default, null)
+	  );
+	};
+	
+	exports.default = Game;
+
+/***/ },
+/* 318 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _connections = __webpack_require__(315);
+	
+	var _types = __webpack_require__(260);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -37292,20 +37394,47 @@
 	    for (var i = 0; i < amountDisplay; i++) {
 	      board.push(null);
 	    }
-	    this.props.fillBoard(board);
+	
+	    //this.fillBoard(board)
 	  },
 	  componentWillMount: function componentWillMount() {
 	    console.log("will mount");
+	    this.shuffledCards();
 	    this.generateBoard();
 	  },
-	  render: function render() {
+	  shuffledCards: function shuffledCards() {
+	    var shuffled = [];
+	    for (var i = this.props.cards.length; i > 0; i--) {
+	      var randomInd = Math.floor(Math.random() * this.props.cards.length);
+	      var randomCard = this.props.cards[randomInd];
+	      shuffled.push(randomCard);
+	      this.props.cards.splice(randomInd, 1);
+	    }
+	    _connections.socket.emit('cards', { cards: shuffled });
+	  },
+	  fillBoard: function fillBoard(board) {
 	    var _this = this;
 	
+	    var newBoard = board.map(function (slot) {
+	      if (null === slot) {
+	        var firstCard = _this.state.shuffledCards[0];
+	        _this.setState({ shuffledCards: _this.state.shuffledCards.splice(0, 1) });
+	        return firstCard;
+	      } else {
+	        return slot;
+	      }
+	    });
+	    this.setState({ board: newBoard });
+	  },
+	  render: function render() {
+	    var _this2 = this;
+	
 	    console.log("render");
+	    console.log(this.props.cards);
 	    var boardOfCards = this.props.board.map(function (slot, i) {
 	      return _react2.default.createElement(
 	        'article',
-	        { onClick: _this.props.handleClick, key: i, className: 'cards' },
+	        { onClick: _this2.props.handleClick, key: i, className: 'cards' },
 	        slot.card
 	      );
 	    });
@@ -37329,7 +37458,7 @@
 	exports.default = Board;
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37346,18 +37475,18 @@
 	
 	var _socket2 = _interopRequireDefault(_socket);
 	
+	var _connections = __webpack_require__(315);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	//const socket = io("http://localhost:3000");
 	
 	var ChatBar = _react2.default.createClass({
 	  displayName: 'ChatBar',
 	  getInitialState: function getInitialState() {
 	    return {
 	      messages: [],
-	      socket: socket,
+	      socket: _connections.socket,
 	      username: "",
 	      mess: ""
 	    };
@@ -37438,7 +37567,7 @@
 	exports.default = ChatBar;
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37446,67 +37575,19 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.socket = undefined;
-	
-	exports.default = function (store) {
-	  socket.on('connect', function () {
-	    store.dispatch({
-	      type: _types.CHANGE_STATUS,
-	      status: 'connected'
-	    });
-	  });
-	  socket.on('disconnect', function () {
-	    store.dispatch({
-	      type: _types.CHANGE_STATUS,
-	      status: 'disconnected'
-	    });
-	  });
-	  socket.on('board', function () {
-	    //come back to this
-	    store.dispatch({
-	      type: _types.SHOW_BOARD
-	    });
-	  });
-	  socket.on('joined', function (member) {
-	    sessionStorage.member = JSON.stringify(member);
-	    store.dispatch({
-	      type: _types.ADD_MEMBER,
-	      member: member
-	    });
-	  });
-	  socket.on('waitingPlayers', function (players) {
-	    store.dispatch({
-	      type: _types.WAITING_PLAYERS,
-	      players: players
-	    });
-	  });
-	  socket.on('players', function (players) {
-	    store.dispatch({
-	      type: _types.PLAYERS,
-	      players: players
-	    });
-	  });
-	  socket.on('connections', function (amountOfConnections) {
-	    store.dispatch({
-	      type: _types.CONNECTIONS,
-	      amountOfConnections: amountOfConnections
-	    });
-	  });
-	};
 	
 	var _types = __webpack_require__(260);
 	
-	var _socket = __webpack_require__(264);
+	var _connections = __webpack_require__(315);
 	
-	var _socket2 = _interopRequireDefault(_socket);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var socket = exports.socket = (0, _socket2.default)("http://localhost:3000");
-	
-	socket.on('message', function (data) {
-	  console.log('Incoming message:', data);
-	});
+	exports.default = function (store) {
+	  _connections.socket.on('updateCards', function (cards) {
+	    store.dispatch({
+	      type: _types.UPDATE_CARDS,
+	      cards: cards
+	    });
+	  });
+	};
 
 /***/ }
 /******/ ]);
