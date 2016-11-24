@@ -683,4 +683,4 @@
   }
 ]
 
-export default cards
+module.exports = cards

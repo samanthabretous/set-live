@@ -1,7 +1,7 @@
 module.exports = {
-  entry: "./src/app-client.js",
+  entry: "./client/src/app-client.js",
   output: {
-    path: "src/public/",
+    path: "client/public/",
     filename: "bundle.js",
   },
   //what is bundle.js doing?
