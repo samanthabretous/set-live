@@ -13,10 +13,11 @@ import WaitingForPlayersContainer from './middleware/WaitingForPlayers'
 import GameContainer from './middleware/Game'
 import Game from './components/Game'
 
+import {shuffledCards} from './actions/thunk-actions'
 
 export default (
   <Route path="/" component={AppContainer}>
     <IndexRoute component={WaitingForPlayersContainer}/>
-    <Route path='game' component={GameContainer} />
+    <Route path='game' component={GameContainer}/>
   </Route> 
 );

@@ -8,12 +8,11 @@ const WaitingForPlayers = (props) => {
   return (
     <div>
       <Display if={props.status==='connected'}>
-        
+        <input className=""/>
         <Display if={props.member.name}>
           <h1>Joined {props.member.name}</h1>
           <p>{props.amountOfConnections} players connected</p>
           {props.waitingPlayers.map((player, index)=> <p key={index}>WAITING{player.name}</p>)}
-          <h1>Going to the game room</h1>
           {props.players.map((player, index)=> <p key={index}>PLAYER {index + player.name}</p>)}
         </Display>
 

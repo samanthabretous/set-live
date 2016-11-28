@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import io from 'socket.io-client';
-import cards from '../card_deck' 
 import store from '../store'
 
 //import "../css/style.css";

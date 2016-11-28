@@ -62,15 +62,15 @@
 	
 	var _store2 = _interopRequireDefault(_store);
 	
-	var _routes = __webpack_require__(274);
+	var _routes = __webpack_require__(273);
 	
 	var _routes2 = _interopRequireDefault(_routes);
 	
-	var _connections = __webpack_require__(327);
+	var _connections = __webpack_require__(326);
 	
 	var _connections2 = _interopRequireDefault(_connections);
 	
-	var _board = __webpack_require__(333);
+	var _board = __webpack_require__(332);
 	
 	var _board2 = _interopRequireDefault(_board);
 	
@@ -28845,13 +28845,7 @@
 	  return state;
 	};
 	
-	var _card_deck = __webpack_require__(272);
-	
-	var _card_deck2 = _interopRequireDefault(_card_deck);
-	
-	var _types = __webpack_require__(273);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _types = __webpack_require__(272);
 	
 	var INTIAL_STATE = {
 	  amountOfConnections: [],
@@ -28859,584 +28853,13 @@
 	  waitingPlayers: [],
 	  players: [],
 	  status: 'disconnected',
-	  cards: _card_deck2.default,
+	  cards: null,
 	  board: [],
 	  amountOfCardsOnBoard: 12
 	};
 
 /***/ },
 /* 272 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	var cards = [{
-	  card: 1,
-	  number: 1,
-	  color: 'red',
-	  shade: 'solid',
-	  shape: 'squiggles'
-	}, {
-	  card: 2,
-	  number: 2,
-	  color: 'red',
-	  shade: 'solid',
-	  shape: 'squiggles'
-	}, {
-	  card: 3,
-	  number: 3,
-	  color: 'red',
-	  shade: 'solid',
-	  shape: 'squiggles'
-	},
-	
-	// SOLID GREEN squigglesS
-	{
-	  card: 4,
-	  number: 1,
-	  color: 'green',
-	  shade: 'solid',
-	  shape: 'squiggles'
-	}, {
-	  card: 5,
-	  number: 2,
-	  color: 'green',
-	  shade: 'solid',
-	  shape: 'squiggles'
-	}, {
-	  card: 6,
-	  number: 3,
-	  color: 'green',
-	  shade: 'solid',
-	  shape: 'squiggles'
-	},
-	
-	// SOLID PURPLE squigglesS
-	{
-	  card: 7,
-	  number: 1,
-	  color: 'purple',
-	  shade: 'solid',
-	  shape: 'squiggles'
-	}, {
-	  card: 8,
-	  number: 2,
-	  color: 'purple',
-	  shade: 'solid',
-	  shape: 'squiggles'
-	}, {
-	  card: 9,
-	  number: 3,
-	  color: 'purple',
-	  shade: 'solid',
-	  shape: 'squiggles'
-	},
-	
-	// SOLID RED DIAMONDS
-	
-	{
-	  card: 10,
-	  number: 1,
-	  color: 'red',
-	  shade: 'solid',
-	  shape: 'diamond'
-	}, {
-	  card: 11,
-	  number: 2,
-	  color: 'red',
-	  shade: 'solid',
-	  shape: 'diamond'
-	}, {
-	  card: 12,
-	  number: 3,
-	  color: 'red',
-	  shade: 'solid',
-	  shape: 'diamond'
-	},
-	
-	// SOLID GREEN DIAMONDS
-	
-	{
-	  card: 13,
-	  number: 1,
-	  color: 'green',
-	  shade: 'solid',
-	  shape: 'diamond'
-	}, {
-	  card: 14,
-	  number: 2,
-	  color: 'green',
-	  shade: 'solid',
-	  shape: 'diamond'
-	}, {
-	  card: 15,
-	  number: 3,
-	  color: 'green',
-	  shade: 'solid',
-	  shape: 'diamond'
-	},
-	
-	// SOLID PURPLE DIAMONDS
-	
-	{
-	  card: 16,
-	  number: 1,
-	  color: 'purple',
-	  shade: 'solid',
-	  shape: 'diamond'
-	}, {
-	  card: 17,
-	  number: 2,
-	  color: 'purple',
-	  shade: 'solid',
-	  shape: 'diamond'
-	}, {
-	  card: 18,
-	  number: 3,
-	  color: 'purple',
-	  shade: 'solid',
-	  shape: 'diamond'
-	},
-	
-	// SOLID RED OVAL
-	
-	{
-	  card: 19,
-	  number: 1,
-	  color: 'red',
-	  shade: 'solid',
-	  shape: 'oval'
-	}, {
-	  card: 20,
-	  number: 2,
-	  color: 'red',
-	  shade: 'solid',
-	  shape: 'oval'
-	}, {
-	  card: 21,
-	  number: 3,
-	  color: 'red',
-	  shade: 'solid',
-	  shape: 'oval'
-	},
-	
-	// SOLID GREEN OVAL
-	
-	{
-	  card: 22,
-	  number: 1,
-	  color: 'green',
-	  shade: 'solid',
-	  shape: 'oval'
-	}, {
-	  card: 23,
-	  number: 2,
-	  color: 'green',
-	  shade: 'solid',
-	  shape: 'oval'
-	}, {
-	  card: 24,
-	  number: 3,
-	  color: 'green',
-	  shade: 'solid',
-	  shape: 'oval'
-	},
-	
-	// SOLID PURPLE OVAL
-	
-	{
-	  card: 25,
-	  number: 1,
-	  color: 'purple',
-	  shade: 'solid',
-	  shape: 'oval'
-	}, {
-	  card: 26,
-	  number: 2,
-	  color: 'purple',
-	  shade: 'solid',
-	  shape: 'oval'
-	}, {
-	  card: 27,
-	  number: 3,
-	  color: 'purple',
-	  shade: 'solid',
-	  shape: 'oval'
-	},
-	
-	// STRIPED RED squiggles
-	
-	{
-	  card: 28,
-	  number: 1,
-	  color: 'red',
-	  shade: 'striped',
-	  shape: 'squiggles'
-	}, {
-	  card: 29,
-	  number: 2,
-	  color: 'red',
-	  shade: 'striped',
-	  shape: 'squiggles'
-	}, {
-	  card: 30,
-	  number: 3,
-	  color: 'red',
-	  shade: 'striped',
-	  shape: 'squiggles'
-	},
-	
-	// STRIPED GREEN squiggles
-	
-	{
-	  card: 31,
-	  number: 1,
-	  color: 'green',
-	  shade: 'striped',
-	  shape: 'squiggles'
-	}, {
-	  card: 32,
-	  number: 2,
-	  color: 'green',
-	  shade: 'striped',
-	  shape: 'squiggles'
-	}, {
-	  card: 33,
-	  number: 3,
-	  color: 'green',
-	  shade: 'striped',
-	  shape: 'squiggles'
-	},
-	
-	// STRIPED PURPLE squiggles
-	
-	{
-	  card: 34,
-	  number: 1,
-	  color: 'purple',
-	  shade: 'striped',
-	  shape: 'squiggles'
-	}, {
-	  card: 35,
-	  number: 2,
-	  color: 'purple',
-	  shade: 'striped',
-	  shape: 'squiggles'
-	}, {
-	  card: 36,
-	  number: 3,
-	  color: 'purple',
-	  shade: 'striped',
-	  shape: 'squiggles'
-	},
-	
-	// STRIPED RED DIAMOND
-	
-	{
-	  card: 37,
-	  number: 1,
-	  color: 'red',
-	  shade: 'striped',
-	  shape: 'diamond'
-	}, {
-	  card: 38,
-	  number: 2,
-	  color: 'red',
-	  shade: 'striped',
-	  shape: 'diamond'
-	}, {
-	  card: 39,
-	  number: 3,
-	  color: 'red',
-	  shade: 'striped',
-	  shape: 'diamond'
-	},
-	
-	// STRIPED GREEN DIAMOND
-	
-	{
-	  card: 40,
-	  number: 1,
-	  color: 'green',
-	  shade: 'striped',
-	  shape: 'diamond'
-	}, {
-	  card: 41,
-	  number: 2,
-	  color: 'green',
-	  shade: 'striped',
-	  shape: 'diamond'
-	}, {
-	  card: 42,
-	  number: 3,
-	  color: 'green',
-	  shade: 'striped',
-	  shape: 'diamond'
-	},
-	
-	// PURPLE STRIPED DIAMOND
-	
-	{
-	  card: 43,
-	  number: 1,
-	  color: 'purple',
-	  shade: 'striped',
-	  shape: 'diamond'
-	}, {
-	  card: 44,
-	  number: 2,
-	  color: 'purple',
-	  shade: 'striped',
-	  shape: 'diamond'
-	}, {
-	  card: 45,
-	  number: 3,
-	  color: 'purple',
-	  shade: 'striped',
-	  shape: 'diamond'
-	},
-	
-	// RED STRIPED OVAL
-	
-	{
-	  card: 46,
-	  number: 1,
-	  color: 'red',
-	  shade: 'striped',
-	  shape: 'oval'
-	}, {
-	  card: 47,
-	  number: 2,
-	  color: 'red',
-	  shade: 'striped',
-	  shape: 'oval'
-	}, {
-	  card: 48,
-	  number: 3,
-	  color: 'red',
-	  shade: 'striped',
-	  shape: 'oval'
-	},
-	
-	// GREEN STRIPED OVAL
-	
-	{
-	  card: 49,
-	  number: 1,
-	  color: 'green',
-	  shade: 'striped',
-	  shape: 'oval'
-	}, {
-	  card: 50,
-	  number: 2,
-	  color: 'green',
-	  shade: 'striped',
-	  shape: 'oval'
-	}, {
-	  card: 51,
-	  number: 3,
-	  color: 'green',
-	  shade: 'striped',
-	  shape: 'oval'
-	},
-	
-	// PURPLE STRIPED OVAL
-	
-	{
-	  card: 52,
-	  number: 1,
-	  color: 'purple',
-	  shade: 'striped',
-	  shape: 'oval'
-	}, {
-	  card: 53,
-	  number: 2,
-	  color: 'purple',
-	  shade: 'striped',
-	  shape: 'oval'
-	}, {
-	  card: 54,
-	  number: 3,
-	  color: 'purple',
-	  shade: 'striped',
-	  shape: 'oval'
-	},
-	
-	// ------------squiggless outline------------
-	{
-	  card: 55,
-	  number: 1,
-	  color: "red",
-	  shade: "outline",
-	  shape: "squiggles"
-	}, {
-	  card: 56,
-	  number: 2,
-	  color: "red",
-	  shade: "outline",
-	  shape: "squiggles"
-	}, {
-	  card: 57,
-	  number: 3,
-	  color: "red",
-	  shade: "outline",
-	  shape: "squiggles"
-	}, {
-	  card: 58,
-	  number: 1,
-	  color: "red",
-	  shade: "outline",
-	  shape: "squiggles"
-	}, {
-	  card: 59,
-	  number: 2,
-	  color: "green",
-	  shade: "outline",
-	  shape: "squiggles"
-	}, {
-	  card: 60,
-	  number: 3,
-	  color: "green",
-	  shade: "outline",
-	  shape: "squiggles"
-	}, {
-	  card: 61,
-	  number: 1,
-	  color: "purple",
-	  shade: "outline",
-	  shape: "squiggles"
-	}, {
-	  card: 62,
-	  number: 2,
-	  color: "purple",
-	  shade: "outline",
-	  shape: "squiggles"
-	}, {
-	  card: 63,
-	  number: 3,
-	  color: "purple",
-	  shade: "outline",
-	  shape: "squiggles"
-	},
-	
-	// ----------------diamond outline---------------
-	{
-	  card: 64,
-	  number: 1,
-	  color: "red",
-	  shade: "outline",
-	  shape: "diamond"
-	}, {
-	  card: 65,
-	  number: 2,
-	  color: "red",
-	  shade: "outline",
-	  shape: "diamond"
-	}, {
-	  card: 66,
-	  number: 3,
-	  color: "red",
-	  shade: "outline",
-	  shape: "diamond"
-	}, {
-	  card: 67,
-	  number: 1,
-	  color: "red",
-	  shade: "outline",
-	  shape: "diamond"
-	}, {
-	  card: 68,
-	  number: 2,
-	  color: "green",
-	  shade: "outline",
-	  shape: "diamond"
-	}, {
-	  card: 69,
-	  number: 3,
-	  color: "green",
-	  shade: "outline",
-	  shape: "diamond"
-	}, {
-	  card: 70,
-	  number: 1,
-	  color: "purple",
-	  shade: "outline",
-	  shape: "diamond"
-	}, {
-	  card: 71,
-	  number: 2,
-	  color: "purple",
-	  shade: "outline",
-	  shape: "diamond"
-	}, {
-	  card: 72,
-	  number: 3,
-	  color: "purple",
-	  shade: "outline",
-	  shape: "diamond"
-	},
-	
-	//------------------oval outline---------------
-	{
-	  card: 73,
-	  number: 1,
-	  color: "red",
-	  shade: "outline",
-	  shape: "oval"
-	}, {
-	  card: 74,
-	  number: 2,
-	  color: "red",
-	  shade: "outline",
-	  shape: "oval"
-	}, {
-	  card: 75,
-	  number: 3,
-	  color: "red",
-	  shade: "outline",
-	  shape: "oval"
-	}, {
-	  card: 76,
-	  number: 1,
-	  color: "red",
-	  shade: "outline",
-	  shape: "oval"
-	}, {
-	  card: 77,
-	  number: 2,
-	  color: "green",
-	  shade: "outline",
-	  shape: "oval"
-	}, {
-	  card: 78,
-	  number: 3,
-	  color: "green",
-	  shade: "outline",
-	  shape: "oval"
-	}, {
-	  card: 79,
-	  number: 1,
-	  color: "purple",
-	  shade: "outline",
-	  shape: "oval"
-	}, {
-	  card: 80,
-	  number: 2,
-	  color: "purple",
-	  shade: "outline",
-	  shape: "oval"
-	}, {
-	  card: 81,
-	  number: 3,
-	  color: "purple",
-	  shade: "outline",
-	  shape: "oval"
-	}];
-	
-	module.exports = cards;
-
-/***/ },
-/* 273 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29459,7 +28882,7 @@
 	var BOARD = exports.BOARD = 'board';
 
 /***/ },
-/* 274 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29474,23 +28897,23 @@
 	
 	var _reactRouter = __webpack_require__(178);
 	
-	var _AppContainer = __webpack_require__(275);
+	var _AppContainer = __webpack_require__(274);
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
-	var _WaitingForPlayers = __webpack_require__(323);
+	var _WaitingForPlayers = __webpack_require__(322);
 	
 	var _WaitingForPlayers2 = _interopRequireDefault(_WaitingForPlayers);
 	
-	var _Game = __webpack_require__(328);
+	var _Game = __webpack_require__(327);
 	
 	var _Game2 = _interopRequireDefault(_Game);
 	
-	var _Game3 = __webpack_require__(329);
+	var _Game3 = __webpack_require__(328);
 	
 	var _Game4 = _interopRequireDefault(_Game3);
 	
-	var _thunkActions = __webpack_require__(332);
+	var _thunkActions = __webpack_require__(331);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29510,7 +28933,7 @@
 	//====================
 
 /***/ },
-/* 275 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29519,7 +28942,7 @@
 	  value: true
 	});
 	
-	var _App = __webpack_require__(276);
+	var _App = __webpack_require__(275);
 	
 	var _App2 = _interopRequireDefault(_App);
 	
@@ -29536,7 +28959,7 @@
 	exports.default = (0, _reactRedux.connect)(appToState)(_App2.default);
 
 /***/ },
-/* 276 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29553,13 +28976,9 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _socket = __webpack_require__(277);
+	var _socket = __webpack_require__(276);
 	
 	var _socket2 = _interopRequireDefault(_socket);
-	
-	var _card_deck = __webpack_require__(272);
-	
-	var _card_deck2 = _interopRequireDefault(_card_deck);
 	
 	var _store = __webpack_require__(269);
 	
@@ -29597,7 +29016,7 @@
 	exports.default = App;
 
 /***/ },
-/* 277 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -29605,10 +29024,10 @@
 	 * Module dependencies.
 	 */
 	
-	var url = __webpack_require__(278);
-	var parser = __webpack_require__(283);
-	var Manager = __webpack_require__(290);
-	var debug = __webpack_require__(280)('socket.io-client');
+	var url = __webpack_require__(277);
+	var parser = __webpack_require__(282);
+	var Manager = __webpack_require__(289);
+	var debug = __webpack_require__(279)('socket.io-client');
 	
 	/**
 	 * Module exports.
@@ -29707,12 +29126,12 @@
 	 * @api public
 	 */
 	
-	exports.Manager = __webpack_require__(290);
-	exports.Socket = __webpack_require__(316);
+	exports.Manager = __webpack_require__(289);
+	exports.Socket = __webpack_require__(315);
 
 
 /***/ },
-/* 278 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -29720,8 +29139,8 @@
 	 * Module dependencies.
 	 */
 	
-	var parseuri = __webpack_require__(279);
-	var debug = __webpack_require__(280)('socket.io-client:url');
+	var parseuri = __webpack_require__(278);
+	var debug = __webpack_require__(279)('socket.io-client:url');
 	
 	/**
 	 * Module exports.
@@ -29794,7 +29213,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 279 */
+/* 278 */
 /***/ function(module, exports) {
 
 	/**
@@ -29839,7 +29258,7 @@
 
 
 /***/ },
-/* 280 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -29849,7 +29268,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(281);
+	exports = module.exports = __webpack_require__(280);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -30013,7 +29432,7 @@
 
 
 /***/ },
-/* 281 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -30029,7 +29448,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(282);
+	exports.humanize = __webpack_require__(281);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -30216,7 +29635,7 @@
 
 
 /***/ },
-/* 282 */
+/* 281 */
 /***/ function(module, exports) {
 
 	/**
@@ -30347,7 +29766,7 @@
 
 
 /***/ },
-/* 283 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -30355,11 +29774,11 @@
 	 * Module dependencies.
 	 */
 	
-	var debug = __webpack_require__(280)('socket.io-parser');
-	var json = __webpack_require__(284);
-	var Emitter = __webpack_require__(286);
-	var binary = __webpack_require__(287);
-	var isBuf = __webpack_require__(289);
+	var debug = __webpack_require__(279)('socket.io-parser');
+	var json = __webpack_require__(283);
+	var Emitter = __webpack_require__(285);
+	var binary = __webpack_require__(286);
+	var isBuf = __webpack_require__(288);
 	
 	/**
 	 * Protocol version.
@@ -30757,14 +30176,14 @@
 
 
 /***/ },
-/* 284 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! JSON v3.3.2 | http://bestiejs.github.io/json3 | Copyright 2012-2014, Kit Cambridge | http://kit.mit-license.org */
 	;(function () {
 	  // Detect the `define` function exposed by asynchronous module loaders. The
 	  // strict `define` check is necessary for compatibility with `r.js`.
-	  var isLoader = "function" === "function" && __webpack_require__(285);
+	  var isLoader = "function" === "function" && __webpack_require__(284);
 	
 	  // A set of types used to distinguish objects from primitives.
 	  var objectTypes = {
@@ -31666,7 +31085,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(262)(module), (function() { return this; }())))
 
 /***/ },
-/* 285 */
+/* 284 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -31674,7 +31093,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 286 */
+/* 285 */
 /***/ function(module, exports) {
 
 	
@@ -31844,7 +31263,7 @@
 
 
 /***/ },
-/* 287 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -31853,8 +31272,8 @@
 	 * Module requirements
 	 */
 	
-	var isArray = __webpack_require__(288);
-	var isBuf = __webpack_require__(289);
+	var isArray = __webpack_require__(287);
+	var isBuf = __webpack_require__(288);
 	
 	/**
 	 * Replaces every Buffer | ArrayBuffer in packet with a numbered placeholder.
@@ -31992,7 +31411,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 288 */
+/* 287 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -32001,7 +31420,7 @@
 
 
 /***/ },
-/* 289 */
+/* 288 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -32021,7 +31440,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 290 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -32029,15 +31448,15 @@
 	 * Module dependencies.
 	 */
 	
-	var eio = __webpack_require__(291);
-	var Socket = __webpack_require__(316);
-	var Emitter = __webpack_require__(317);
-	var parser = __webpack_require__(283);
-	var on = __webpack_require__(319);
-	var bind = __webpack_require__(320);
-	var debug = __webpack_require__(280)('socket.io-client:manager');
-	var indexOf = __webpack_require__(314);
-	var Backoff = __webpack_require__(322);
+	var eio = __webpack_require__(290);
+	var Socket = __webpack_require__(315);
+	var Emitter = __webpack_require__(316);
+	var parser = __webpack_require__(282);
+	var on = __webpack_require__(318);
+	var bind = __webpack_require__(319);
+	var debug = __webpack_require__(279)('socket.io-client:manager');
+	var indexOf = __webpack_require__(313);
+	var Backoff = __webpack_require__(321);
 	
 	/**
 	 * IE6+ hasOwnProperty
@@ -32587,19 +32006,19 @@
 
 
 /***/ },
+/* 290 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	module.exports = __webpack_require__(291);
+
+
+/***/ },
 /* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	module.exports = __webpack_require__(292);
-
-
-/***/ },
-/* 292 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	module.exports = __webpack_require__(293);
 	
 	/**
 	 * Exports parser
@@ -32607,25 +32026,25 @@
 	 * @api public
 	 *
 	 */
-	module.exports.parser = __webpack_require__(300);
+	module.exports.parser = __webpack_require__(299);
 
 
 /***/ },
-/* 293 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var transports = __webpack_require__(294);
-	var Emitter = __webpack_require__(286);
-	var debug = __webpack_require__(280)('engine.io-client:socket');
-	var index = __webpack_require__(314);
-	var parser = __webpack_require__(300);
-	var parseuri = __webpack_require__(279);
-	var parsejson = __webpack_require__(315);
-	var parseqs = __webpack_require__(308);
+	var transports = __webpack_require__(293);
+	var Emitter = __webpack_require__(285);
+	var debug = __webpack_require__(279)('engine.io-client:socket');
+	var index = __webpack_require__(313);
+	var parser = __webpack_require__(299);
+	var parseuri = __webpack_require__(278);
+	var parsejson = __webpack_require__(314);
+	var parseqs = __webpack_require__(307);
 	
 	/**
 	 * Module exports.
@@ -32752,9 +32171,9 @@
 	 */
 	
 	Socket.Socket = Socket;
-	Socket.Transport = __webpack_require__(299);
-	Socket.transports = __webpack_require__(294);
-	Socket.parser = __webpack_require__(300);
+	Socket.Transport = __webpack_require__(298);
+	Socket.transports = __webpack_require__(293);
+	Socket.parser = __webpack_require__(299);
 	
 	/**
 	 * Creates transport of the given type.
@@ -33349,17 +32768,17 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 294 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(295);
-	var XHR = __webpack_require__(297);
-	var JSONP = __webpack_require__(311);
-	var websocket = __webpack_require__(312);
+	var XMLHttpRequest = __webpack_require__(294);
+	var XHR = __webpack_require__(296);
+	var JSONP = __webpack_require__(310);
+	var websocket = __webpack_require__(311);
 	
 	/**
 	 * Export transports.
@@ -33409,12 +32828,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 295 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 	
-	var hasCORS = __webpack_require__(296);
+	var hasCORS = __webpack_require__(295);
 	
 	module.exports = function (opts) {
 	  var xdomain = opts.xdomain;
@@ -33453,7 +32872,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 296 */
+/* 295 */
 /***/ function(module, exports) {
 
 	
@@ -33476,18 +32895,18 @@
 
 
 /***/ },
-/* 297 */
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module requirements.
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(295);
-	var Polling = __webpack_require__(298);
-	var Emitter = __webpack_require__(286);
-	var inherit = __webpack_require__(309);
-	var debug = __webpack_require__(280)('engine.io-client:polling-xhr');
+	var XMLHttpRequest = __webpack_require__(294);
+	var Polling = __webpack_require__(297);
+	var Emitter = __webpack_require__(285);
+	var inherit = __webpack_require__(308);
+	var debug = __webpack_require__(279)('engine.io-client:polling-xhr');
 	
 	/**
 	 * Module exports.
@@ -33900,19 +33319,19 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 298 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(299);
-	var parseqs = __webpack_require__(308);
-	var parser = __webpack_require__(300);
-	var inherit = __webpack_require__(309);
-	var yeast = __webpack_require__(310);
-	var debug = __webpack_require__(280)('engine.io-client:polling');
+	var Transport = __webpack_require__(298);
+	var parseqs = __webpack_require__(307);
+	var parser = __webpack_require__(299);
+	var inherit = __webpack_require__(308);
+	var yeast = __webpack_require__(309);
+	var debug = __webpack_require__(279)('engine.io-client:polling');
 	
 	/**
 	 * Module exports.
@@ -33925,7 +33344,7 @@
 	 */
 	
 	var hasXHR2 = (function () {
-	  var XMLHttpRequest = __webpack_require__(295);
+	  var XMLHttpRequest = __webpack_require__(294);
 	  var xhr = new XMLHttpRequest({ xdomain: false });
 	  return null != xhr.responseType;
 	})();
@@ -34151,15 +33570,15 @@
 
 
 /***/ },
-/* 299 */
+/* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(300);
-	var Emitter = __webpack_require__(286);
+	var parser = __webpack_require__(299);
+	var Emitter = __webpack_require__(285);
 	
 	/**
 	 * Module exports.
@@ -34312,22 +33731,22 @@
 
 
 /***/ },
-/* 300 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var keys = __webpack_require__(301);
-	var hasBinary = __webpack_require__(302);
-	var sliceBuffer = __webpack_require__(303);
-	var after = __webpack_require__(304);
-	var utf8 = __webpack_require__(305);
+	var keys = __webpack_require__(300);
+	var hasBinary = __webpack_require__(301);
+	var sliceBuffer = __webpack_require__(302);
+	var after = __webpack_require__(303);
+	var utf8 = __webpack_require__(304);
 	
 	var base64encoder;
 	if (global && global.ArrayBuffer) {
-	  base64encoder = __webpack_require__(306);
+	  base64encoder = __webpack_require__(305);
 	}
 	
 	/**
@@ -34385,7 +33804,7 @@
 	 * Create a blob api even for blob builder when vendor prefixes exist
 	 */
 	
-	var Blob = __webpack_require__(307);
+	var Blob = __webpack_require__(306);
 	
 	/**
 	 * Encodes a packet.
@@ -34928,7 +34347,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 301 */
+/* 300 */
 /***/ function(module, exports) {
 
 	
@@ -34953,7 +34372,7 @@
 
 
 /***/ },
-/* 302 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -34961,7 +34380,7 @@
 	 * Module requirements.
 	 */
 	
-	var isArray = __webpack_require__(288);
+	var isArray = __webpack_require__(287);
 	
 	/**
 	 * Module exports.
@@ -35018,7 +34437,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 303 */
+/* 302 */
 /***/ function(module, exports) {
 
 	/**
@@ -35053,7 +34472,7 @@
 
 
 /***/ },
-/* 304 */
+/* 303 */
 /***/ function(module, exports) {
 
 	module.exports = after
@@ -35087,7 +34506,7 @@
 
 
 /***/ },
-/* 305 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/wtf8 v1.0.0 by @mathias */
@@ -35326,7 +34745,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(262)(module), (function() { return this; }())))
 
 /***/ },
-/* 306 */
+/* 305 */
 /***/ function(module, exports) {
 
 	/*
@@ -35399,7 +34818,7 @@
 
 
 /***/ },
-/* 307 */
+/* 306 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -35502,7 +34921,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 308 */
+/* 307 */
 /***/ function(module, exports) {
 
 	/**
@@ -35545,7 +34964,7 @@
 
 
 /***/ },
-/* 309 */
+/* 308 */
 /***/ function(module, exports) {
 
 	
@@ -35557,7 +34976,7 @@
 	};
 
 /***/ },
-/* 310 */
+/* 309 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -35631,7 +35050,7 @@
 
 
 /***/ },
-/* 311 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -35639,8 +35058,8 @@
 	 * Module requirements.
 	 */
 	
-	var Polling = __webpack_require__(298);
-	var inherit = __webpack_require__(309);
+	var Polling = __webpack_require__(297);
+	var inherit = __webpack_require__(308);
 	
 	/**
 	 * Module exports.
@@ -35869,19 +35288,19 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 312 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(299);
-	var parser = __webpack_require__(300);
-	var parseqs = __webpack_require__(308);
-	var inherit = __webpack_require__(309);
-	var yeast = __webpack_require__(310);
-	var debug = __webpack_require__(280)('engine.io-client:websocket');
+	var Transport = __webpack_require__(298);
+	var parser = __webpack_require__(299);
+	var parseqs = __webpack_require__(307);
+	var inherit = __webpack_require__(308);
+	var yeast = __webpack_require__(309);
+	var debug = __webpack_require__(279)('engine.io-client:websocket');
 	var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 	
 	/**
@@ -35893,7 +35312,7 @@
 	var WebSocket = BrowserWebSocket;
 	if (!WebSocket && typeof window === 'undefined') {
 	  try {
-	    WebSocket = __webpack_require__(313);
+	    WebSocket = __webpack_require__(312);
 	  } catch (e) { }
 	}
 	
@@ -36150,13 +35569,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 313 */
+/* 312 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 314 */
+/* 313 */
 /***/ function(module, exports) {
 
 	
@@ -36171,7 +35590,7 @@
 	};
 
 /***/ },
-/* 315 */
+/* 314 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -36209,7 +35628,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 316 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -36217,13 +35636,13 @@
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(283);
-	var Emitter = __webpack_require__(317);
-	var toArray = __webpack_require__(318);
-	var on = __webpack_require__(319);
-	var bind = __webpack_require__(320);
-	var debug = __webpack_require__(280)('socket.io-client:socket');
-	var hasBin = __webpack_require__(321);
+	var parser = __webpack_require__(282);
+	var Emitter = __webpack_require__(316);
+	var toArray = __webpack_require__(317);
+	var on = __webpack_require__(318);
+	var bind = __webpack_require__(319);
+	var debug = __webpack_require__(279)('socket.io-client:socket');
+	var hasBin = __webpack_require__(320);
 	
 	/**
 	 * Module exports.
@@ -36634,7 +36053,7 @@
 
 
 /***/ },
-/* 317 */
+/* 316 */
 /***/ function(module, exports) {
 
 	
@@ -36801,7 +36220,7 @@
 
 
 /***/ },
-/* 318 */
+/* 317 */
 /***/ function(module, exports) {
 
 	module.exports = toArray
@@ -36820,7 +36239,7 @@
 
 
 /***/ },
-/* 319 */
+/* 318 */
 /***/ function(module, exports) {
 
 	
@@ -36850,7 +36269,7 @@
 
 
 /***/ },
-/* 320 */
+/* 319 */
 /***/ function(module, exports) {
 
 	/**
@@ -36879,7 +36298,7 @@
 
 
 /***/ },
-/* 321 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -36887,7 +36306,7 @@
 	 * Module requirements.
 	 */
 	
-	var isArray = __webpack_require__(288);
+	var isArray = __webpack_require__(287);
 	
 	/**
 	 * Module exports.
@@ -36945,7 +36364,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 322 */
+/* 321 */
 /***/ function(module, exports) {
 
 	
@@ -37036,7 +36455,7 @@
 
 
 /***/ },
-/* 323 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37045,7 +36464,7 @@
 	  value: true
 	});
 	
-	var _WaitingForPlayers = __webpack_require__(324);
+	var _WaitingForPlayers = __webpack_require__(323);
 	
 	var _WaitingForPlayers2 = _interopRequireDefault(_WaitingForPlayers);
 	
@@ -37066,7 +36485,7 @@
 	exports.default = (0, _reactRedux.connect)(appToState)(_WaitingForPlayers2.default);
 
 /***/ },
-/* 324 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37079,17 +36498,17 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _display = __webpack_require__(325);
+	var _display = __webpack_require__(324);
 	
 	var _display2 = _interopRequireDefault(_display);
 	
-	var _join = __webpack_require__(326);
+	var _join = __webpack_require__(325);
 	
 	var _join2 = _interopRequireDefault(_join);
 	
 	var _reactRouter = __webpack_require__(178);
 	
-	var _connections = __webpack_require__(327);
+	var _connections = __webpack_require__(326);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -37159,7 +36578,7 @@
 	exports.default = WaitingForPlayers;
 
 /***/ },
-/* 325 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37188,7 +36607,7 @@
 	exports.default = Display;
 
 /***/ },
-/* 326 */
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37203,7 +36622,7 @@
 	
 	var _reactRouter = __webpack_require__(178);
 	
-	var _connections = __webpack_require__(327);
+	var _connections = __webpack_require__(326);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -37246,7 +36665,7 @@
 	exports.default = Join;
 
 /***/ },
-/* 327 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37256,15 +36675,15 @@
 	});
 	exports.socket = undefined;
 	
-	var _types = __webpack_require__(273);
+	var _types = __webpack_require__(272);
 	
-	var _socket = __webpack_require__(277);
+	var _socket = __webpack_require__(276);
 	
 	var _socket2 = _interopRequireDefault(_socket);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var socket = exports.socket = (0, _socket2.default)("http://localhost:3000");
+	var socket = exports.socket = (0, _socket2.default)("http://localhost:4000");
 	
 	exports.default = function (store) {
 	  socket.on('connect', function () {
@@ -37317,7 +36736,7 @@
 	});
 
 /***/ },
-/* 328 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37326,7 +36745,7 @@
 	  value: true
 	});
 	
-	var _Game = __webpack_require__(329);
+	var _Game = __webpack_require__(328);
 	
 	var _Game2 = _interopRequireDefault(_Game);
 	
@@ -37346,7 +36765,7 @@
 	exports.default = (0, _reactRedux.connect)(appToState)(_Game2.default);
 
 /***/ },
-/* 329 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37359,19 +36778,19 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _display = __webpack_require__(325);
+	var _display = __webpack_require__(324);
 	
 	var _display2 = _interopRequireDefault(_display);
 	
-	var _join = __webpack_require__(326);
+	var _join = __webpack_require__(325);
 	
 	var _join2 = _interopRequireDefault(_join);
 	
-	var _board = __webpack_require__(330);
+	var _board = __webpack_require__(329);
 	
 	var _board2 = _interopRequireDefault(_board);
 	
-	var _chatBar = __webpack_require__(331);
+	var _chatBar = __webpack_require__(330);
 	
 	var _chatBar2 = _interopRequireDefault(_chatBar);
 	
@@ -37398,7 +36817,7 @@
 	exports.default = Game;
 
 /***/ },
-/* 330 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37411,9 +36830,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _connections = __webpack_require__(327);
+	var _connections = __webpack_require__(326);
 	
-	var _types = __webpack_require__(273);
+	var _types = __webpack_require__(272);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -37428,22 +36847,11 @@
 	    for (var i = 0; i < amountDisplay; i++) {
 	      board.push(null);
 	    }
-	    this.fillBoard();
+	    //this.fillBoard()
 	  },
 	  componentDidMount: function componentDidMount() {
 	    console.log("will mount");
-	    this.shuffledCards();
 	    //this.generateBoard()
-	  },
-	  shuffledCards: function shuffledCards() {
-	    var shuffled = [];
-	    for (var i = this.props.cards.length; i > 0; i--) {
-	      var randomInd = Math.floor(Math.random() * this.props.cards.length);
-	      var randomCard = this.props.cards[randomInd];
-	      shuffled.push(randomCard);
-	      this.props.cards.splice(randomInd, 1);
-	    }
-	    _connections.socket.emit('cards', { cards: shuffled });
 	  },
 	  fillBoard: function fillBoard(board) {
 	    var _this = this;
@@ -37462,8 +36870,6 @@
 	  render: function render() {
 	    var _this2 = this;
 	
-	    console.log("render");
-	    console.log(this.props.cards);
 	    var boardOfCards = this.props.board.map(function (slot, i) {
 	      return _react2.default.createElement(
 	        'article',
@@ -37491,7 +36897,7 @@
 	exports.default = Board;
 
 /***/ },
-/* 331 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37504,11 +36910,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _socket = __webpack_require__(277);
+	var _socket = __webpack_require__(276);
 	
 	var _socket2 = _interopRequireDefault(_socket);
 	
-	var _connections = __webpack_require__(327);
+	var _connections = __webpack_require__(326);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -37600,15 +37006,15 @@
 	exports.default = ChatBar;
 
 /***/ },
-/* 332 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var _connections = __webpack_require__(327);
+	var _connections = __webpack_require__(326);
 
 /***/ },
-/* 333 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37617,9 +37023,9 @@
 	  value: true
 	});
 	
-	var _types = __webpack_require__(273);
+	var _types = __webpack_require__(272);
 	
-	var _connections = __webpack_require__(327);
+	var _connections = __webpack_require__(326);
 	
 	exports.default = function (store) {
 	  _connections.socket.on('updateCards', function (cards) {

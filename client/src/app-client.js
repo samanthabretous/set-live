@@ -9,7 +9,7 @@ import ConnectionsSocketListeners from './actions/socket-listeners/connections'
 import BoardSocketListeners from './actions/socket-listeners/board'
 
 ConnectionsSocketListeners(store)
-BoardSocketListeners(store)
+BoardSocketListeners (store)
 
 ReactDOM.render(  
   <Provider store={store}>
