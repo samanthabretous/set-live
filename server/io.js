@@ -1,8 +1,10 @@
-const _ = require ('underscore');
-const deckOfCards = require('../client/src/card_deck.js')
-
-
 module.exports = ((app,io)=>{
+  const _ = require ('underscore');
+  const Player = require('./models/Player');
+  const Game = require('./models/Game')
+
+
+  let games = {}
   let rooms = ['gameRoom', 'waitingRoom']
   let connections = [];
   let board = [];
@@ -14,7 +16,7 @@ module.exports = ((app,io)=>{
 
   //Connect to the socket
   io.sockets.on('connection', function(socket){
-    //set username
+
 
     socket.once('disconnect', function() {
       var member = _.findWhere(players, { id: this.id });
@@ -29,13 +31,17 @@ module.exports = ((app,io)=>{
       console.log("Disconnected: %s sockets remaining.", connections.length);
     });
 
+    socket.on('createGameRoom', ()=>{
+      
+    })
+
     socket.on('join', function(payload) {
-      let newMember = {
+      let newMember = new Player({
         id: this.id,
         name: payload.name, 
-      };
+      });
       if(players.length < 7){
-        socket.join(gameRoom);
+        this.join(gameRoom);
         players.push(newMember);
       } else {
         socket.join(waitingRoom)
@@ -103,7 +109,4 @@ module.exports = ((app,io)=>{
     console.log("Connected: %s sockets connections", connections.length)
   })
 
-
-   
-
-})
+}) //module.exports closing

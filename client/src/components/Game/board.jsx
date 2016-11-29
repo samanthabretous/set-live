@@ -1,11 +1,8 @@
 import React from 'react'
-import {socket} from '../../../actions/socket-listeners/connections'
-import {CARDS} from '../../../actions/types'
+import {socket} from '../../actions/socket-listeners/connections'
+import {CARDS} from '../../actions/types'
 
 const Board = React.createClass({
-  getInitialState(){
-    return {gameBoard: [], name: ''}
-  },
   generateBoard(){
     //find the width, based on the user input of cards
     let amountDisplay = this.props.amountOfCardsOnBoard
@@ -15,24 +12,11 @@ const Board = React.createClass({
     for(let i = 0; i < amountDisplay; i++){
       board.push(null)
     }
-    
-    //this.fillBoard(board)
-
+    //this.fillBoard()
   },
-  componentWillMount(){
+  componentDidMount(){
     console.log("will mount")
-    this.shuffledCards()
-    this.generateBoard()
-  },
-  shuffledCards(){
-    let shuffled = [];
-    for(let i = this.props.cards.length; i > 0; i--) {
-      let randomInd = Math.floor(Math.random()*this.props.cards.length);
-      let randomCard = this.props.cards[randomInd];
-      shuffled.push(randomCard);
-      this.props.cards.splice(randomInd, 1);
-    }
-    socket.emit('cards', {cards: shuffled});
+    //this.generateBoard()
   },
   fillBoard(board) {
     let newBoard = board.map(slot => {
@@ -47,8 +31,6 @@ const Board = React.createClass({
     this.setState({board: newBoard})
   },
   render() {
-    console.log("render")
-    console.log(this.props.cards)
     let boardOfCards = this.props.board.map((slot,i) => <article onClick={this.props.handleClick} key={i} className="cards">{slot.card}</article>)
     return (
       <div>

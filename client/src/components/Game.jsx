@@ -1,8 +1,7 @@
 import React from 'react'
 import Display from './parts/display'
-import Join from './parts/join'
-import Board from './parts/Game/board';
-import ChatBar from './parts/Game/chatBar';
+import Board from './Game/board';
+import ChatBar from './Game/chatBar';
 
 const Game = (props) => {
   return (

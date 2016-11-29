@@ -9,14 +9,19 @@ import { Route, IndexRoute } from 'react-router';
 // of our website.
 //====================
 import AppContainer from './middleware/AppContainer'
-import WaitingForPlayersContainer from './middleware/WaitingForPlayers'
+import LandingPageContainer from './middleware/LandingPage'
 import GameContainer from './middleware/Game'
 import Game from './components/Game'
 
+//Redux
+import store from './store'
+import {generateUserNameAsync} from './actions/thunk-actions'
+
+const getRandomName = () => {store.dispatch(generateUserNameAsync())}
 
 export default (
   <Route path="/" component={AppContainer}>
-    <IndexRoute component={WaitingForPlayersContainer}/>
-    <Route path='game' component={GameContainer} />
+    <IndexRoute component={LandingPageContainer} onEnter={getRandomName}/>
+    <Route path='game' component={GameContainer}/>
   </Route> 
 );

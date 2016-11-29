@@ -1,4 +1,3 @@
-import cards from '../card_deck'
 import { ADD_MEMBER, CHANGE_STATUS, WAITING_PLAYERS, PLAYERS, CONNECTIONS, UPDATE_CARDS, BOARD } from '../actions/types';
 
 const INTIAL_STATE = {
@@ -7,7 +6,7 @@ const INTIAL_STATE = {
   waitingPlayers:[],
   players: [],
   status: 'disconnected', 
-  cards: cards, 
+  cards: null, 
   board: [], 
   amountOfCardsOnBoard: 12
 }
