@@ -4,7 +4,7 @@ module.exports = ((app,io)=>{
   const Game = require('./models/Game')
 
 
-
+  let games = {}
   let rooms = ['gameRoom', 'waitingRoom']
   let connections = [];
   let board = [];
@@ -30,6 +30,10 @@ module.exports = ((app,io)=>{
       socket.disconnect();
       console.log("Disconnected: %s sockets remaining.", connections.length);
     });
+
+    socket.on('createGameRoom', ()=>{
+      
+    })
 
     socket.on('join', function(payload) {
       let newMember = new Player({

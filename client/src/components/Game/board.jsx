@@ -1,6 +1,6 @@
 import React from 'react'
-import {socket} from '../../../actions/socket-listeners/connections'
-import {CARDS} from '../../../actions/types'
+import {socket} from '../../actions/socket-listeners/connections'
+import {CARDS} from '../../actions/types'
 
 const Board = React.createClass({
   generateBoard(){

@@ -1,10 +1,10 @@
 import React from 'react'
 import Display from './parts/display'
-import Join from './parts/join'
+import Join from './landingPage/join'
 import {Link} from 'react-router'
 import {socket} from '../actions/socket-listeners/connections'
 
-const WaitingForPlayers = (props) => {
+const LandingPage = (props) => {
   return (
     <div>
       <Display if={props.status==='connected'}>
@@ -18,7 +18,7 @@ const WaitingForPlayers = (props) => {
 
         <Display if={!props.member.name}>
           <h1>Join the session</h1>
-          <Join />
+          <Join username={props.username}/>
         </Display>
       </Display>
 
@@ -27,4 +27,4 @@ const WaitingForPlayers = (props) => {
   )
 }
 
-export default WaitingForPlayers;
+export default LandingPage;

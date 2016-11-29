@@ -14,3 +14,7 @@ export const UPDATE_CARDS = 'cards';
 export const BOARD = 'board';
 
 
+//LandingPage
+export const SET_USER_NAME = 'set_user_name'
+
+
