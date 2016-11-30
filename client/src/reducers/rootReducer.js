@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux';
 
-import mainReducer from './mainReducer';
+import gameReducer from './gameReducer';
 import landingPageReducer from './landingPageReducer'
 
 export const rootReducer = combineReducers({
   landingPageReducer,
-  mainReducer
+  gameReducer
 });

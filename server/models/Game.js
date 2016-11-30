@@ -12,17 +12,19 @@
     return shuffled
   }
 
-  let Game = function(config){
-    this.players = [];
-    this.room = config.room;
+  let Game = function(room, player){
+    this.players = [player];
+    this.room = room;
     this.board = [];
 
     ////get a fresh deck of cards
-    this.cards = shuffleCards(deckOfCards); 
+    this.cards = null//shuffleCards(deckOfCards); 
     this.playerTurn = null;
 
     //start playing
     this.started = false;
+    this.maxPlayers = 2;
+    this.roomFull = false;
   }
 
   Game.prototype.announce = function(data, socket) {
@@ -31,6 +33,10 @@
     } else {
         io.sockets.in(this.name).emit('announce',data);
     }
+  }
+
+  Game.prototype.isRoomFull = function() {
+    return this.players.length >= this.maxPlayers ? true : false;
   }
 
   Game.prototype.start = function() {

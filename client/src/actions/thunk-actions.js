@@ -1,6 +1,11 @@
 import $ from 'jquery'
 import {socket} from './socket-listeners/connections'
-import {SET_USER_NAME} from './types'
+import {SET_USER_NAME, SET_ROOM_NAME} from './types'
+
+export const generateRoomName = roomName => ({
+  type: SET_ROOM_NAME,
+  payload: roomName
+})
 
 export const generateUserName = username => ({
   type: SET_USER_NAME,
