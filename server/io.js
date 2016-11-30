@@ -4,7 +4,8 @@ module.exports = ((app,io)=>{
   const Game = require('./models/Game')
 
 
-  let games = {}
+  let games = {};
+  let maxPlayers = 1;
   let rooms = ['gameRoom', 'waitingRoom']
   let connections = [];
   let board = [];
@@ -23,43 +24,47 @@ module.exports = ((app,io)=>{
       if (member) {
         players.splice(players.indexOf(member), 1);
         io.sockets.emit('players', players);
-        console.log("Left: %s (%s players members)", member.name, players.length)
+        console.log("Left: %s (%s players members)", member.name, players.length);
       }
-      socket.leave(waitingRoom)
+      socket.leave(waitingRoom);
       connections.splice(connections.indexOf(socket), 1);
       socket.disconnect();
       console.log("Disconnected: %s sockets remaining.", connections.length);
     });
 
-    socket.on('createGameRoom', ()=>{
-      
-    })
-
-    socket.on('join', function(payload) {
+    socket.on('enterGameRoom', (payload)=>{
+      let roomName = payload.roomName;
       let newMember = new Player({
-        id: this.id,
-        name: payload.name, 
+        id: socket.id,
+        name: payload.username, 
       });
-      if(players.length < 7){
-        this.join(gameRoom);
-        players.push(newMember);
-      } else {
-        socket.join(waitingRoom)
-        waitingPlayers.push(newMember);
-        
-      }
-      this.emit('players', players);
-      this.emit('waitingPlayers', waitingPlayers);
-      //console.log(connections.length)
-      this.emit('connections', connections.length)
-      this.emit('joined', newMember);
-      //console.log("Players Joined: %s", payload.name);
+      socket.emit('joined', newMember);
+      // this.emit('players', players);
+      io.sockets.emit('connections', connections.length);
 
-    });
+      //check if the room exist and if so make sure there is space in the room
+      if(games[roomName] && !games[roomName].isRoomFull()){
+        console.log(games[roomName].players)
+        socket.join(roomName)
+        games[roomName].players.push(newMember)
+      } 
+
+      //if room exist but is full. tell player
+      else if (games[roomName] && games[roomName].isRoomFull()) {
+        console.log(roomName)
+          socket.emit('roomFull', true)
+      } else {
+        console.log('new')
+        games[roomName] = new Game(roomName, newMember);
+
+        //tell the person who created the room to invite people
+        socket.emit('invitePlayersToRoom')
+      }
+    })
 
     socket.on('startNew', function(){
       if (waitingPlayers.length >= 1 && players.length < 7){
-        let loopUntil = waitingPlayers.length > 7 ? 7 : waitingPlayers.length 
+        let loopUntil = waitingPlayers.length > 7 ? 7 : waitingPlayers.length;
         for(let i = 0; i < loopUntil; i++){
           //find player and move them to the gameroom
           console.log(waitingPlayers)

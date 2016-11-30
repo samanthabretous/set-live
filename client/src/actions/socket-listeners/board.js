@@ -1,4 +1,4 @@
-import { UPDATE_CARDS } from '../types';
+import { UPDATE_CARDS, PLAYERS } from '../types';
 import {socket} from './connections'
 
 export default (store) => {
@@ -8,4 +8,10 @@ export default (store) => {
       cards
     })
   })
+  socket.on('players', (players)=>{
+    store.dispatch({
+      type: PLAYERS,
+      players
+    })
+  });
 }
