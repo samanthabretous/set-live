@@ -22,6 +22,6 @@ const getRandomName = () => {store.dispatch(generateUserNameAsync())}
 export default (
   <Route path="/" component={AppContainer}>
     <IndexRoute component={LandingPageContainer} onEnter={getRandomName}/>
-    <Route path='game' component={GameContainer}/>
+    <Route path='game/:room' component={GameContainer}/>
   </Route> 
 );

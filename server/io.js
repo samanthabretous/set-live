@@ -18,7 +18,7 @@ module.exports = ((app,io)=>{
   //Connect to the socket
   io.sockets.on('connection', function(socket){
 
-
+    //when socket is disconnected remove player from the connections array
     socket.once('disconnect', function() {
       var member = _.findWhere(players, { id: this.id });
       if (member) {
@@ -28,10 +28,12 @@ module.exports = ((app,io)=>{
       }
       socket.leave(waitingRoom);
       connections.splice(connections.indexOf(socket), 1);
+      //socket.leave(socket.room);
       socket.disconnect();
       console.log("Disconnected: %s sockets remaining.", connections.length);
     });
 
+    //create and/or join a room
     socket.on('enterGameRoom', (payload)=>{
       let roomName = payload.roomName;
       let newMember = new Player({
@@ -39,27 +41,28 @@ module.exports = ((app,io)=>{
         name: payload.username, 
       });
       socket.emit('joined', newMember);
-      // this.emit('players', players);
-      io.sockets.emit('connections', connections.length);
 
       //check if the room exist and if so make sure there is space in the room
       if(games[roomName] && !games[roomName].isRoomFull()){
-        console.log(games[roomName].players)
-        socket.join(roomName)
-        games[roomName].players.push(newMember)
+        socket.join(roomName);
+        games[roomName].players.push(newMember);
+        newMember.addRoom(roomName);
+        io.sockets.in(roomName).emit('players', games[roomName].players );
       } 
 
       //if room exist but is full. tell player
       else if (games[roomName] && games[roomName].isRoomFull()) {
-        console.log(roomName)
-          socket.emit('roomFull', true)
+          socket.emit('roomFull', true);
       } else {
-        console.log('new')
+        socket.join(roomName);
         games[roomName] = new Game(roomName, newMember);
+        newMember.addRoom(roomName);
+        socket.emit('players', games[roomName].players);
 
         //tell the person who created the room to invite people
-        socket.emit('invitePlayersToRoom')
+        socket.emit('invitePlayersToRoom', roomName);
       }
+      console.log(io.nsps['/'].adapter.rooms[roomName])
     })
 
     socket.on('startNew', function(){

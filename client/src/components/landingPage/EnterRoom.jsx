@@ -25,9 +25,10 @@ const EnterRoom = (props) => {
         className="roomName" 
         placeholder="enter a room name..."
         required />
-      <Link to="/game">
+      <Link to={"/game/" + props.roomName}>
         <button to="/game" 
           className="btn btn-primary"
+          disabled={!props.roomName}
           onClick={joinRoom}>
           Enter Room
         </button>

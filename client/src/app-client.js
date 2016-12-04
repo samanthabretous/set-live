@@ -8,6 +8,8 @@ import routes from './routes'
 import ConnectionsSocketListeners from './actions/socket-listeners/connections'
 import BoardSocketListeners from './actions/socket-listeners/board'
 
+require('../css/app.scss')
+
 ConnectionsSocketListeners(store)
 BoardSocketListeners (store)
 

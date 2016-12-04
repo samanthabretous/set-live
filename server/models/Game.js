@@ -1,24 +1,14 @@
 (function() {
   const deckOfCards = require('../game/card_deck')
-
-  let shuffleCards = (cards) => {
-    let shuffled = [];
-    for(let i = cards.length; i > 0; i--) {
-      let randomInd = Math.floor(Math.random()*cards.length);
-      let randomCard = cards[randomInd];
-      shuffled.push(randomCard);
-      cards.splice(randomInd, 1);
-    }
-    return shuffled
-  }
+  const boardFunctions = require('../game/boardFunctions')
 
   let Game = function(room, player){
     this.players = [player];
     this.room = room;
-    this.board = [];
+    this.board = boardFunctions.generateBoard(12);
 
     ////get a fresh deck of cards
-    this.cards = null//shuffleCards(deckOfCards); 
+    this.cards = boardFunctions.shuffleCards(deckOfCards); 
     this.playerTurn = null;
 
     //start playing
@@ -41,12 +31,10 @@
 
   Game.prototype.start = function() {
     this.started = true;
+
+    //select a random player to start the game
     let random = Math.floor(Math.random()*this.players.length)
-    let player = this.players[random];
-    this.turn = {
-        id : player.id,
-        name : player.name
-    };
+    this.turn = this.players[random]
     //this.handCardsAndCoins();
     //this.announce({what : 'started', turn: this.turn})
   }
@@ -62,84 +50,22 @@
 
   }
 
-  Game.prototype
+  Game.prototype.fillBoard = function(board) {
+    let filled = board.map(slot => {
+
+      //check to see if spot is empty
+      if (null === slot) {
+        let firstCard = this.cards[0]
+        this.cards.splice(0,1)
+
+        //fill spot with the next card in the deck
+        return firstCard
+      } else {
+        return slot
+      }
+    })
+  }
 
   module.exports = Game
 
 })();
-
-
-// rooms[roomName] = {
-
-//             player : function(id) {
-//                 for (var i in this.players){
-//                     if (this.players[i].id === id) return this.players[i];
-//                 }
-//                 return null;
-//             },
-//             announce : function(data, socket) {
-//                 if (socket) {
-//                     socket.broadcast.to(this.name).emit('announce', data);
-//                 } else {
-//                     io.sockets.in(this.name).emit('announce',data);
-//                 }
-//             },
-//             start : function() {
-//                 this.started = true;
-//                 var p = this.players[0];
-//                 this.turn = {
-//                     id : p.id,
-//                     name : p.name
-//                 };
-//                 this.handCardsAndCoins();
-//                 this.announce({what : 'started', turn: this.turn})
-//             },
-//             handCardsAndCoins : function() {
-//                 for (var i in this.players) {
-//                     var player = this.players[i];
-//                     var card_1 = this.deck.shift();
-//                     var card_2 = this.deck.shift();
-//                     player.lost = false;
-//                     player.coins = 2;
-//                     player.cards = [
-//                         {
-//                             id : "first",
-//                             flipped : false,
-//                             type : card_1
-//                         },
-//                         {
-//                             id : "second",
-//                             flipped : false,
-//                             type : card_2
-//                         }
-//                     ];
-//                     player.has = function(card) {
-//                         if (!this.cards[0].flipped && this.cards[0].type === card) {
-//                             return true;
-//                         } else if (!this.cards[1].flipped && this.cards[1].type === card) {
-//                             return true;
-//                         }
-//                         return false;
-//                     };
-//                     player.flip = function(card) {
-//                         var flipped;
-//                         if (!this.cards[0].flipped && (this.cards[0].type === card || this.cards[0].id === card)) {
-//                             this.cards[0].flipped = true;
-//                             flipped = [ this.cards[0] ];
-//                         } else if (!this.cards[1].flipped && (this.cards[1].type === card || this.cards[1].id === card)) {
-//                             this.cards[1].flipped = true;
-//                             flipped = [ this.cards[1] ];
-//                         } else if (card === 'both'){
-//                             this.cards[0].flipped = true;
-//                             this.cards[1].flipped = true;
-//                             flipped = this.cards;
-//                         }
-
-//                         this.lost = this.cards[0].flipped && this.cards[1].flipped;
-//                         return flipped;
-//                     };
-//                     var s = sockets[player.id];
-//                     s.emit('hand-cards', player.cards);
-//                 }
-//             }
-//         };

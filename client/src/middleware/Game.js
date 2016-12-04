@@ -4,11 +4,13 @@ import {connect} from 'react-redux'
 const appToState = state => {
 return {
   member: state.landingPageReducer.member,
-  amountOfConnections: state.landingPageReducer.amountOfConnections,
+  roomName: state.gameReducer.roomName,
   players: state.gameReducer.players,
   board: state.gameReducer.board,
   cards: state.gameReducer.cards, 
-  amountOfCardsOnBoard: state.gameReducer.amountOfCardsOnBoard
+  amountOfCardsOnBoard: state.gameReducer.amountOfCardsOnBoard,
+  modalStatus: state.gameReducer.modalStatus,
+
 }}
 
 
