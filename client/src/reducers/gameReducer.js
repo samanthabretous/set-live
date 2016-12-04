@@ -12,15 +12,12 @@ const INTIAL_STATE = {
 export default function(state = INTIAL_STATE, action) {
   switch(action.type){
     case PLAYERS: 
-      return Object.assign({}, state, {players: action.players});
     case INVITE_PLAYERS: 
-      return Object.assign({}, state, {roomName: action.roomName});
     case UPDATE_CARDS: 
-      return Object.assign({}, state, {cards: action.cards});
     case BOARD: 
-      return Object.assign({}, state, {board: action.board});
     case MODAL_STATUS: 
-      return Object.assign({}, state, {modalStatus: action.payload});
+      let key = Object.keys(action)[1]
+      return Object.assign({}, state, {[key]: action[key]});
     default: 
       return state
   }

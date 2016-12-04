@@ -13,17 +13,12 @@ const INTIAL_STATE = {
 export default function(state = INTIAL_STATE, action) {
   switch(action.type){
     case ADD_MEMBER: 
-      return Object.assign({}, state, {member: action.member});
     case CHANGE_STATUS: 
-      return Object.assign({}, state, {status: action.status});
     case ROOM_STATUS: 
-      return Object.assign({}, state, {roomStatus: action.roomStatus});
     case SET_USER_NAME: 
-      return Object.assign({}, state, {username: action.payload})
     case SET_ROOM_NAME: 
-      return Object.assign({}, state, {roomName: action.payload})
-    case CONNECTIONS: 
-      return Object.assign({}, state, {amountOfConnections: action.amountOfConnections});
+      let key = Object.keys(action)[1]
+      return Object.assign({}, state, {[key]: action[key]});
     default: 
       return state
   }

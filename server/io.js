@@ -34,7 +34,7 @@ module.exports = ((app,io)=>{
     });
 
     //create and/or join a room
-    socket.on('enterGameRoom', (payload)=>{
+    socket.on('enterGameRoom', (payload) => {
       let roomName = payload.roomName;
       let newMember = new Player({
         id: socket.id,
@@ -42,12 +42,12 @@ module.exports = ((app,io)=>{
       });
       socket.emit('joined', newMember);
 
-      //check if the room exist and if so make sure there is space in the room
+      //check if the room exist and make sure there is space in the room
       if(games[roomName] && !games[roomName].isRoomFull()){
         socket.join(roomName);
         games[roomName].players.push(newMember);
         newMember.addRoom(roomName);
-        io.sockets.in(roomName).emit('players', games[roomName].players );
+        io.sockets.in(roomName).emit('players', games[roomName].players);
       } 
 
       //if room exist but is full. tell player
@@ -62,54 +62,45 @@ module.exports = ((app,io)=>{
         //tell the person who created the room to invite people
         socket.emit('invitePlayersToRoom', roomName);
       }
-      console.log(io.nsps['/'].adapter.rooms[roomName])
     })
 
-    socket.on('startNew', function(){
-      if (waitingPlayers.length >= 1 && players.length < 7){
-        let loopUntil = waitingPlayers.length > 7 ? 7 : waitingPlayers.length;
-        for(let i = 0; i < loopUntil; i++){
-          //find player and move them to the gameroom
-          console.log(waitingPlayers)
-          console.log(players)
-          let playerId = waitingPlayers[i].id
-          let clients = io.of('/').in(waitingRoom)
-          let player = clients.sockets[playerId]
-          //let roomWait = clients.sockets[playerId].adapter.rooms
-          if(player){
-            player.leave(waitingRoom)
-            player.join(gameRoom)
-            //console.log(player.nsp.adapter.rooms)
-            players.push(waitingPlayers[i])
-            io.to(gameRoom).emit('message', gameRoom)
-            waitingPlayers.shift()
-          }
-        }
-
-        io.sockets.emit('waitingPlayers', waitingPlayers);
-        io.sockets.emit('players', players);
+    socket.on('startNewGame', roomName => {
+      if(games[roomName]){
+        let game = games[roomName]
+        game.dealCards(io)
       }
     })
 
-    socket.on('loadBoard', (newBoard) => {
-      board = [...board, newBoard]
-      io.emit('boardLoad', board)
-    })
+    // socket.on('startNew', function(){
+    //   if (waitingPlayers.length >= 1 && players.length < 7){
+    //     let loopUntil = waitingPlayers.length > 7 ? 7 : waitingPlayers.length;
+    //     for(let i = 0; i < loopUntil; i++){
+    //       //find player and move them to the gameroom
+    //       console.log(waitingPlayers)
+    //       console.log(players)
+    //       let playerId = waitingPlayers[i].id
+    //       let clients = io.of('/').in(waitingRoom)
+    //       let player = clients.sockets[playerId]
+    //       //let roomWait = clients.sockets[playerId].adapter.rooms
+    //       if(player){
+    //         player.leave(waitingRoom)
+    //         player.join(gameRoom)
+    //         //console.log(player.nsp.adapter.rooms)
+    //         players.push(waitingPlayers[i])
+    //         io.to(gameRoom).emit('message', gameRoom)
+    //         waitingPlayers.shift()
+    //       }
+    //     }
+
+    //     io.sockets.emit('waitingPlayers', waitingPlayers);
+    //     io.sockets.emit('players', players);
+    //   }
+    // })
+      //console.log(io.nsps['/'].adapter.rooms[that.room])
 
     //refactor this to work with the newMember variable
     socket.on('new message', (msg) => {
       io.emit('received message', msg)
-    })
-
-    //come back to this
-    socket.emit('board', {
-      board: board
-    })
-    
-    socket.on('cards', (cards) => {
-      playingCards.push(...cards.cards)
-      //console.log(cards.cards)
-      io.sockets.emit('updateCards', {cards: playingCards})
     })
 
     // when a new client window is connected

@@ -6,7 +6,7 @@ import store from './store'
 import routes from './routes'
 
 import ConnectionsSocketListeners from './actions/socket-listeners/connections'
-import BoardSocketListeners from './actions/socket-listeners/board'
+import BoardSocketListeners from './actions/socket-listeners/game-connections'
 
 require('../css/app.scss')
 

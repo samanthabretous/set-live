@@ -19,6 +19,7 @@ const generateBoard = (cardsToDisplay) => {
   for(let i = 0; i < cardsToDisplay; i++){
     board.push(null)
   }
+  return board
 }
 
 module.exports = {
