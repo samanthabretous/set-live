@@ -5,7 +5,6 @@ export const socket = io.connect();
 
 export default (store) => {
   socket.on('connect', () =>{
-    console.log('connect')
     store.dispatch({
       type: CHANGE_STATUS,
       status: 'connected'
@@ -19,15 +18,7 @@ export default (store) => {
     })
   });
 
-  socket.on('board', () => {
-    //come back to this
-    store.dispatch({
-      type: SHOW_BOARD
-    })
-  });
-
   socket.on('joined', (member) =>{
-    console.log(member)
     sessionStorage.member = JSON.stringify(member);
     store.dispatch({
       type: ADD_MEMBER,

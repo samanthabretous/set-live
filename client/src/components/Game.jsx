@@ -1,11 +1,13 @@
 import React from 'react'
+import store from '../store'
+import {socket} from '../actions/socket-listeners/connections'
+
 import Display from './parts/display'
-// import Board from './Game/board';
+import Board from './Game/Board';
 import ChatBar from './Game/chatBar';
 import InvitePlayers from './Game/InvitePlayers'
 import Modal from './parts/Modal'
 import {MODAL_STATUS} from '../actions/types'
-import store from '../store'
 
 const Game = React.createClass({
   componentDidMount(){
@@ -13,14 +15,15 @@ const Game = React.createClass({
       console.log('timeout')
       store.dispatch({
         type: MODAL_STATUS, 
-        payload: false
+        modalStatus: false
       }) 
     }, 2000)
   },
-
+  startGame(roomName){
+    console.log('start')
+    socket.emit('startNewGame', roomName)
+  },
   render(){
-    console.log(this.props.modalStatus)
-    console.log(this.props.roomName)
     return (
       <div>
         <Display if={this.props.member.name}>
@@ -28,10 +31,14 @@ const Game = React.createClass({
           <p>{this.props.players.length} players connected to Room: {this.props.roomName}</p>
           {this.props.players.map((player, index)=> <p key={index}>PLAYER {index + player.name}</p>)}
         </Display>
+        <button onClick={()=> this.startGame(this.props.roomName)}>Start New Game</button>
         <Display if={this.props.roomName && this.props.modalStatus} >
           <Modal transitionName="modal-anim">
             <InvitePlayers />
           </Modal>
+        </Display>
+        <Display if={this.props.board.length > 0} >
+          <Board board={this.props.board}/>
         </Display>
       </div>
     )
@@ -39,11 +46,3 @@ const Game = React.createClass({
 })
 
 export default Game;
-
-
-       // <Board 
-        //   board={this.props.board}
-        //   cards={this.props.cards}
-        //   amountOfCardsOnBoard={this.props.amountOfCardsOnBoard}
-        // />
-        // <ChatBar />

@@ -6,7 +6,6 @@ export const PLAYERS = 'players';
 
 
 export const UPDATE_CARDS = 'cards';
-export const BOARD = 'board';
 
 
 //LandingPage
@@ -17,9 +16,9 @@ export const CHANGE_STATUS = 'change_status';
 export const ROOM_STATUS = 'room_status';
 
 //GAME PAGE
-
 export const INVITE_PLAYERS = 'invite_players'
 export const MODAL_STATUS = 'modal-status'
+export const BOARD = 'board';
 
 
 

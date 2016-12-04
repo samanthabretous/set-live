@@ -1,4 +1,4 @@
-import { UPDATE_CARDS, PLAYERS, INVITE_PLAYERS } from '../types';
+import { UPDATE_CARDS, PLAYERS, INVITE_PLAYERS, BOARD } from '../types';
 import {socket} from './connections'
 
 export default (store) => {
@@ -9,7 +9,6 @@ export default (store) => {
     })
   })
   socket.on('players', players =>{
-    console.log(players)
     store.dispatch({
       type: PLAYERS,
       players
@@ -20,6 +19,13 @@ export default (store) => {
     store.dispatch({
       type: INVITE_PLAYERS,
       roomName
+    })
+  })
+
+  socket.on('board', board => {
+    store.dispatch({
+      type: BOARD,
+      board
     })
   })
 }

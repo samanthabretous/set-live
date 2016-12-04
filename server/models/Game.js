@@ -17,11 +17,11 @@
     this.roomFull = false;
   }
 
-  Game.prototype.announce = function(data, socket) {
+  Game.prototype.announcePlayers = function(socket, data) {
     if (socket) {
-        socket.broadcast.to(this.name).emit('announce', data);
+        socket.broadcast.to(this.room).emit('players', data);
     } else {
-        io.sockets.in(this.name).emit('announce',data);
+        io.sockets.in(this.room).emit('players', data);
     }
   }
 
@@ -46,12 +46,9 @@
     return null;
   }
 
-  Game.prototype.dealCards = function() {
-
-  }
-
-  Game.prototype.fillBoard = function(board) {
-    let filled = board.map(slot => {
+  Game.prototype.dealCards = function(io) {
+    let that = this;
+    let fillBoard = this.board.map(slot => {
 
       //check to see if spot is empty
       if (null === slot) {
@@ -64,6 +61,17 @@
         return slot
       }
     })
+    this.board = fillBoard;
+
+    let promise = new Promise((resolve, reject) => {
+      if (this.board[0] !== null) resolve(that.board);
+      else reject(Error("It broke"));
+    });
+
+    promise.then((result)=>{
+      io.sockets.in(that.room).emit('board', result);
+    })
+    .catch(err => console.log(err))
   }
 
   module.exports = Game
