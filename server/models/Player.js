@@ -4,9 +4,13 @@
     this.name = config.name;
     this.cards = null;
     this.lost = false;
-    
+    this.room = null
   }
 
-  module.exports = Player
+  Player.prototype.addRoom = function (roomName) {
+    return this.room = roomName;
+  }
+
+  module.exports = Player;
 
 })();

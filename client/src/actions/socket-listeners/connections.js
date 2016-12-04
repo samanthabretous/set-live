@@ -1,7 +1,6 @@
 import { ADD_MEMBER, CHANGE_STATUS, SHOW_BOARD, ROOM_STATUS, PLAYERS} from '../types';
 
 import io from 'socket.io-client';
-// export const socket = io(window.location.hostname + ':4000');
 export const socket = io.connect();
 
 export default (store) => {
@@ -35,9 +34,6 @@ export default (store) => {
       member
     })
   });
-  socket.on('connections', (connections)=>{
-    console.log(connections)
-  })
 
   socket.on('roomFull', (roomStatus)=>{
     store.dispatch({
