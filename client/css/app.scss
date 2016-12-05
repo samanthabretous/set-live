@@ -1,5 +1,9 @@
+@import '_variables';
+@import 'setLogo';
+
+
 body {
-  background: red;
+  background-color: $yellow;
 }
 
 .board{
@@ -16,7 +20,6 @@ body {
   border-radius: 10px;
 
 }
-
 
 .modal-anim-enter {
     opacity: 0.00;

@@ -1,0 +1,59 @@
+  .st0{opacity:0.5;fill:#651A65;}
+  .st1{fill:url(#SVGID_1_);}
+  .st2{fill:url(#SVGID_2_);}
+  .st3{fill:url(#SVGID_3_);}
+  .st4{fill:url(#SVGID_4_);}
+  .st5{fill:#C9C6CF;}
+  .st6{fill:#FFFFFF;}
+  .st7{fill:#621967;}
+  .st8{fill:#651A65;}
+  .st9{fill:none;stroke:#621967;stroke-width:9;stroke-miterlimit:10;}
+  .st10{fill:#A8A9AD;}
+
+
+#slogan .st6{
+  animation: biggify 250ms 2 alternate;
+}
+
+
+@keyframes biggify {
+  0% {
+    transform: scale(1);
+  }
+  100%{
+    transform: scale(1.02)
+  }
+}
+
+#sloganF .st6{
+  animation-delay: 150ms;
+}
+#sloganA2 .st6{
+  animation-delay: 300ms;
+}
+#sloganM .st6{
+  animation-delay: 450ms;
+}
+#sloganI .st6{
+  animation-delay: 600ms;
+}
+#sloganL .st6{
+  animation-delay: 750ms;
+}
+#sloganY .st6{
+  animation-delay: 900ms;
+}
+#sloganG .st6{
+  animation-delay: 1050ms;
+}
+#sloganA3 .st6{
+  animation-delay: 1200ms;
+}
+#sloganM2 .st6{
+  animation-delay: 1350ms;
+}
+#sloganE .st6{
+  animation-delay: 1500ms;
+}
+
+
