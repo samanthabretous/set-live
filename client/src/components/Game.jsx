@@ -9,6 +9,8 @@ import InvitePlayers from './Game/InvitePlayers'
 import Modal from './parts/Modal'
 import {MODAL_STATUS} from '../actions/types'
 
+import isSetOnBoard from './Game/isSetOnBoard'
+
 const Game = React.createClass({
   componentDidMount(){
     setTimeout(() => {
@@ -22,6 +24,9 @@ const Game = React.createClass({
   startGame(roomName){
     console.log('start')
     socket.emit('startNewGame', roomName)
+  },
+  isSet(){
+    console.log(isSetOnBoard(this.props.board))
   },
   render(){
     return (
@@ -37,6 +42,7 @@ const Game = React.createClass({
             <InvitePlayers />
           </Modal>
         </Display>
+        <button onClick={this.isSet}></button>
         <Display if={this.props.board.length > 0} >
           <Board board={this.props.board}/>
         </Display>

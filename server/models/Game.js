@@ -13,7 +13,7 @@
 
     //start playing
     this.started = false;
-    this.maxPlayers = 2;
+    this.maxPlayers = 6;
     this.roomFull = false;
   }
 
@@ -53,7 +53,9 @@
       //check to see if spot is empty
       if (null === slot) {
         let firstCard = this.cards[0]
-        this.cards.splice(0,1)
+        //if(this.cards.length > 0){
+          this.cards.splice(0,1)
+        //}
 
         //fill spot with the next card in the deck
         return firstCard
@@ -64,7 +66,7 @@
     this.board = fillBoard;
 
     let promise = new Promise((resolve, reject) => {
-      if (this.board[0] !== null) resolve(that.board);
+      if (this.board[0] !== null) resolve(this.board);
       else reject(Error("It broke"));
     });
 
