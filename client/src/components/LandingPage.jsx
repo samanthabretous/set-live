@@ -5,8 +5,7 @@ import EnterRoom from './landingPage/EnterRoom'
 
 const LandingPage = (props) => {
   return (
-    <div>
-      <h1>Join the session</h1>
+    <div className="landingPage">
       <Join username={props.username}/>
       <EnterRoom 
         roomName={props.roomName} 

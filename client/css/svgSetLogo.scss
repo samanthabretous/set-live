@@ -1,0 +1,99 @@
+ /*SVG LOGO*/
+
+  .st0{fill:none;stroke:#621967;stroke-width:6;stroke-miterlimit:10;}
+  .st1{opacity:0.5;fill:#651A65;}
+  .st2{fill:url(#SVGID_1_);}
+  .st3{fill:url(#SVGID_2_);}
+  .st4{fill:url(#SVGID_3_);}
+  .st5{fill:url(#SVGID_4_);}
+  .st6{fill:#C9C6CF;}
+  .st7{fill:#FFFFFF;}
+  .st8{fill:#621967;}
+  .st9{fill:#651A65;}
+  .st10{fill:none;stroke:#621967;stroke-width:9;stroke-miterlimit:10;}
+  .st11{fill:#A8A9AD;}
+
+#slogan .st7{
+  transform-origin: 100% 100%;
+  animation: biggify 250ms 2 alternate;
+}
+
+
+@keyframes biggify {
+  0% {
+    transform: scale(1);
+  }
+  100%{
+    transform: scale(1.25)
+  }
+}
+
+$sloganDelay: 2.5s;
+
+#sloganA1 .st7{
+  animation-delay: $sloganDelay;
+}
+#sloganF .st7{
+  animation-delay: $sloganDelay + 150ms;
+}
+#sloganA2 .st7{
+  animation-delay: $sloganDelay + 300ms;
+}
+#sloganM1 .st7{
+  animation-delay: $sloganDelay + 450ms;
+}
+#sloganI .st7{
+  animation-delay: $sloganDelay + 600ms;
+}
+#sloganL .st7{
+  animation-delay: $sloganDelay + 750ms;
+}
+#sloganY .st7{
+  animation-delay: $sloganDelay + 900ms;
+}
+#sloganG .st7{
+  animation-delay: $sloganDelay + 1050ms;
+}
+#sloganA3 .st7{
+  animation-delay: $sloganDelay + 1200ms;
+}
+#sloganM2 .st7{
+  animation-delay: $sloganDelay + 1350ms;
+}
+#sloganE .st7{
+  animation-delay: $sloganDelay + 1500ms;
+}
+
+#setLogo{
+  transform-origin: 50% 50%;
+  animation: larger 500ms 1 alternate;
+}
+
+@keyframes larger {
+  0% {
+    transform: scale(0.02);
+  }
+  80% {
+    transform: scale(1.25);
+  }
+  100%{
+    transform: scale(1);  
+  }
+}
+
+.st0 {
+  stroke-dasharray: 2500;
+  stroke-dashoffset:20;
+  animation: dash 3.25s linear forwards;
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 2500;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+

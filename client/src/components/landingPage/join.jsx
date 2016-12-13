@@ -8,11 +8,10 @@ const Join = (props) => {
   };
   return (
     <form action="javascript:void(0)">
-      <label> Full name </label>
       {props.username ?
       <input 
         onChange={handleChange}
-        className="userName" 
+        className="userName landingInput" 
         placeholder="enter your full name..."
         defaultValue={props.username}
         required /> 

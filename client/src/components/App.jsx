@@ -1,16 +1,23 @@
 import React from 'react';
 import ReactDOM from "react-dom";
-import io from 'socket.io-client';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import store from '../store'
 import SetLogo from '../../images/set_logo.svg';
 
 
 const App = (props) => {
+  console.log(props.params.room)
   return (
-    <div>
-      <SetLogo />  
-      {props.status =='connected' ? <h1>Connected</h1> : null}
-      {props.children}
+    <div className="app">
+      <div className={(props.params.room ? "logoTransition" : "set_logo")}>
+        <SetLogo /> 
+      </div> 
+      <ReactCSSTransitionGroup 
+        transitionName="pageSlider"
+        transitionEnterTimeout={600} 
+        transitionLeaveTimeout={600}>
+        {props.children}
+      </ReactCSSTransitionGroup>
     </div>
   )
 }
