@@ -2,17 +2,14 @@ import React from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 const Modal = (props) => {
-  let closeModal = () =>{
-  }
+  console.log(props.transitionName)
   return (
     <ReactCSSTransitionGroup 
-      transitionName={props.transitionName}    
-      transitionEnter={false}
-      transitionLeave={false}
+      transitionName="modal-anim"    
+      transitionEnterTimeout={600}
+      transitionLeaveTimeout={600}
     >
-      <div className="modal">
-        {props.children}
-      </div>
+      {props.children}
     </ReactCSSTransitionGroup>
   )
 }

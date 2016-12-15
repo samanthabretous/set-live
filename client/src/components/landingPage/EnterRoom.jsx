@@ -19,10 +19,9 @@ const EnterRoom = (props) => {
 
   return (
     <form action="javascript:void(0)" >
-      <label> Room Name </label>
       <input 
         onChange={handleChange}
-        className="roomName" 
+        className="roomName landingInput" 
         placeholder="enter a room name..."
         required />
       <Link to={"/game/" + props.roomName}>

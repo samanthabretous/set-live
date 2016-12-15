@@ -1,0 +1,32 @@
+.modal{
+  background: white;
+  position: fixed;
+  z-index: 3;
+  top: 50%;
+  left:50%;
+  width: 50%;
+  height: 40%;
+  border-radius: 25px;
+  transform: translate(-50%,-50%);
+}
+
+.modal-anim-enter {
+  opacity: 0.00;
+  transform: scale(0.7);
+  transition: all 5s;
+}
+
+.modal-anim-enter.modal-anim-enter-active {
+  opacity: 1;
+  transform: scale(1);
+}
+.modal-anim-leave {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.2s;
+}
+
+.modal-anim-leave.modal-anim-leave-active {
+  opacity: 0.00;
+  transform: scale(0.7);
+}

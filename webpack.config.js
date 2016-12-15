@@ -17,6 +17,10 @@ module.exports = {
         exclude: /(node_modules|app-server.js)/,
         loaders: [
           'babel?presets[]=react,presets[]=es2015'],
+      },
+      { 
+        test: /\.svg$/, 
+        loader: 'babel?presets[]=es2015,presets[]=react!svg-react' 
       }
     ]
   },
