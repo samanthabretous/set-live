@@ -23,7 +23,7 @@ const Game = React.createClass({
     }, 5000)
   },
   startGame(roomName){
-    console.log('start')
+    console.log(roomName)
     socket.emit('startNewGame', roomName)
   },
   isSet(){
@@ -37,7 +37,7 @@ const Game = React.createClass({
           <p>{this.props.players.length} players connected to Room: {this.props.roomName}</p>
           {this.props.players.map((player, index)=> <p key={index}>PLAYER {index + player.name}</p>)}
         </Display>
-        <button onClick={()=> this.startGame(this.props.roomName)}>Start New Game</button>
+        <button onClick={()=> this.startGame(this.props.member.room)}>Start New Game</button>
         {
           this.props.roomName && this.props.modalStatus 
           ?
