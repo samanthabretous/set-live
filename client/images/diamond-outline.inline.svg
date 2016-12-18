@@ -2,10 +2,9 @@
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="241.333px" height="489.333px" viewBox="0 0 241.333 489.333" style="enable-background:new 0 0 241.333 489.333;"
+	 width="241.333px" height="489.332px" viewBox="0 0 241.333 489.332" enable-background="new 0 0 241.333 489.332"
 	 xml:space="preserve">
-<g>
-	<path d="M223.975,367.717c0,57.055-46.252,103.309-103.308,103.309c-57.055,0-103.309-46.254-103.309-103.309V121.617
-		c0-57.056,46.254-103.309,103.309-103.309c57.056,0,103.308,46.252,103.308,103.309V367.717z"/>
-</g>
+<path class="cardShape" d="M120.667,33.092l103.246,211.574L120.667,456.24L17.422,244.666L120.667,33.092 M120.667,12.57
+	L7.488,244.501H7.327l0.08,0.165l-0.08,0.165h0.161l113.179,231.931l113.179-231.931h0.16l-0.08-0.165l0.08-0.165h-0.16
+	L120.667,12.57L120.667,12.57z"/>
 </svg>

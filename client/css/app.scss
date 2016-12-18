@@ -25,7 +25,17 @@ body {
 
 }
 
-
+.card {
+  .red {
+    fill: $red !important;
+  }
+  .green {
+    fill: $green !important;
+  }
+  .purple {
+    fill: $purple !important;
+  }
+}
 
 .board{
   width: 80vw;
