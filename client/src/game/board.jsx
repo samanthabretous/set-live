@@ -18,7 +18,7 @@ const Board = (props) => {
        let Special = cardComponents[slot.shape + '-' + slot.shade]
        let number = []
       for(let j = 0; j < slot.number; j++){
-        number.push(<Special key={j} className={slot.color}/>)
+        number.push(<Special key={j} className={"shapes " +slot.color}/>)
       }
       return (
         <div className="card" key={i}>

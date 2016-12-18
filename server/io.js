@@ -61,7 +61,7 @@ module.exports = ((app,io)=>{
         //tell the person who created the room to invite people
         socket.emit('invitePlayersToRoom', roomName);
       }
-      console.log(newMember)
+
       socket.emit('joined', newMember);
     })
 
