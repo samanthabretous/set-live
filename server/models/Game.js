@@ -71,6 +71,7 @@
     });
 
     promise.then((result)=>{
+      console.log(result[0])
       io.sockets.in(that.room).emit('board', result);
     })
     .catch(err => console.log(err))

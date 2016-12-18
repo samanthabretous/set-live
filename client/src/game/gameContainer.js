@@ -14,4 +14,4 @@ return {
 }}
 
 
-export default connect(appToState)(Game)
+export default connect(appToState, mapDispatchToProps)(Game)
