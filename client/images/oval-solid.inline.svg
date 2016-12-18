@@ -2,10 +2,10 @@
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="241.333px" height="489.333px" viewBox="0 0 241.333 489.333" style="enable-background:new 0 0 241.333 489.333;"
+	 width="241.333px" height="489.332px" viewBox="0 0 241.333 489.332" enable-background="new 0 0 241.333 489.332"
 	 xml:space="preserve">
-<g>
-	<polygon points="233.926,244.667 234.006,244.501 233.846,244.501 120.667,12.57 7.488,244.501 7.327,244.501 7.407,244.667 
-		7.327,244.831 7.488,244.831 120.667,476.762 233.846,244.831 234.006,244.831 	"/>
+<g class="cardShape">
+	<path d="M223.975,367.717c0,57.055-46.252,103.309-103.308,103.309c-57.055,0-103.309-46.254-103.309-103.309
+		v-246.1c0-57.057,46.254-103.31,103.309-103.31c57.056,0,103.308,46.252,103.308,103.31V367.717z"/>
 </g>
 </svg>
