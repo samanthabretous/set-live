@@ -1,9 +1,9 @@
 import React from 'react'
 import {Link} from 'react-router'
 
-import {socket} from '../../actions/socket-listeners/connections'
-import store from '../../store'
-import {generateRoomName} from '../../actions/thunk-actions'
+import {socket} from '../actions/socket-listeners/connections'
+import store from '../store'
+import {generateRoomName} from '../actions/thunk-actions'
 
 const EnterRoom = (props) => {
   let handleChange = (event) => {

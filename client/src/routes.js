@@ -8,10 +8,9 @@ import { Route, IndexRoute } from 'react-router';
 // Import the different components that will represent the different pages
 // of our website.
 //====================
-import AppContainer from './middleware/AppContainer'
-import LandingPageContainer from './middleware/LandingPage'
-import GameContainer from './middleware/Game'
-import Game from './components/Game'
+import AppContainer from './app/appContainer'
+import LandingPageContainer from './landingPage/landingPageContainer'
+import GameContainer from './game/gameContainer'
 
 //Redux
 import store from './store'

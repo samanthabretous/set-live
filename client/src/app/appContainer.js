@@ -1,4 +1,4 @@
-import App from '../components/App'
+import App from './App'
 import {connect} from 'react-redux'
 
 const appToState = state => ({

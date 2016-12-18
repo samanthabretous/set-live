@@ -1,6 +1,6 @@
 import React from 'react'
-import store from '../../store'
-import {generateUserName} from '../../actions/thunk-actions'
+import store from '../store'
+import {generateUserName} from '../actions/thunk-actions'
 
 const Join = (props) => {
   let handleChange = (event) => {
@@ -8,14 +8,12 @@ const Join = (props) => {
   };
   return (
     <form action="javascript:void(0)">
-      {props.username ?
       <input 
         onChange={handleChange}
         className="userName landingInput" 
         placeholder="enter your full name..."
-        defaultValue={props.username}
+        defaultValue={props.username ? props.username : ""}
         required /> 
-      : null }
     </form>
   )
   
