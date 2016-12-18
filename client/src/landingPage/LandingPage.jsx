@@ -1,7 +1,7 @@
 import React from 'react'
-import Display from './parts/display'
-import Join from './landingPage/Join'
-import EnterRoom from './landingPage/EnterRoom'
+import Display from '../app/Display'
+import Join from './Join'
+import EnterRoom from './EnterRoom'
 
 const LandingPage = (props) => {
   return (

@@ -3,14 +3,14 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import store from '../store'
 import {socket} from '../actions/socket-listeners/connections'
 
-import Display from './parts/display'
-import Board from './Game/Board';
-import ChatBar from './Game/chatBar';
-import InvitePlayers from './Game/InvitePlayers'
-import Modal from './parts/Modal'
+import Display from '../app/Display'
+import Board from './Board';
+import ChatBar from './chatBar';
+import InvitePlayers from './InvitePlayers'
+import Modal from '../app/Modal'
 import {MODAL_STATUS} from '../actions/types'
 
-import isSetOnBoard from './Game/isSetOnBoard'
+import isSetOnBoard from './isSetOnBoard'
 
 const Game = React.createClass({
   componentDidMount(){

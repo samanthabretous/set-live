@@ -4,7 +4,7 @@
     number: 1,
     color: 'red',
     shade: 'solid',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
   {
@@ -12,7 +12,7 @@
     number: 2,
     color: 'red',
     shade: 'solid',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
   {
@@ -20,16 +20,16 @@
     number: 3,
     color: 'red',
     shade: 'solid',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
-  // SOLID GREEN squigglesS
+  // SOLID GREEN squiggleS
   {
     card: 4,
     number: 1,
     color: 'green',
     shade: 'solid',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
   {
@@ -37,7 +37,7 @@
     number: 2,
     color: 'green',
     shade: 'solid',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
   {
@@ -45,16 +45,16 @@
     number: 3,
     color: 'green',
     shade: 'solid',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
-  // SOLID PURPLE squigglesS
+  // SOLID PURPLE squiggleS
   {
     card: 7,
     number: 1,
     color: 'purple',
     shade: 'solid',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
   {
@@ -62,7 +62,7 @@
     number: 2,
     color: 'purple',
     shade: 'solid',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
   {
@@ -70,7 +70,7 @@
     number: 3,
     color: 'purple',
     shade: 'solid',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
   // SOLID RED DIAMONDS
@@ -229,14 +229,14 @@
     shape: 'oval'
   },
 
-  // STRIPED RED squiggles
+  // STRIPED RED squiggle
 
    {
     card: 28,
     number: 1,
     color: 'red',
     shade: 'striped',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
    {
@@ -244,7 +244,7 @@
     number: 2,
     color: 'red',
     shade: 'striped',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
    {
@@ -252,17 +252,17 @@
     number: 3,
     color: 'red',
     shade: 'striped',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
-  // STRIPED GREEN squiggles
+  // STRIPED GREEN squiggle
 
    {
     card: 31,
     number: 1,
     color: 'green',
     shade: 'striped',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
    {
@@ -270,7 +270,7 @@
     number: 2,
     color: 'green',
     shade: 'striped',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
    {
@@ -278,17 +278,17 @@
     number: 3,
     color: 'green',
     shade: 'striped',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
-  // STRIPED PURPLE squiggles
+  // STRIPED PURPLE squiggle
 
    {
     card: 34,
     number: 1,
     color: 'purple',
     shade: 'striped',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
    {
@@ -296,7 +296,7 @@
     number: 2,
     color: 'purple',
     shade: 'striped',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
    {
@@ -304,7 +304,7 @@
     number: 3,
     color: 'purple',
     shade: 'striped',
-    shape: 'squiggles'
+    shape: 'squiggle'
   },
 
   // STRIPED RED DIAMOND
@@ -463,13 +463,13 @@
     shape: 'oval'
   },
 
-  // ------------squiggless outline------------
+  // ------------squiggles outline------------
   {
     card: 55,
     number: 1,
     color: "red",
     shade: "outline",
-    shape: "squiggles"
+    shape: "squiggle"
   },
 
   {
@@ -477,7 +477,7 @@
     number: 2,
     color: "red",
     shade: "outline",
-    shape: "squiggles"
+    shape: "squiggle"
   },
 
   {
@@ -485,7 +485,7 @@
     number: 3,
     color: "red",
     shade: "outline",
-    shape: "squiggles"
+    shape: "squiggle"
   },
 
   {
@@ -493,7 +493,7 @@
     number: 1,
     color: "red",
     shade: "outline",
-    shape: "squiggles"
+    shape: "squiggle"
   },
 
   {
@@ -501,7 +501,7 @@
     number: 2,
     color: "green",
     shade: "outline",
-    shape: "squiggles"
+    shape: "squiggle"
   },
 
   {
@@ -509,7 +509,7 @@
     number: 3,
     color: "green",
     shade: "outline",
-    shape: "squiggles"
+    shape: "squiggle"
   },
 
   {
@@ -517,7 +517,7 @@
     number: 1,
     color: "purple",
     shade: "outline",
-    shape: "squiggles"
+    shape: "squiggle"
   },
 
   {
@@ -525,7 +525,7 @@
     number: 2,
     color: "purple",
     shade: "outline",
-    shape: "squiggles"
+    shape: "squiggle"
   },
 
   {
@@ -533,7 +533,7 @@
     number: 3,
     color: "purple",
     shade: "outline",
-    shape: "squiggles"
+    shape: "squiggle"
   },
 
   // ----------------diamond outline---------------

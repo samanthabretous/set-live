@@ -19,8 +19,12 @@ module.exports = {
           'babel?presets[]=react,presets[]=es2015'],
       },
       { 
-        test: /\.svg$/, 
+        test: /\inline.svg$/, 
         loader: 'babel?presets[]=es2015,presets[]=react!svg-react' 
+      },
+      {
+        test: /\.jpe?g$|\.gif$|\.png$|^(?!.*\.inline\.svg$).*\.svg$/,
+        loader: 'url'
       }
     ]
   },
