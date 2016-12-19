@@ -1,6 +1,7 @@
 (function() {
   const deckOfCards = require('../game/card_deck')
   const boardFunctions = require('../game/boardFunctions')
+  const _ = require('lodash')
 
   let Game = function(room, player){
     this.players = [player];
@@ -8,13 +9,12 @@
     this.board = boardFunctions.generateBoard(12);
 
     ////get a fresh deck of cards
-    this.cards = boardFunctions.shuffleCards(deckOfCards); 
+    this.cards = _.shuffle(deckOfCards); 
     this.playerTurn = null;
 
     //start playing
     this.started = false;
     this.maxPlayers = 6;
-    this.roomFull = false;
   }
 
   Game.prototype.announcePlayers = function(socket, data) {
@@ -47,7 +47,6 @@
   }
 
   Game.prototype.dealCards = function(io) {
-    let that = this;
     let fillBoard = this.board.map(slot => {
 
       //check to see if spot is empty
@@ -66,13 +65,13 @@
     this.board = fillBoard;
 
     let promise = new Promise((resolve, reject) => {
-      if (this.board[0] !== null) resolve(this.board);
+      if (this.board[0]) resolve(this.board);
       else reject(Error("It broke"));
     });
 
     promise.then((result)=>{
       console.log(result[0])
-      io.sockets.in(that.room).emit('board', result);
+      io.sockets.in(this.room).emit('board', result);
     })
     .catch(err => console.log(err))
   }

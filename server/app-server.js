@@ -15,15 +15,6 @@ server.listen(app.get('port'), function() {
 var staticPath = path.join(__dirname, '../client/public');
 app.use(express.static(staticPath));
 
-
-app.get('/room', function(req, res){
-    console.log(req.query);
-
-    //var room = rooms[req.query.name];
-
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(room));
-});
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, '../client/public/index.html'));
 });
