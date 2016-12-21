@@ -1,4 +1,4 @@
-import { UPDATE_CARDS, PLAYERS, INVITE_PLAYERS, BOARD } from '../types';
+import { UPDATE_CARDS, PLAYERS, INVITE_PLAYERS, BOARD, LEFT_PLAYER } from '../types';
 import {socket} from './connections'
 
 export default (store) => {
@@ -12,6 +12,14 @@ export default (store) => {
     store.dispatch({
       type: PLAYERS,
       players
+    })
+  });
+
+  socket.on('leftPlayer', (playerHasLeft)=>{
+    console.log(player)
+    store.dispatch({
+      type: LEFT_PLAYER,
+      playerHasLeft
     })
   });
 
