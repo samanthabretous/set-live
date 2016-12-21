@@ -6,7 +6,7 @@ const INTIAL_STATE = {
   member: {},
   status: 'disconnected',
   roomStatus: false, 
-  roomname: null,
+  roomName: null,
 }
 
 

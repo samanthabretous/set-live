@@ -20,6 +20,7 @@ export const INVITE_PLAYERS = 'invite_players'
 export const MODAL_STATUS = 'modal-status'
 export const BOARD = 'board';
 export const CLICKED_CARDS = 'clicked_cards'
+export const LEFT_PLAYERS = 'left_players'
 
 
 

@@ -4,6 +4,8 @@
     this.name = config.name;
     this.cards = null;
     this.lost = false;
+
+    //property is needed to help with disconnection
     this.room = null
   }
 

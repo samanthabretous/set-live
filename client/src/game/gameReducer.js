@@ -1,7 +1,8 @@
-import { PLAYERS, UPDATE_CARDS, BOARD, INVITE_PLAYERS, MODAL_STATUS, CLICKED_CARDS} from '../actions/types';
+import { PLAYERS, UPDATE_CARDS, BOARD, INVITE_PLAYERS, MODAL_STATUS, CLICKED_CARDS, LEFT_PLAYERS} from '../actions/types';
 
 const INTIAL_STATE = {
   players: [],
+  playerHasLeft: null,
   cards: null, 
   board: [], 
   amountOfCardsOnBoard: 12, 
@@ -20,7 +21,7 @@ export default function(state = INTIAL_STATE, action) {
       let key = Object.keys(action)[1]
       return Object.assign({}, state, {[key]: action[key]});
     case CLICKED_CARDS: 
-      return Object.assign({}, state, {clickedCards: [... state.clickedCards, action.payload]})
+      return Object.assign({}, state, {clickedCards: action.payload})
     default: 
       return state
   }

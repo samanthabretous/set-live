@@ -7,7 +7,7 @@ import Display from '../app/Display'
 import Board from './Board';
 import ChatBar from './chatBar';
 import InvitePlayers from './InvitePlayers'
-import Modal from '../app/Modal'
+import Modal from './Modal'
 import {MODAL_STATUS} from '../actions/types'
 
 import isSetOnBoard from './isSetOnBoard'
@@ -23,34 +23,32 @@ const Game = React.createClass({
     }, 5000)
   },
   startGame(roomName){
-    console.log(roomName)
     socket.emit('startNewGame', roomName)
   },
   isSet(){
     console.log(isSetOnBoard(this.props.board))
   },
   render(){
+    console.log(this.props.roomName)
     return (
       <div className="gameView">
         <section className="gameInfo">
           <Display if={this.props.member.name}>
             <h1>Joined {this.props.member.name}</h1>
-            <p>{this.props.players.length} players connected to Room: {this.props.roomName}</p>
+            <p>{this.props.players.length} players connected to Room: {this.props.roomName.roomName}</p>
             {this.props.players.map((player, index)=> <p key={index}>PLAYER {index + player.name}</p>)}
           </Display>
           <button onClick={()=> this.startGame(this.props.member.room)}>Start New Game</button>
           {
-            this.props.roomName && this.props.modalStatus 
-            ?
+            this.props.roomName && this.props.modalStatus &&
               <Modal className="modal-anim" transitionName={"modal-anim"}>
                 <InvitePlayers />
               </Modal>
-            : null
           }
           <button onClick={this.isSet}></button>
         </section>
         <Display if={this.props.board.length > 0} >
-          <Board board={this.props.board}/>
+          <Board {...this.props}/>
         </Display>
       </div>
     )
