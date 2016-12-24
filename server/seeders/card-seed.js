@@ -1,5 +1,5 @@
 const db = require('../models');
-const Card = require('../models').Card;
+const Card = require('../models').card;
 
 Card.sync({force: true})
 .then(() => db.sequelize.sync())

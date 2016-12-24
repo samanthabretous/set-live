@@ -38,6 +38,8 @@ db.sequelize.sync()
   require('./io.js')(app, io);
 })
 
+module.exports = app
+
 
 
 
