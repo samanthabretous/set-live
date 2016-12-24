@@ -1,16 +1,25 @@
 import React from 'react';
-import ReactDOM from "react-dom";
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+
 import store from '../store'
 import SetLogo from '../../images/set_logo.inline.svg';
 
+//components
+import GameMenu from '../game/GameMenu'
+import Display from './Display'
+
 
 const App = (props) => {
+  let styles = {
+
+  }
   return (
-    <div className="app">
-      <div className={(props.params.room ? "logoTransition" : "set_logo")}>
-        <SetLogo /> 
-      </div> 
+    <div className={"app " + (props.params.room ? "game" : "")}>
+      <div className={props.params.room ? "gameMenu" : ""}>
+        <div className={props.params.room ? "logoTransition" : "set_logo"}>
+          <SetLogo /> 
+        </div> 
+        {props.params.room && <GameMenu {...props}/>}
+      </div>
       {props.children}
     </div>
   )

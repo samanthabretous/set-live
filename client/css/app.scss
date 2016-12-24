@@ -8,6 +8,7 @@
 *{
   box-sizing: border-box;
 }
+
 body {
   background-color: $yellow;
   width: 100vw;
@@ -15,7 +16,8 @@ body {
   margin: 0;
   border: 1px solid black;
 
-  .app{
+
+  .app {
     width: 90%;
     height: 100vh;
     border: 6px solid purple;
@@ -23,8 +25,67 @@ body {
     margin-top: 2%;
     position: relative;
   }
+  .game{
+    display: flex;
 
-}
+    .gameMenu {
+      width: 20%;
+      height: 100%;
+      border: 2px dashed red;
+
+      @mixin centerFlex() {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+      }
+
+      .set_logo {
+        @include centerFlex()
+        height: 60%;
+
+        svg{
+          width:60%;
+          height: auto;
+        }
+      }
+
+      .logoTransition {
+        @include centerFlex()
+        height: 60vh;
+        padding: 0 auto;
+        animation: strink 1s forwards;
+
+        svg{
+          width:30%;
+          height: auto;
+          animation: moveLogo 1s forwards;
+        }
+      }
+
+      @keyframes moveLogo {
+        from {
+          width: 30%;
+        }
+        to{
+          width: 100%;
+        }
+      }
+
+      @keyframes strink {
+        from{
+          height: 60vh;
+          width: 100%;
+        }
+        to {
+          height: 20vh;
+          width: 20%;
+        }
+      }
+
+    }//gameMenu
+  }//app
+}//body
+
 
 
 

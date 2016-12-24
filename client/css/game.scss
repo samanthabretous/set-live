@@ -1,48 +1,56 @@
-.gameView{
-  display: flex;
-
-}
-
-.gameInfo{
-  width: 20vw;
-
-}
-
-.board{
-  width: 65vw;
-  height: 80vh;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  border: 3px solid red;
-
-  .card{
-    width: 30%;
-    height: 25%;
-    border: 1px black solid;
-    border-radius: 10px;
-    background: white;
+  .gameView {
     display: flex;
-    justify-content: space-around;
-    align-content: center;
+  }
+  .gameInfo {
+    width: 20vw;
+  }
+  .board {
+    width: 65vw;
+    height: 80vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border: 3px solid red;
 
-    .shapes{
+  .card {
+      width: 30%;
+      height: 25%;
+      border: 1px black solid;
+      border-radius: 10px;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      align-content: center;
+
+    .shapes {
       width: 30%;
       height: auto;
       //border: 3px solid black;
     }
 
     .red {
-      fill: $red !important;
+      fill: $red;
     }
 
     .green {
-      fill: $green !important;
+      fill: $green;
     }
 
     .purple {
-      fill: $purple !important;
+      fill: $purple;
     }
+  }
+}
 
-  }//card
-}//board
+ .block {
+    height: 100px;
+    width: 100px;
+    float: left;
+    background-color: steelblue;
+    outline:1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+  }
+  button {
+    margin: 10px;
+  }

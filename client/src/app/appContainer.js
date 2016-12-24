@@ -2,7 +2,9 @@ import App from './App'
 import {connect} from 'react-redux'
 
 const appToState = state => ({
-  status: state.status,
+  member: state.landingPageReducer.member,
+  roomName: state.gameReducer.roomName,
+  players: state.gameReducer.players,
 })
 
 

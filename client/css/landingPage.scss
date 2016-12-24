@@ -1,73 +1,7 @@
 @import '_variables';
 
-@mixin centerFlex() {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-}
-
-.set_logo {
-  @include centerFlex()
-  height: 60%;
-
-  svg{
-    width:60%;
-    height: auto;
-  }
-}
-
-.logoTransition {
-  @include centerFlex()
-  height: 60vh;
-  padding: 0 auto;
-  animation: strink 1s forwards;
-
-  svg{
-    width:30%;
-    height: auto;
-    animation: moveLogo 1s forwards;
-  }
-}
-
-@keyframes moveLogo {
-  from {
-    width: 30%;
-  }
-  to{
-    width: 100%;
-  }
-}
-
-@keyframes strink {
-  from{
-    height: 60vh;
-    width: 100%;
-  }
-  to {
-    height: 20vh;
-    width: 20%;
-  }
-}
 
 
 
-.landingPage{
-  display: flex;
-  width: 100%;
-  
-  form{
-    width: 50%;
 
-    .landingInput {
-      border: none;
-      background: white;
-      border-radius: 25px;
-      height: 5vh;
-      width: 60%;
-      font-size: 24px;
-      padding: 1%;
-      margin: 5%;
-    }
-  }
-}
 

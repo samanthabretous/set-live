@@ -22,7 +22,7 @@ module.exports = ((app,io)=>{
       })
 
       //once player is found, remove that player from the game object
-      let foundRoom = foundPlayer && foundPlayer[0].room ? foundPlayer[0].room : null;
+      let foundRoom = foundPlayer[0] && foundPlayer[0].room ? foundPlayer[0].room : null;
       if(foundRoom) {
 
         let players = games[foundRoom].players

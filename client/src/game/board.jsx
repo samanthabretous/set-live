@@ -53,17 +53,17 @@ const Board = (props) => {
   let boardOfCards = (board) => {
     return board.map((slot,i) => {
 
-      // define component. imported all svg images into an object. when certain attributes are triggered look inside the object and grab import information. inorder to use that infomation as a component, it had to be saved in a varbable 
+      // define component. imported all svg images into an object. when certain attributes are triggered look inside the object and grab import information. inorder to use that infomation as a component, it had to be saved in a variable 
        let Special = cardComponents[slot.shape + '-' + slot.shade]
       
       //render amount of shapes needed per card based on the card number attribute
       let number = []
       for(let j = 0; j < slot.number; j++){
-        number.push(<Special key={j} className={"shapes " + slot.color}/>)
+        number.push(<Special key={j} className={"shapes " +slot.color}/>)
       }
       return (
         <div 
-          className="card" 
+          className="card"
           key={i}
           onClick={()=>handleCardClick(slot)}
         >
