@@ -39,3 +39,4 @@ dist/
 maps/
 bundle.js
 bundle.js.map
+config.json

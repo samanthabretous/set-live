@@ -1,7 +1,7 @@
 module.exports = ((app,io)=>{
   const _ = require ('lodash');
-  const Player = require('./models/Player');
-  const Game = require('./models/Game')
+  const Player = require('./modelObjs/Player');
+  const Game = require('./modelObjs/Game')
 
   let games = {};
   let maxPlayers = 1;

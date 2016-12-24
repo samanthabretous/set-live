@@ -4,23 +4,42 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
-// Start the server
-app.set('port', process.env.PORT || 4000);
+//sequelize
+const bodyParser = require('body-parser')
+const db = require('./models');
 
-server.listen(app.get('port'), function() {
-  console.log("Running on port ", 4000);
-});
+
+
+// Start the server
  
-// Serve the client
+// Client
 var staticPath = path.join(__dirname, '../client/public');
 app.use(express.static(staticPath));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, '../client/public/index.html'));
-});
- 
-// Handle socket.io
-require('./io.js')(app, io);
+db.sequelize.sync()
+.then(() => {
+  app.set('port', process.env.PORT || 4000);
+
+  server.listen(app.get('port'), function() {
+    console.log("Running on port ", 4000);
+  });
+
+  //api routes
+  const routes = require('./routes');
+  app.use('/api/player', routes.player)
+  app.use('/api/game', routes.game)
+
+  app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, '../client/public/index.html'));
+  });
+   
+  // Handle socket.io
+  require('./io.js')(app, io);
+})
+
+
+
 
 
 
