@@ -16,6 +16,7 @@ const db = require('./models');
 var staticPath = path.join(__dirname, '../client/public');
 app.use(express.static(staticPath));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
 
 db.sequelize.sync()
 .then(() => {
@@ -29,6 +30,7 @@ db.sequelize.sync()
   const routes = require('./routes');
   app.use('/api/player', routes.player)
   app.use('/api/game', routes.game)
+  app.use('/api/card', routes.card)
 
   app.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname, '../client/public/index.html'));

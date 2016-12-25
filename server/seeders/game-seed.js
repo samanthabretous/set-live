@@ -6,7 +6,7 @@ Game.sync({force: true})
 .then(() => db.sequelize.sync())
 //add the following post to the database:
 .then(() => {
-  return Game.create({room:'first room', board:[false, false, false]})
+  return Game.create({room:'room1', board:[false, false, false]})
 })
 .then( game => {
 
