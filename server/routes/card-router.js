@@ -8,9 +8,10 @@ const getAllCards = (req,res) =>{
     .catch(err => debug(err))
 }
 
-
 router.route('/')
   .get(getAllCards)
 
 
-module.exports = router
+module.exports = {
+  router
+}

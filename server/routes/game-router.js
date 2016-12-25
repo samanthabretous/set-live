@@ -77,4 +77,12 @@ router.route('/room/:room')
   .post(createRoom)
 
 
-module.exports = router
+module.exports = {
+  router, 
+  getAllGames,
+  getOneGameById,
+  getOneGameByRoom,
+  createRoom,
+  deleteRoom,
+  updateRoom
+}

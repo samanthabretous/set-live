@@ -14,7 +14,7 @@ const getOnePlayerById = (req,res) => {
   .catch(err => debug(err))
 }
 
-const getOnePlayerByPlayer = (req,res) =>{
+const getOnePlayerByUsername = (req,res) =>{
   Player.findOne({
     where: {
       username: req.params.username
@@ -74,9 +74,17 @@ router.route('/id/:id')
   .put(updatePlayer)
 
 router.route('/username/:username')
-  .get(getOnePlayerByPlayer)
+  .get(getOnePlayerByUsername)
   .post(createPlayer)
 
 
 
-module.exports = router
+module.exports = {
+  router, 
+  getAllPlayers,
+  getOnePlayerById,
+  getOnePlayerByUsername,
+  createPlayer,
+  deletePlayer,
+  updatePlayer
+}

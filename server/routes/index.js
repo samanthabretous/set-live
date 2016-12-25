@@ -1,6 +1,6 @@
-const player = require('./player-router')
-const game = require('./game-router')
-const card = require('./card-router')
+const player = require('./player-router').router
+const game = require('./game-router').router
+const card = require('./card-router').router
 
 module.exports = {
   player, 
