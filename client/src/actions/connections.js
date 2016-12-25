@@ -1,4 +1,4 @@
-import { ADD_MEMBER, CHANGE_STATUS, SHOW_BOARD, ROOM_STATUS, PLAYERS} from '../types';
+import { ADD_MEMBER, CONNECTION_STATUS, SHOW_BOARD, ROOM_STATUS, PLAYERS} from './types';
 
 import io from 'socket.io-client';
 export const socket = io.connect();
@@ -6,14 +6,14 @@ export const socket = io.connect();
 export default (store) => {
   socket.on('connect', () =>{
     store.dispatch({
-      type: CHANGE_STATUS,
+      type: CONNECTION_STATUS,
       status: 'connected'
     })
   });
 
   socket.on('disconnect', () => {
     store.dispatch({
-      type: CHANGE_STATUS,
+      type: CONNECTION_STATUS,
       status: 'disconnected'
     })
   });

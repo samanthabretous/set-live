@@ -1,12 +1,14 @@
 import React from 'react'
 import path from 'path'
 import _ from 'lodash'
-import {socket} from '../actions/socket-listeners/connections'
+import {socket} from '../actions/connections'
 import {CARDS} from '../actions/types'
 import cardComponents from './cardComponents'
 
 
 const Board = (props) => {
+
+  let {clickedCards, board, addClickedCard} = props
 
   /* 
   * @param {Object} card. when user clicks on card 
@@ -23,19 +25,19 @@ const Board = (props) => {
     // let clicked = _.filter(clickedCards, (cardClick) =>
     //   card.card !== cardClick.card 
     // )
-    let cardNumbers = _.map(props.clickedCards, 'card')
+    let cardNumbers = _.map(clickedCards, 'card')
     if(! _.includes(cardNumbers, card.card)) {
-      var clicked = [...props.clickedCards, card]
+      var clicked = [...clickedCards, card]
     } else {
       //remove obj from array
-      var clicked = _.filter(props.clickedCards, (cardClick) => card.card !== cardClick.card)
+      var clicked = _.filter(clickedCards, (cardClick) => card.card !== cardClick.card)
     }
     console.log(clicked)
     if(clicked.length === 3) {
       //check if set
-      props.addClickedCard([])
+      addClickedCard([])
     } else {
-      props.addClickedCard(clicked)
+      addClickedCard(clicked)
     }
     
     //if user has clicked on three cards
@@ -77,7 +79,7 @@ const Board = (props) => {
     <div>
       <div>Board</div>
       <section className="board">
-        {boardOfCards(props.board)}
+        {boardOfCards(board)}
       </section>
     </div>
   )

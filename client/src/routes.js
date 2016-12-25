@@ -8,19 +8,13 @@ import { Route, IndexRoute } from 'react-router';
 // Import the different components that will represent the different pages
 // of our website.
 //====================
-import AppContainer from './app/appContainer'
-import LandingPageContainer from './landingPage/landingPageContainer'
-import GameContainer from './game/gameContainer'
-
-//Redux
-import store from './store'
-import {generateUserNameAsync} from './actions/thunk-actions'
-
-const getRandomName = () => {store.dispatch(generateUserNameAsync())}
+import AppContainer from './containers/appContainer'
+import LandingPageContainer from './containers/landingPageContainer'
+import GameContainer from './containers/gameContainer'
 
 export default (
   <Route path="/" component={AppContainer}>
-    <IndexRoute component={LandingPageContainer} onEnter={getRandomName}/>
+    <IndexRoute component={LandingPageContainer} />
     <Route path='game/:room' component={GameContainer}/>
   </Route> 
 );

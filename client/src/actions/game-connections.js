@@ -1,4 +1,4 @@
-import { UPDATE_CARDS, PLAYERS, INVITE_PLAYERS, BOARD, LEFT_PLAYER } from '../types';
+import { UPDATE_CARDS, PLAYERS, INVITE_PLAYERS, BOARD, LEFT_PLAYER } from './types';
 import {socket} from './connections'
 
 export default (store) => {

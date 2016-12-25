@@ -1,29 +1,60 @@
-import { ADD_MEMBER, CHANGE_STATUS, PLAYERS } from './types';
-import store from '../store'
+import { ADD_MEMBER, CONNECTIONS_STATUS, PLAYERS, CLICKED_CARDS, LOGIN_MODAL, SET_ROOM_NAME, SET_USER_NAME, SET_EMAIL, SET_PASSWORD, MODAL_STATUS, LOGIN_FORM_ERRORS } from './types';
 
-export function addMemberAction(member) {
-  store.dispatch({
-    type: ADD_MEMBER,
-    member
-  })
-}
+export const formUsernameAction = username => ({
+  type: SET_USER_NAME,
+  username
+})
 
-export function changeStatusAction(status) {
-  store.dispatch({
-    type: CHANGE_STATUS,
-    status
-  })
-}
+export const formEmailAction = email => ({
+  type: SET_EMAIL,
+  email
+})
 
-export function playerAction(player) {
-  store.dispatch({
-    type: PLAYERS,
-    player
-  })
-}
+export const formPasswordAction = password => ({
+  type: SET_PASSWORD,
+  password
+})
 
-export function joinedAction(member){
-  store.dispatch({
-    type: JOIN_MEMBER
-  })
-}
+export const loginModalAction = loginModal => ({
+  type: LOGIN_MODAL,
+  loginModal
+})
+
+export const loginErrorsAction = loginErrors => ({
+  type: LOGIN_FORM_ERRORS,
+  loginErrors
+})
+
+export const addMemberAction = member => ({
+  type: ADD_MEMBER,
+  member
+})
+
+export const changeStatusAction = status => ({
+  type: CONNECTIONS_STATUS,
+  status
+})
+
+export const playerAction = player => ({
+  type: PLAYERS,
+  player
+})
+
+export const joinedAction = member => ({
+  type: JOIN_MEMBER
+})
+
+export const addClickedCard = payload => ({
+  type: CLICKED_CARDS,
+  payload 
+})
+
+export const inviteModalAction = modalStatus => ({
+  type: MODAL_STATUS, 
+  modalStatus
+})
+
+export const generateRoomName = roomName => ({
+  type: SET_ROOM_NAME,
+  roomName
+})

@@ -9,6 +9,7 @@ describe('Card Test', () => {
     supertest(server)
       .get('/api/card/')
       .end((err, res) => {
+        console.log(res)
         expect(res.body.length).equal(81);
         expect(res.body[0].card).be.a('number')
         expect(res.body[0].number).be.a('number')

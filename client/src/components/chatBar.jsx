@@ -1,6 +1,5 @@
 import React from 'react'
-import io from 'socket.io-client';
-import {socket} from '../actions/socket-listeners/connections'
+import {socket} from '../actions/connections'
 
 const ChatBar = React.createClass({
   getInitialState(){

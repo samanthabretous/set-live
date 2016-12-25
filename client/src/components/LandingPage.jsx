@@ -1,48 +1,51 @@
 import React from 'react'
-import Display from '../app/Display'
-import store from '../store'
-import {generateUserName, generateRoomName} from '../actions/thunk-actions'
-import {socket} from '../actions/socket-listeners/connections'
-import style from './landingStyles'
-import {Link} from 'react-router'
 import Radium from 'radium'
 import {Motion, spring} from 'react-motion';
+import {Link} from 'react-router'
 
-const LandingPage = Radium((props) => {
+import store from '../store'
+import {socket} from '../actions/connections'
+
+import style from './landingStyles'
+
+const LandingPage = Radium( props => {
+
+  let {roomName, username, generateRoomName} = props
+
   let handleNameChange = (event) => {
-    store.dispatch(generateUserName(event.target.value))
+    props.formUsernameAction(event.target.value)
   };
   let handleRoomChange = (event) => {
-    store.dispatch(generateRoomName(event.target.value))
+    console.log('room')
+    console.log(roomName)
+    generateRoomName(event.target.value)
   };
 
   let joinRoom = () =>{
+    console.log(roomName)
     socket.emit('enterGameRoom', {
-      roomName: props.roomName,
-      username: props.username 
+      roomName,
+      username
     });
   };
 
   return (
     <div style={style.landingPage}>
-<Motion defaultStyle={{x: 0}} style={{x: spring(10)}}>
-  {interpolatingStyle => <div style={interpolatingStyle} />}
-</Motion>
       <input 
         onChange={handleNameChange}
         style={style.landingInput}
         placeholder="enter your full name..."
-        defaultValue={props.username ? props.username : ""}
-        required /> 
+        defaultValue={username ? username : ""}
+        required />
       <input 
         onChange={handleRoomChange}
         style={style.landingInput} 
         placeholder="enter a room name..."
         required />
-      <Link to={"/game/" + props.roomName}>
+      <Link to={"/game/" + roomName}>
         <button to="/game" 
           className="btn btn-primary"
-          disabled={!props.roomName}
+          disabled={!roomName}
           onClick={joinRoom}>
           Enter Room
         </button>
