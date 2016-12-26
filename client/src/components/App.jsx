@@ -26,7 +26,6 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    console.log(this)
     auth.onChange = this.updateAuth.bind(this)
     auth.login()
   }
@@ -38,7 +37,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className={"app " + (this.props.params.room ? "game" : "")}>
         <ul>

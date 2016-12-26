@@ -1,4 +1,8 @@
 'use strict';
+
+const bcrypt = require('bcrypt-nodejs'),
+      SALT_WORK_FACTOR = 12;
+
 module.exports = function(sequelize, DataTypes) {
   var Player = sequelize.define('player', {
     username: {
@@ -42,6 +46,18 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
         Player.belongsToMany(models.game, {through:"game_player"})
+      },
+
+      //check if password is valid
+      validPassword: function(password, passwd, cb, player){
+        bcrypt.compare(password, passwd, function(err, isMatch){
+          if (err) console.log(err)
+          if (isMatch) {
+            return cb(null, player)
+          } else {
+            return cb(null, false)
+          }
+        })
       }
     },
     getterMethods: {
@@ -50,5 +66,16 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
+
+  //change the password player has enter into an encrypted password before entering into database
+  Player.hook('beforeCreate', function(player, fn){
+    var salt = bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt){
+      return salt
+    });
+    player.password = bcrypt.hashSync(player.password, salt) 
+    return fn
+
+  })
+
   return Player;
 };

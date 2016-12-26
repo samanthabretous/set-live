@@ -2,6 +2,7 @@ module.exports = ((app,io)=>{
   const _ = require ('lodash');
   const Player = require('./modelObjs/Player');
   const Game = require('./modelObjs/Game')
+  const debug = require('debug')('OH_GOSH')
 
   let games = {};
   let maxPlayers = 1;
@@ -42,6 +43,17 @@ module.exports = ((app,io)=>{
       socket.disconnect();
       console.log("Disconnected");
     });
+
+    /*
+    * @param {Object} payload. holds login form infomation
+    * check to see if that username or password exist already in the database
+    * if it has let the user know. 
+    * else add user to database.
+    * @returns {}
+    */
+    socket.on('login', payload => {
+      debug(payload)
+    })
 
     //create and/or join a room
     socket.on('enterGameRoom', (payload) => {

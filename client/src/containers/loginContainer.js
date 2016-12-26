@@ -6,7 +6,8 @@ import {
   formUsernameAction,
   formEmailAction,
   formPasswordAction,
-  loginErrorsAction,
+  formErrorsAction,
+  loginErrorAction,
   loginLoadingAction,
   signinSocketAction,
 } from '../actions/loginActions'
@@ -17,7 +18,8 @@ const mapDispatchToProps = (dispatch) => (
     formUsernameAction,
     formEmailAction,
     formPasswordAction, 
-    loginErrorsAction,
+    formErrorsAction,
+    loginErrorAction,
     loginLoadingAction,
     signinSocketAction,
   }, dispatch)
@@ -27,8 +29,9 @@ const mapStateToState = state => ({
   username: state.login.username,
   email: state.login.email,
   password: state.login.password,
-  loginErrors: state.login.loginErrors,
+  formErrors: state.login.formErrors,
   loading: state.login.loading,
+  error: state.login.error,
 })
 
 

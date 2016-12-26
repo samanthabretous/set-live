@@ -1,4 +1,4 @@
-import { LOGIN_MODAL, SET_USER_NAME, SET_EMAIL, SET_PASSWORD, LOGIN_FORM_ERRORS, LOGIN_LOADING } from './types';
+import { LOGIN_ERROR, SET_USER_NAME, SET_EMAIL, SET_PASSWORD, FORM_ERRORS, LOGIN_LOADING } from './types';
 import {socket} from '../actions/connections'
 
 export const formUsernameAction = username => ({
@@ -16,13 +16,13 @@ export const formPasswordAction = password => ({
   password
 })
 
-export const loginModalAction = loginModal => ({
-  type: LOGIN_MODAL,
-  loginModal
+export const loginErrorAction = loginError => ({
+  type: LOGIN_ERROR,
+  loginError
 })
 
-export const loginErrorsAction = loginErrors => ({
-  type: LOGIN_FORM_ERRORS,
+export const formErrorsAction = loginErrors => ({
+  type: FORM_ERRORS,
   loginErrors
 })
 

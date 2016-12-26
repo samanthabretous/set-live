@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import auth from '../utils/auth.js'
 
 const LoginModal = props => {
-  const { username, email, password,formUsernameAction, formEmailAction, formPasswordAction, loginErrorsAction, loginErrors, loginLoadingAction, loading, signinSocketAction } = props;
+  const { username, email, password,formUsernameAction, formEmailAction, formPasswordAction, formErrorsAction, formErrors, loginLoadingAction, loginErrorAction, loading, signinSocketAction } = props;
 
 
   const handleChange = (event) =>{
@@ -22,12 +22,12 @@ const LoginModal = props => {
       };
     };
 
-    if(loginErrors[event.target.name]){
-      let errors = Object.assign({}, loginErrors);
+    if(formErrors[event.target.name]){
+      let errors = Object.assign({}, formErrors);
       delete errors[event.target.name];
       console.log(errors)
       whichTarget();
-      loginErrorsAction(errors);
+      formErrorsAction(errors);
     } else {
       whichTarget();
     };
@@ -40,7 +40,7 @@ const LoginModal = props => {
     if(username === '') errors.username = "Can not be empty";
     if(email.indexOf('@') === -1 && email.indexOf('.'=== -1)) errors.email = "Must be a vaild email";
     if(password.length < 6) errors.password = "Password must be at least 6 characters long"
-    loginErrorsAction(errors);
+    formErrorsAction(errors);
 
     //before sending form request to back end check to make sure there are no errors
     const isValid = Object.keys(errors).length === 0
@@ -51,20 +51,21 @@ const LoginModal = props => {
 
       //confirm create login info and send user to next page
       auth.login(username, email, password, (loggedIn) => {
-        if (!loggedIn)
-          return this.setState({ error: true })
+        console.log("loggedIn",loggedIn)
+        if (!loggedIn) {
+          return loginErrorAction(true)
+        }
 
-        const { location } = this.props
-
+        const { location } = props
+        console.log("location",location)
         if (location.state && location.state.nextPathname) {
-
+        console.log(location.state)
           //if trying to access a authorized page after login it will redirect to the give path or go back to home
-          this.props.router.replace(location.state.nextPathname)
+          props.router.replace(location.state.nextPathname)
         } else {
           this.props.router.replace('/')
         }
       })
-      signinSocketAction({username, email, password})
     }
 
   };
@@ -73,7 +74,7 @@ const LoginModal = props => {
     <div style={{width: 500, height: 400, backgroundColor: 'white'}}>
       {loading && <span>Loading...</span>}
       <div className={classnames('loginInput', {
-        error: !!loginErrors.username
+        error: !!formErrors.username
       })}>
         <label htmlFor="username">Username</label>
         <input
@@ -83,10 +84,10 @@ const LoginModal = props => {
           value={username}
           placeholder="Enter Username"
         />
-        <span>{loginErrors.username}</span>
+        <span>{formErrors.username}</span>
       </div>
       <div className={classnames('loginInput', {
-        error: !!loginErrors.email
+        error: !!formErrors.email
       })}>
         <label htmlFor="email">Email</label>
         <input
@@ -96,10 +97,10 @@ const LoginModal = props => {
           value={email}
           placeholder="Enter Email"
         />
-        <span>{loginErrors.email}</span>
+        <span>{formErrors.email}</span>
         </div>
       <div className={classnames('loginInput', {
-        error: !!loginErrors.password
+        error: !!formErrors.password
       })}>
         <label htmlFor="passowrd">Password</label>
         <input
@@ -109,7 +110,7 @@ const LoginModal = props => {
           value={password}
           placeholder="Enter Password"
         />
-        <span>{loginErrors.password}</span>
+        <span>{formErrors.password}</span>
       </div>
       <button onClick={handleSubmit}>Submit</button>
     </div>

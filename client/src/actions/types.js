@@ -8,8 +8,8 @@ export const PLAYERS = 'players';
 export const SET_USER_NAME = 'set_user_name';
 export const SET_EMAIL = 'set_email';
 export const SET_PASSWORD = 'set_password';
-export const LOGIN_MODAL = 'login_modal';
-export const LOGIN_FORM_ERRORS = 'login_errors';
+export const LOGIN_ERROR = 'login_error';
+export const FORM_ERRORS = 'form_errors';
 export const LOGIN_LOADING = 'login_loading';
 
 

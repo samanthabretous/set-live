@@ -21,6 +21,11 @@ const getOnePlayerByUsername = (req,res) =>{
     },
     include: [{all:true}]
   })
+  .then( player => {
+    debug("use",player)
+    passwd = player ? player.password : ''
+    isMatch = Player.validPassword(password, passwd, done, player)
+  })
   .then(game => res.send(game))
   .catch(err => debug(err))
 }
@@ -31,8 +36,7 @@ const createPlayer = (req, res) => {
     first_name: req.body.firstname,
     last_name: req.body.lastname,
   })
-  .then(game => game.addCards(range(1,82)))
-  .then(game => res.send(game))
+  .then(player => res.send(player))
   .catch(err => debug(err))
 }
 
@@ -64,7 +68,7 @@ const updatePlayer = (req, res) => {
 }
 
 
-
+//api/player
 router.route('/')
   .get(getAllPlayers)
 

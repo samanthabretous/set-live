@@ -111,5 +111,5 @@ Card.sync({force: true})
     { card: 79, number: 1, color: "purple", shade: "outline", shape: "oval" },
     { card: 80, number: 2, color: "purple", shade: "outline", shape: "oval" },
     { card: 81, number: 3, color: "purple", shade: "outline", shape: "oval" }
-  ]
+  ], {validate: true}
 ))
