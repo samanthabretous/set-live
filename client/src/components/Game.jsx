@@ -5,7 +5,7 @@ import store from '../store'
 import Board from './Board';
 import ChatBar from './chatBar';
 
-import isSetOnBoard from './isSetOnBoard'
+import isSetOnBoard from '../utils/isSetOnBoard'
 
 const Game = React.createClass({
   componentDidMount(){

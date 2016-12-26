@@ -1,8 +1,9 @@
 import React from 'react'
 import classnames from 'classnames'
+import auth from '../utils/auth.js'
 
 const LoginModal = props => {
-  const { username, email, password,formUsernameAction, formEmailAction, formPasswordAction, loginErrorsAction, loginErrors } = props;
+  const { username, email, password,formUsernameAction, formEmailAction, formPasswordAction, loginErrorsAction, loginErrors, loginLoadingAction, loading, signinSocketAction } = props;
 
 
   const handleChange = (event) =>{
@@ -41,9 +42,36 @@ const LoginModal = props => {
     if(password.length < 6) errors.password = "Password must be at least 6 characters long"
     loginErrorsAction(errors);
 
+    //before sending form request to back end check to make sure there are no errors
+    const isValid = Object.keys(errors).length === 0
+    if(isValid){
+
+      //display loading signal
+      loginLoadingAction(true)
+
+      //confirm create login info and send user to next page
+      auth.login(username, email, password, (loggedIn) => {
+        if (!loggedIn)
+          return this.setState({ error: true })
+
+        const { location } = this.props
+
+        if (location.state && location.state.nextPathname) {
+
+          //if trying to access a authorized page after login it will redirect to the give path or go back to home
+          this.props.router.replace(location.state.nextPathname)
+        } else {
+          this.props.router.replace('/')
+        }
+      })
+      signinSocketAction({username, email, password})
+    }
+
   };
+
   return (
     <div style={{width: 500, height: 400, backgroundColor: 'white'}}>
+      {loading && <span>Loading...</span>}
       <div className={classnames('loginInput', {
         error: !!loginErrors.username
       })}>

@@ -10,6 +10,7 @@ export const SET_EMAIL = 'set_email';
 export const SET_PASSWORD = 'set_password';
 export const LOGIN_MODAL = 'login_modal';
 export const LOGIN_FORM_ERRORS = 'login_errors';
+export const LOGIN_LOADING = 'login_loading';
 
 
 //LandingPage

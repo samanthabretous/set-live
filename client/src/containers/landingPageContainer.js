@@ -12,7 +12,7 @@ const mapDispatchToProps = (dispatch) => (
 
 const mapStateToProps = state => ({
   status: state.game.status,
-  username: state.game.username,
+  username: state.login.username,
   roomName: state.game.roomName,
 })
 

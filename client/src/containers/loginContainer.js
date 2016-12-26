@@ -1,9 +1,8 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {withRouter} from 'react-router'
-import App from '../components/App'
+import LoginModal from '../components/LoginModal'
 import {
-  loginModalAction,
   formUsernameAction,
   formEmailAction,
   formPasswordAction,
@@ -15,7 +14,6 @@ import {
 
 const mapDispatchToProps = (dispatch) => (
   bindActionCreators({
-    loginModalAction,
     formUsernameAction,
     formEmailAction,
     formPasswordAction, 
@@ -26,7 +24,6 @@ const mapDispatchToProps = (dispatch) => (
 )
 
 const mapStateToState = state => ({
-  loginModal: state.login.loginModal,
   username: state.login.username,
   email: state.login.email,
   password: state.login.password,
@@ -35,4 +32,4 @@ const mapStateToState = state => ({
 })
 
 
-export default withRouter(connect(mapStateToState, mapDispatchToProps)(App))
+export default withRouter(connect(mapStateToState, mapDispatchToProps)(LoginModal))

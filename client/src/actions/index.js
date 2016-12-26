@@ -1,28 +1,9 @@
-import { ADD_MEMBER, CONNECTIONS_STATUS, PLAYERS, CLICKED_CARDS, LOGIN_MODAL, SET_ROOM_NAME, SET_USER_NAME, SET_EMAIL, SET_PASSWORD, MODAL_STATUS, LOGIN_FORM_ERRORS } from './types';
+import { ADD_MEMBER, CONNECTIONS_STATUS, PLAYERS, CLICKED_CARDS, SET_ROOM_NAME, MODAL_STATUS, } from './types';
 
-export const formUsernameAction = username => ({
-  type: SET_USER_NAME,
-  username
-})
 
-export const formEmailAction = email => ({
-  type: SET_EMAIL,
-  email
-})
-
-export const formPasswordAction = password => ({
-  type: SET_PASSWORD,
-  password
-})
-
-export const loginModalAction = loginModal => ({
-  type: LOGIN_MODAL,
-  loginModal
-})
-
-export const loginErrorsAction = loginErrors => ({
-  type: LOGIN_FORM_ERRORS,
-  loginErrors
+export const loginLoadingAction = loading => ({
+  type: LOGIN_LOADING,
+  loading
 })
 
 export const addMemberAction = member => ({

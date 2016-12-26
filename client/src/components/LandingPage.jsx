@@ -6,8 +6,6 @@ import {Link} from 'react-router'
 import store from '../store'
 import {socket} from '../actions/connections'
 
-import style from './landingStyles'
-
 const LandingPage = Radium( props => {
 
   let {roomName, username, generateRoomName} = props
@@ -30,16 +28,16 @@ const LandingPage = Radium( props => {
   };
 
   return (
-    <div style={style.landingPage}>
+    <div className="landingPage">
       <input 
         onChange={handleNameChange}
-        style={style.landingInput}
+        className="landingInput"
         placeholder="enter your full name..."
         defaultValue={username ? username : ""}
         required />
       <input 
         onChange={handleRoomChange}
-        style={style.landingInput} 
+        className="landingInput"
         placeholder="enter a room name..."
         required />
       <Link to={"/game/" + roomName}>
