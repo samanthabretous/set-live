@@ -15,7 +15,7 @@ function redirectToLogin(nextState, replace) {
   if (!auth.loggedIn()) {
     replace({
       pathname: '/login',
-      state: { nextPathname: nextState.location.pathname }
+      state: { modal: true, nextPathname: nextState.location.pathname }
     })
   }
 }

@@ -7,7 +7,7 @@ import SetLogo from '../../images/set_logo.inline.svg';
 
 //components
 import GameMenu from './GameMenu'
-import LoginModal from './LoginModal'
+import Modal from './Modal'
 
 
 class App extends React.Component {
@@ -17,6 +17,17 @@ class App extends React.Component {
       loggedIn: auth.loggedIn()
     }
     //const {params, children, loginModalAction, loginModal} = this.props
+  }
+  componentWillReceiveProps(nextProps) {
+    // if we changed routes...
+    if ((
+      nextProps.location.key !== this.props.location.key &&
+      nextProps.location.state &&
+      nextProps.location.state.modal
+    )) {
+      // save the old children (just like animation)
+      this.previousChildren = this.props.children
+    }
   }
   
   updateAuth(loggedIn) {
@@ -37,6 +48,13 @@ class App extends React.Component {
   }
 
   render() {
+    let { location } = this.props
+
+    let isModal = (
+      location.state &&
+      location.state.modal &&
+      this.previousChildren
+    )
     return (
       <div className={"app " + (this.props.params.room ? "game" : "")}>
         <ul>
@@ -52,15 +70,29 @@ class App extends React.Component {
           <li><Link to="/page2">Page Two</Link> (authenticated)</li>
           <li><Link to="/user/foo">User: Foo</Link> (authenticated)</li>
         </ul>
+
         <div className={this.props.params.room ? "gameMenu" : ""}>
           <div className={this.props.params.room ? "logoTransition" : "set_logo"}>
             <SetLogo /> 
           </div> 
           <button onClick={this.setLoginModal.bind(this)}>Login</button>
-          {this.props.loginModal && <LoginModal {...props}/>}
-          {this.props.params.room && <GameMenu {...props}/>}
+          {/*this.props.params.room && <GameMenu {...this.props}/>*/}
         </div>
-        {this.props.children}
+        <div>
+
+          <div>
+            {isModal ?
+              this.previousChildren :
+              this.props.children
+            }
+
+            {isModal && (
+              <Modal isOpen={true} returnTo={location.state.returnTo}>
+                {this.props.children}
+              </Modal>
+            )}
+          </div>
+        </div>
       </div>
     )
   }

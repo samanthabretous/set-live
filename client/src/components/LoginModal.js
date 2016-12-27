@@ -63,7 +63,7 @@ const LoginModal = props => {
           //if trying to access a authorized page after login it will redirect to the give path or go back to home
           props.router.replace(location.state.nextPathname)
         } else {
-          this.props.router.replace('/')
+          props.router.replace('/')
         }
       })
     }

@@ -9,7 +9,8 @@ module.exports = {
       return
     }
     signInRequest(username, email, pass, (res) => {
-      if (res) {
+      console.log('res', res)
+      if (res.authenticated) {
         localStorage.token = res.token
         if (cb) cb(true)
         this.onChange(true)
