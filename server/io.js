@@ -51,7 +51,7 @@ module.exports = ((app,io)=>{
     */
     //create and/or join a room
     socket.on('enterGameRoom', (payload) => {
-
+      debug(payload)
       //find player in database and save
       let socketPlayer = null; 
       Player.findOne({
@@ -92,15 +92,15 @@ module.exports = ((app,io)=>{
         //make sure there is space left in the game
         if(playersInGame < maxPlayers){
 
-          // add player to room and let all players in room know there is a new player
+          // add player to room and let other players in room know there is a new player
+          debug(socketPlayer)
           game.addPlayers([socketPlayer.id])
           let allPlayers = game.get('players') ? game.get('players').concat(socketPlayer) : socketPlayer
           socket.join(payload.roomName);
-          io.sockets.in(payload.roomName).emit('players', allPlayers);
-          debug("players",allPlayers)
+          socket.in(payload.roomName).emit('players', socketPlayer);
 
           //send a message to player and let them know how many more people they can invite
-          socket.emit('goToGame', {gameRoom: true, room: payload.roomName, players: allPlayers});
+          socket.emit('goToGame', {game: game, room: payload.roomName, players: allPlayers});
           return game
         } else {
           
@@ -112,13 +112,17 @@ module.exports = ((app,io)=>{
 
     }) //'enterGameRoom'
 
-    socket.on('startNewGame', roomName => {
-      if(games[roomName]){
-        let game = games[roomName]
-        if(game.cards) {
-          game.dealCards(io) 
-        }
-      }
+    /* @params {Number} gameId
+     * add cards to the game board to being game
+     * @returns {Object} game room
+    */
+    socket.on('startNewGame', gameId => {
+      Games.findById(gameId)
+      .then(game =>{
+
+        //deal cards
+      })
+
     })
 
     //refactor this to work with the newMember variable

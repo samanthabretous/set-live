@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router'
+import {RouteTransition} from 'react-motion'
 import auth from '../utils/auth'
 
 import store from '../store'
@@ -47,7 +48,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     let { location } = this.props
 
     let isModal = (
@@ -56,20 +56,7 @@ class App extends React.Component {
       this.previousChildren
     )
     return (
-      <div className={"app " + (this.props.params.room ? "game" : "")}>
-        <ul>
-          <li>
-            {this.state.loggedIn ? (
-              <Link to="/logout">Log out</Link>
-            ) : (
-              <Link to="/login">Sign in</Link>
-            )}
-          </li>
-          <li><Link to="/how-to-play">About</Link></li>
-          <li><Link to="/">Home</Link> (changes depending on auth status)</li>
-          <li><Link to="/page2">Page Two</Link> (authenticated)</li>
-          <li><Link to="/user/foo">User: Foo</Link> (authenticated)</li>
-        </ul>
+      <div className={`app ${(this.props.params.room ? "game" : "")}`}>
 
         <div className={this.props.params.room ? "gameMenu" : ""}>
           <div className={this.props.params.room ? "logoTransition" : "set_logo"}>
@@ -81,6 +68,18 @@ class App extends React.Component {
           }}> Login </Link>
           {this.props.params.room && <GameMenu {...this.props}/>}
         </div>
+        <ul>
+          <li>
+            {this.state.loggedIn ? (
+              <Link to="/logout">Log out</Link>
+            ) : (
+              <Link to="/login">Sign in</Link>
+            )}
+          </li>
+        
+          <li><Link to="/">Home</Link> (changes depending on auth status)</li>
+          <li><Link to="/play">Play Game</Link> (authenticated)</li>
+        </ul>
         <div>
 
           <div>

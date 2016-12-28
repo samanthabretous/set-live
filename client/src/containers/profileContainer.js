@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
   status: state.game.status,
   username: state.login.username,
   roomName: state.game.roomName,
+  game: state.game.game,
 })
 
 

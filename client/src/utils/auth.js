@@ -1,15 +1,15 @@
 import $ from 'jquery'
 
 module.exports = {
-  login(username, email, pass, cb) {
+  login(isRegister, username, email, password, cb) {
     cb = arguments[arguments.length - 1]
     if (localStorage.token) {
       if (cb) cb(true)
       this.onChange(true)
       return
     }
-    signInRequest(username, email, pass, (res) => {
-      console.log('res', res)
+
+    const isAuthenicated = (res) => {
       if (res.authenticated) {
         localStorage.token = res.token
         if (cb) cb(true)
@@ -18,7 +18,13 @@ module.exports = {
         if (cb) cb(false)
         this.onChange(false)
       }
-    })
+    }
+    if(isRegister){
+      signInRequest(username, password, isAuthenicated)
+    } else {
+      console.log("we made it")
+      signUpRequest(username, email, password, isAuthenicated)
+    }
   },
 
   getToken: function () {
@@ -38,11 +44,36 @@ module.exports = {
   onChange: function () {}
 }
 
-function signInRequest(username, email, password, cb) {
+const signInRequest = (username, password, cb) => {
 
   //go to the back end and check if the user credentials are correct
   $.ajax({
     url: '/api/authenticate', 
+    type: 'POST',
+    data: {
+      username,
+      password
+    }
+  })
+  .done(data =>{
+    console.log(data)
+    setTimeout(() => {
+      if (data) {
+        cb({
+          authenticated: data.success,
+          token: data.token
+        })
+      } else {
+        cb({ authenticated: false })
+      }
+    }, 2500)
+  })
+}
+
+const signUpRequest = (username, email, password, cb) =>{
+  //go to back end and register player and get token
+  $.ajax({
+    url: '/api/signup', 
     type: 'POST',
     data: {
       username,
@@ -61,6 +92,6 @@ function signInRequest(username, email, password, cb) {
       } else {
         cb({ authenticated: false })
       }
-    }, 5000)
+    }, 2500)
   })
 }

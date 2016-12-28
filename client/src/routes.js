@@ -14,8 +14,6 @@ import auth from './utils/auth.js'
 import AppContainer from './containers/appContainer';
 import GameContainer from './containers/gameContainer';
 import HowToPlay from './components/HowToPlay';
-import Landing from './components/Landing'
-import Login from './components/Login'
 import LoginContainer from './containers/loginContainer'
 import Logout from './components/Logout'
 import Modal from './components/Modal'
@@ -37,7 +35,7 @@ function redirectToLogin(nextState, replace) {
 function redirectToProfile(nextState, replace) {
   if (auth.loggedIn()) {
     replace('/')
-  }
+  } 
 }
 
 export default (
@@ -71,10 +69,10 @@ export default (
 
     <Route onEnter={redirectToLogin} >
       {/* Protected routes that don't share the dashboard UI*/}
-      <Route path='/user/:id'
+      <Route path='/play'
         getComponent={(nextState, cb) => {
           require.ensure([], require => {
-            cb(null, User)
+            cb(null, ProfileContainer)
           })
         }}
       />
@@ -85,6 +83,7 @@ export default (
         // Share the path
         // Dynamically load the correct component
         if (auth.loggedIn()) {
+          
           return require.ensure([], (require) => {
             cb(null, ProfileContainer)
           })

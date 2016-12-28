@@ -6,10 +6,11 @@ import {
   formUsernameAction,
   formEmailAction,
   formPasswordAction,
-  formErrorsAction,
+  loginFormErrorsAction,
   loginErrorAction,
   loginLoadingAction,
   signinSocketAction,
+  isRegisteredAction,
 } from '../actions/loginActions'
 
 
@@ -18,10 +19,10 @@ const mapDispatchToProps = (dispatch) => (
     formUsernameAction,
     formEmailAction,
     formPasswordAction, 
-    formErrorsAction,
+    loginFormErrorsAction,
     loginErrorAction,
     loginLoadingAction,
-    signinSocketAction,
+    isRegisteredAction, 
   }, dispatch)
 )
 
@@ -29,9 +30,10 @@ const mapStateToState = state => ({
   username: state.login.username,
   email: state.login.email,
   password: state.login.password,
-  formErrors: state.login.formErrors,
+  loginFormErrors: state.login.loginFormErrors,
   loading: state.login.loading,
-  error: state.login.error,
+  loginError: state.login.loginError,
+  isRegistered: state.login.isRegistered,
 })
 
 

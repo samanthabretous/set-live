@@ -13,12 +13,13 @@ const createNewPlayer = (req,res) =>{
   })
   .then(player => {
     if(player){
-      res.json({success: true, msg: 'Successful created new user.'})
-    } else {
-      res.json({success: false, msg: 'Username already exists.'})
-    }
+      const token = jwt.encode(player, secret)
+      res.json({success: true, token: 'JWT ' + token, msg: 'Successful created new user.'})
+    }    
   })
-  .catch(err => debug(err))
+  .catch(err => {
+    res.json({success: false, msg: 'Username or Email already exists.'})
+  })
 }
 
 const authenticatePlayer = (req, res) => {
@@ -63,7 +64,6 @@ getToken = function (headers) {
 router.get('/playerinfo', 
   passport.authenticate('jwt', { session: false}), 
   function(req, res){
-    debug(req.user)
     res.send(req.user.profile);
     const token = getToken(req.headers);
     if (token) {

@@ -32,6 +32,7 @@ const mapStateToState = state => ({
   password: state.login.password,
   loginErrors: state.login.loginErrors,
   loading: state.login.loading,
+  game: state.game.game
 })
 
 

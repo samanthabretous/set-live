@@ -1,5 +1,4 @@
-import { LOGIN_ERROR, SET_USER_NAME, SET_EMAIL, SET_PASSWORD, FORM_ERRORS, LOGIN_LOADING } from './types';
-import {socket} from '../actions/connections'
+import { LOGIN_ERROR, SET_USER_NAME, SET_EMAIL, SET_PASSWORD, FORM_ERRORS, LOGIN_LOADING, REGISTER } from './types';
 
 export const formUsernameAction = username => ({
   type: SET_USER_NAME,
@@ -21,9 +20,9 @@ export const loginErrorAction = loginError => ({
   loginError
 })
 
-export const formErrorsAction = loginErrors => ({
+export const loginFormErrorsAction = loginFormErrors => ({
   type: FORM_ERRORS,
-  loginErrors
+  loginFormErrors
 })
 
 export const loginLoadingAction = loading => ({
@@ -31,9 +30,8 @@ export const loginLoadingAction = loading => ({
   loading
 })
 
-//thunk action
-export const signinSocketAction = data => {
-  return dispatch => {
-    socket.emit('login', data)
-  }
-}
+export const isRegisteredAction = isRegistered => ({
+  type: REGISTER,
+  isRegistered
+})
+

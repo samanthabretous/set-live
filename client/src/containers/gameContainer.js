@@ -9,7 +9,6 @@ const mapDispatchToProps = (dispatch) => (
 
 const appToState = state => {
 return {
-  member: state.game.member,
   roomName: state.game.roomName,
   players: state.game.players,
   playerHasLeft: state.game.playerHasLeft,
@@ -17,6 +16,7 @@ return {
   cards: state.game.cards, 
   modalStatus: state.game.modalStatus,
   clickedCards: state.game.clickedCards,
+  gameRoom: state.game.gameRoom
 }}
 
 

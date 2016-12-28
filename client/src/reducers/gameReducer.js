@@ -3,20 +3,15 @@ import { PLAYERS, UPDATE_CARDS, BOARD, INVITE_PLAYERS, MODAL_STATUS, CLICKED_CAR
 const INTIAL_STATE = {
   players: [],
   playerHasLeft: null,
-  cards: null, 
-  board: [], 
   roomName: "",
-  gameRoom: false,
+  game: null,
   modalStatus: true,
   clickedCards: [],
-  member: {},
   status: 'disconnected',
 }
 
 export default function(state = INTIAL_STATE, action) {
-  console.log("action",action)
   switch(action.type){
-    case PLAYERS: 
     case INVITE_PLAYERS: 
     case UPDATE_CARDS: 
     case BOARD: 
@@ -30,7 +25,9 @@ export default function(state = INTIAL_STATE, action) {
       return Object.assign({}, state, {clickedCards: action.payload})
     case GO_TO_GAME: 
       console.log(action.gameInfo)
-      return Object.assign({}, state, {gameRoom: true, room: action.gameInfo.roomName, players: action.gameInfo.players})
+      return Object.assign({}, state, {game: action.gameInfo.game, room: action.gameInfo.roomName, players: action.gameInfo.players})
+    case PLAYERS: 
+      return [...players, action.players]
     default: 
       return state
   }

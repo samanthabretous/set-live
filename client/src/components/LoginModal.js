@@ -1,9 +1,9 @@
 import React from 'react'
-import classnames from 'classnames'
 import auth from '../utils/auth.js'
+import Display from './Display'
 
 const LoginModal = props => {
-  const { username, email, password,formUsernameAction, formEmailAction, formPasswordAction, formErrorsAction, formErrors, loginLoadingAction, loginErrorAction, loading, signinSocketAction } = props;
+  const { username, email, password,formUsernameAction, formEmailAction, formPasswordAction, loginFormErrorsAction, loginFormErrors, loginLoadingAction, loginErrorAction, loading, signinSocketAction, isRegistered, isRegisteredAction } = props;
 
 
   const handleChange = (event) =>{
@@ -22,35 +22,38 @@ const LoginModal = props => {
       };
     };
 
-    if(formErrors[event.target.name]){
-      let errors = Object.assign({}, formErrors);
+    if(loginFormErrors[event.target.name]){
+      let errors = Object.assign({}, loginFormErrors);
       delete errors[event.target.name];
       console.log(errors)
       whichTarget();
-      formErrorsAction(errors);
+      loginFormErrorsAction(errors);
     } else {
       whichTarget();
     };
   };
 
-  const handleSubmit = () =>{
+  const handleSubmit = () => {
 
     //form validation
     let errors = {};
     if(username === '') errors.username = "Can not be empty";
-    if(email.indexOf('@') === -1 && email.indexOf('.'=== -1)) errors.email = "Must be a vaild email";
+    if(!isRegistered){
+      if(email.indexOf('@') === -1 && email.indexOf('.'=== -1)) errors.email = "Must be a vaild email";
+    }
     if(password.length < 6) errors.password = "Password must be at least 6 characters long"
-    formErrorsAction(errors);
+    loginFormErrorsAction(errors);
 
     //before sending form request to back end check to make sure there are no errors
     const isValid = Object.keys(errors).length === 0
+    console.log("isValid",isValid, loginFormErrors, errors)
     if(isValid){
 
       //display loading signal
       loginLoadingAction(true)
 
       //confirm create login info and send user to next page
-      auth.login(username, email, password, (loggedIn) => {
+      auth.login(isRegistered, username, email, password, (loggedIn) => {
         console.log("loggedIn",loggedIn)
         if (!loggedIn) {
           return loginErrorAction(true)
@@ -73,46 +76,46 @@ const LoginModal = props => {
   return (
     <div style={{width: 500, height: 400, backgroundColor: 'white'}}>
       {loading && <span>Loading...</span>}
-      <div className={classnames('loginInput', {
-        error: !!formErrors.username
-      })}>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          onChange={handleChange}
-          name='username'
-          value={username}
-          placeholder="Enter Username"
-        />
-        <span>{formErrors.username}</span>
-      </div>
-      <div className={classnames('loginInput', {
-        error: !!formErrors.email
-      })}>
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          onChange={handleChange}
-          name='email'
-          value={email}
-          placeholder="Enter Email"
-        />
-        <span>{formErrors.email}</span>
+      <Display if={!loading}>
+        <h2>{isRegistered ? "Login" : "Sign Up"}</h2>
+        <div className={`loginInput ${!!loginFormErrors.username ? "error" : ""}`}>
+          <label htmlFor="username">Username</label>
+          <input
+            id="username"
+            onChange={handleChange}
+            name='username'
+            value={username}
+            placeholder="Enter Username"
+          />
+          <span>{loginFormErrors.username}</span>
         </div>
-      <div className={classnames('loginInput', {
-        error: !!formErrors.password
-      })}>
-        <label htmlFor="passowrd">Password</label>
-        <input
-          id="passowrd"
-          onChange={handleChange}
-          name='password'
-          value={password}
-          placeholder="Enter Password"
-        />
-        <span>{formErrors.password}</span>
-      </div>
-      <button onClick={handleSubmit}>Submit</button>
+        <Display if={!isRegistered} >
+          <div className={`loginInput ${!!loginFormErrors.email ? "error" : ""}`}>
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              onChange={handleChange}
+              name='email'
+              value={email}
+              placeholder="Enter Email"
+            />
+            <span>{loginFormErrors.email}</span>
+          </div>
+        </Display>
+        <div className={`loginInput ${!!loginFormErrors.password ? "error" : ""}`}>
+          <label htmlFor="passowrd">Password</label>
+          <input
+            id="passowrd"
+            onChange={handleChange}
+            name='password'
+            value={password}
+            placeholder="Enter Password"
+          />
+          <span>{loginFormErrors.password}</span>
+        </div>
+        <button onClick={handleSubmit}>Submit</button>
+        <button onClick={()=>isRegisteredAction(!isRegistered)}>{isRegistered ? "Register" : "Already Signed Up?" }</button>
+      </Display>
     </div>
   )
 }

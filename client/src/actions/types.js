@@ -11,6 +11,8 @@ export const SET_PASSWORD = 'set_password';
 export const LOGIN_ERROR = 'login_error';
 export const FORM_ERRORS = 'form_errors';
 export const LOGIN_LOADING = 'login_loading';
+export const REGISTER = 'register';
+export const RESET_LOGIN = 'reset_login';
 
 
 //LandingPage
