@@ -20,7 +20,7 @@ export const CONNECTION_STATUS = 'change_status';
 export const ROOM_STATUS = 'room_status';
 
 //GAME PAGE
-export const INVITE_PLAYERS = 'invite_players';
+export const GO_TO_GAME = 'go_to_game';
 export const MODAL_STATUS = 'modal-status';
 export const BOARD = 'board';
 export const CLICKED_CARDS = 'clicked_cards';

@@ -6,21 +6,15 @@ import {Link} from 'react-router'
 import store from '../store'
 import {socket} from '../actions/connections'
 
-const LandingPage = Radium( props => {
+const Profile = Radium( props => {
 
   let {roomName, username, generateRoomName} = props
 
-  let handleNameChange = (event) => {
-    props.formUsernameAction(event.target.value)
-  };
   let handleRoomChange = (event) => {
-    console.log('room')
-    console.log(roomName)
     generateRoomName(event.target.value)
   };
 
   let joinRoom = () =>{
-    console.log(roomName)
     socket.emit('enterGameRoom', {
       roomName,
       username
@@ -30,26 +24,20 @@ const LandingPage = Radium( props => {
   return (
     <div className="landingPage">
       <input 
-        onChange={handleNameChange}
-        className="landingInput"
-        placeholder="enter your full name..."
-        defaultValue={username ? username : ""}
-        required />
-      <input 
         onChange={handleRoomChange}
         className="landingInput"
         placeholder="enter a room name..."
-        required />
-      <Link to={"/game/" + roomName}>
+      />
+      {/*<Link to={"/game/" + roomName}>*/}
         <button to="/game" 
           className="btn btn-primary"
           disabled={!roomName}
           onClick={joinRoom}>
           Enter Room
         </button>
-      </Link>
+      {/*</Link>*/}
     </div>
   )
 })
 
-export default LandingPage;
+export default Profile;

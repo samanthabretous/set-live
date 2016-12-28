@@ -1,7 +1,8 @@
 module.exports = ((app,io)=>{
   const _ = require ('lodash');
-  const Player = require('./modelObjs/Player');
-  const Game = require('./modelObjs/Game')
+  const Player = require('./models').player;
+  const Card = require('./models').card;
+  const Game = require('./models').game;
   const debug = require('debug')('OH_GOSH')
 
   let games = {};
@@ -45,53 +46,71 @@ module.exports = ((app,io)=>{
     });
 
     /*
-    * @param {Object} payload. holds login form infomation
-    * check to see if that username or password exist already in the database
-    * if it has let the user know. 
-    * else add user to database.
-    * @returns {}
+    * @param {String} payload. holds room name and username
+    * @returns {Object} game room
     */
-    socket.on('login', payload => {
-      debug(payload)
-    })
-
     //create and/or join a room
     socket.on('enterGameRoom', (payload) => {
-      let newMember = new Player({
-        id: socket.id,
-        name: payload.username, 
-      });
 
-      //check if the room exist and make sure there is space in the room
-      let roomName = payload.roomName;
-      if(games[roomName] && !games[roomName].isRoomFull()){
+      //find player in database and save
+      let socketPlayer = null; 
+      Player.findOne({
+        where: {
+          username: payload.username
+        }
+      })
+      .then(foundPlayer => {
+        socketPlayer = foundPlayer
+      })
+      .then(()=>{
+        //see if room exist in the database
+        return Game.findOne({
+          where: {
+            room: payload.roomName
+          }, 
+          include: Player
+        })
+      })
+      .then(game => {
+        if(!game){
+          // game does not exist already then   
+          return Game.create({
+              room: payload.roomName,
+              board:[false, false, false, false, false, false, false, false, false,false, false, false]
+            }
+          )
+        } else {
+          return game
+        }
+      })
+      .then(game =>{
 
-        //place member in room and update game object
-        socket.join(roomName);
-        newMember.addRoom(roomName);
-        games[roomName].players.push(newMember);
+        //handle if game was recently created 
+        const playersInGame = game.get('players') ? game.get('players').length : 0
+        const maxPlayers = game.get('maxPlayers')
 
-        //let all players in room know there is a new player
-        io.sockets.in(roomName).emit('players', games[roomName].players);
-      } 
+        //make sure there is space left in the game
+        if(playersInGame < maxPlayers){
 
-      //if room exist but is full. tell player
-      else if (games[roomName] && games[roomName].isRoomFull()) {
+          // add player to room and let all players in room know there is a new player
+          game.addPlayers([socketPlayer.id])
+          let allPlayers = game.get('players') ? game.get('players').concat(socketPlayer) : socketPlayer
+          socket.join(payload.roomName);
+          io.sockets.in(payload.roomName).emit('players', allPlayers);
+          debug("players",allPlayers)
+
+          //send a message to player and let them know how many more people they can invite
+          socket.emit('goToGame', {gameRoom: true, room: payload.roomName, players: allPlayers});
+          return game
+        } else {
+          
+          // if room is full. tell player
           socket.emit('roomFull', true);
+        }
 
-      // if game room has not been created
-      } else {
-        socket.join(roomName);
-        newMember.addRoom(roomName);
-        games[roomName] = new Game(roomName, newMember);
-        socket.emit('players', games[roomName].players);
-      }
+      })
 
-      socket.emit('joined', newMember);
-
-      //send a message to all players and let them know how many more people they can invite
-      socket.emit('invitePlayersToRoom', {roomName, players: games[roomName].players});
-    })
+    }) //'enterGameRoom'
 
     socket.on('startNewGame', roomName => {
       if(games[roomName]){

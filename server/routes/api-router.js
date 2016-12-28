@@ -63,6 +63,7 @@ getToken = function (headers) {
 router.get('/playerinfo', 
   passport.authenticate('jwt', { session: false}), 
   function(req, res){
+    debug(req.user)
     res.send(req.user.profile);
     const token = getToken(req.headers);
     if (token) {

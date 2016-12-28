@@ -12,4 +12,5 @@ Game.sync({force: true})
 
   //add all cards to the deck
   game.addCards(range(1,82))
+  game.addPlayers([1])
 })

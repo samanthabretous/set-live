@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const Player = require('../models').game
+const Player = require('../models').player;
 const debug = require('debug')('OH_GOSH')
 
 const getAllPlayers = (req,res) =>{

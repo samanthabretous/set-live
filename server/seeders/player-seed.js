@@ -13,4 +13,7 @@ Player.sync({force: true})
 .then(() =>  Player.create({username: 'test3', email: 'test3@gmail.com', password: 'password3', matches: 5, wins: 4, loses: 2})
 )
 .then( player => player.addGames([1]))
+.then(() =>  Player.create({username: 'admin', email: 'admin@gmail.com', password: 'admin123', matches: 5, wins: 4, loses: 2})
+)
+.then( player => player.addGames([1]))
 

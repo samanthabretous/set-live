@@ -1,12 +1,11 @@
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import LandingPage from '../components/LandingPage';
-import {generateRoomName, formUsernameAction} from '../actions';
+import Profile from '../components/Profile';
+import {generateRoomName} from '../actions';
 
 const mapDispatchToProps = (dispatch) => (
   bindActionCreators({
     generateRoomName, 
-    formUsernameAction
   }, dispatch)
 )
 
@@ -17,4 +16,4 @@ const mapStateToProps = state => ({
 })
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(LandingPage)
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

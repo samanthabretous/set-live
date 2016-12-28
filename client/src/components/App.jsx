@@ -44,10 +44,10 @@ class App extends React.Component {
   //show login/resigter modal
   setLoginModal() {
     this.props.router.push('/login')
-    //this.props.loginModalAction(!this.props.loginModal)
   }
 
   render() {
+    console.log(this.props)
     let { location } = this.props
 
     let isModal = (
@@ -75,8 +75,11 @@ class App extends React.Component {
           <div className={this.props.params.room ? "logoTransition" : "set_logo"}>
             <SetLogo /> 
           </div> 
-          <button onClick={this.setLoginModal.bind(this)}>Login</button>
-          {/*this.props.params.room && <GameMenu {...this.props}/>*/}
+          <Link to={{
+            pathname: '/user/1',
+            state: { modal: true, returnTo: this.props.location.pathname }
+          }}> Login </Link>
+          {this.props.params.room && <GameMenu {...this.props}/>}
         </div>
         <div>
 

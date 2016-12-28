@@ -13,7 +13,7 @@ module.exports = function(passport) {
   var opts = {};
   opts.secretOrKey = secret;
   opts.jwtFromRequest = ExtractJwt.fromAuthHeader();
-  passport.use(new JwtStrategy(
+  passport.use('jwt', new JwtStrategy(
     opts, 
     function(jwt_payload, done) {
       debug(jwt_payload)
@@ -28,5 +28,5 @@ module.exports = function(passport) {
           }
       });
     }
-  ));
+  ));''
 };

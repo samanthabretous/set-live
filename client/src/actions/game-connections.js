@@ -1,4 +1,4 @@
-import { UPDATE_CARDS, PLAYERS, INVITE_PLAYERS, BOARD, LEFT_PLAYER } from './types';
+import { UPDATE_CARDS, PLAYERS, INVITE_PLAYERS, BOARD, LEFT_PLAYER, GO_TO_GAME } from './types';
 import {socket} from './connections'
 
 export default (store) => {
@@ -23,10 +23,11 @@ export default (store) => {
     })
   });
 
-  socket.on('invitePlayersToRoom', roomName =>{
+  /*params {Object} gameInfo holds boolean, roomName, players*/
+  socket.on('goToGame', gameInfo =>{
     store.dispatch({
-      type: INVITE_PLAYERS,
-      roomName
+      type: GO_TO_GAME,
+      gameInfo
     })
   })
 

@@ -2,13 +2,27 @@
 // Import React and the dependencies we need to make react router work
 //====================
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Route, IndexRoute, Link } from 'react-router';
 
 import auth from './utils/auth.js'
 
 
+//====================
+// Import the different components that will represent the different pages
+// of our website.
+//====================
+import AppContainer from './containers/appContainer';
+import GameContainer from './containers/gameContainer';
+import HowToPlay from './components/HowToPlay';
+import Landing from './components/Landing'
+import Login from './components/Login'
+import LoginContainer from './containers/loginContainer'
+import Logout from './components/Logout'
+import Modal from './components/Modal'
+import ProfileContainer from './containers/profileContainer'
+import PageTwo from './components/PageTwo'
+import User from './components/User'
 
-import LandingPageContainer from './containers/landingPageContainer'
 
 
 function redirectToLogin(nextState, replace) {
@@ -20,34 +34,18 @@ function redirectToLogin(nextState, replace) {
   }
 }
 
-function redirectToDashboard(nextState, replace) {
+function redirectToProfile(nextState, replace) {
   if (auth.loggedIn()) {
     replace('/')
   }
 }
-
-//====================
-// Import the different components that will represent the different pages
-// of our website.
-//====================
-import About from './components/About'
-import AppContainer from './containers/appContainer'
-import Dashboard from './components/Dashboard'
-import Landing from './components/Landing'
-import Login from './components/Login'
-import LoginContainer from './containers/loginContainer'
-import Logout from './components/Logout'
-import Modal from './components/Modal'
-import PageOne from './components/PageOne'
-import PageTwo from './components/PageTwo'
-import User from './components/User'
 
 export default (
   <Route component={AppContainer} >
     <Route path='/how-to-play'
       getComponent={(nextState, cb) => {
         require.ensure([], (require) => {
-          cb(null, About)
+          cb(null, HowToPlay)
         })
       }}
     />
@@ -58,7 +56,7 @@ export default (
         })
       }}
     />
-    <Route onEnter={redirectToDashboard}>
+    <Route onEnter={redirectToProfile}>
       {/* Unauthenticated routes
         * Redirect to dashboard if player is already logged in */}
       <Route path='/login'
@@ -88,11 +86,11 @@ export default (
         // Dynamically load the correct component
         if (auth.loggedIn()) {
           return require.ensure([], (require) => {
-            cb(null, Dashboard)
+            cb(null, ProfileContainer)
           })
         }
         return require.ensure([], (require) => {
-          cb(null, Landing)
+          cb(null, HowToPlay)
         })
       }}
     >
@@ -101,7 +99,7 @@ export default (
           // Only load if we're logged in
           if (auth.loggedIn()) {
             return require.ensure([], (require) => {
-              cb(null, PageOne)
+              cb(null, ProfileContainer)
             })
           }
           return cb()
@@ -109,10 +107,10 @@ export default (
       />
       <Route onEnter={redirectToLogin} >
         // Protected nested routes for the dashboard
-        <Route path='/page2'
+        <Route path='/game/:room'
           getComponent={(nextState, cb) => {
             require.ensure([], (require) => {
-              cb(null, PageTwo)
+              cb(null, GameContainer)
             })
           }}
         />
