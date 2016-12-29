@@ -1,4 +1,4 @@
-import { UPDATE_CARDS, PLAYERS, INVITE_PLAYERS, BOARD, LEFT_PLAYER, GO_TO_GAME } from './types';
+import { UPDATE_CARDS, ADD_PLAYER, INVITE_PLAYERS, BOARD, LEFT_PLAYER, GO_TO_GAME } from './types';
 import {socket} from './connections'
 
 export default (store) => {
@@ -8,15 +8,16 @@ export default (store) => {
       cards
     })
   })
-  socket.on('players', players =>{
+  socket.on('addPlayer', player =>{
+    console.log(player)
     store.dispatch({
-      type: PLAYERS,
-      players
+      type: ADD_PLAYER,
+      player
     })
   });
 
   socket.on('leftPlayer', (playerHasLeft)=>{
-    console.log(player)
+    console.log(playerHasLeft)
     store.dispatch({
       type: LEFT_PLAYER,
       playerHasLeft

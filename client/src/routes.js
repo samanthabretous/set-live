@@ -29,6 +29,8 @@ function redirectToLogin(nextState, replace) {
       pathname: '/login',
       state: { modal: true, nextPathname: nextState.location.pathname }
     })
+  } else {
+    auth.getPlayerSecretInfo()
   }
 }
 

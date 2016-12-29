@@ -2,7 +2,6 @@
  * export our different types so that our actions and components can use them
  */
 export const SHOW_BOARD = 'show_board';
-export const PLAYERS = 'players';
 
 //LOGIN FORM
 export const SET_USER_NAME = 'set_user_name';
@@ -23,10 +22,12 @@ export const ROOM_STATUS = 'room_status';
 
 //GAME PAGE
 export const GO_TO_GAME = 'go_to_game';
+export const ADD_PLAYER = 'players';
 export const MODAL_STATUS = 'modal-status';
 export const BOARD = 'board';
 export const CLICKED_CARDS = 'clicked_cards';
 export const LEFT_PLAYERS = 'left_players';
+export const SET_PLAYER_INFO = 'set_player_info';
 
 
 

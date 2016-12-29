@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
   username: state.login.username,
   roomName: state.game.roomName,
   game: state.game.game,
+  playerInfo: state.game.playerInfo,
 })
 
 

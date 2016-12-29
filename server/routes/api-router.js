@@ -5,6 +5,7 @@ const router = require('express').Router(),
       ExtractJwt = passportJWT.ExtractJwt,
       JwtStrategy = passportJWT.Strategy,
       Player = require('../models').player,
+      Game = require('../models').game,
       secret = require('../config/passport').jwtOptions.secretOrKey
       debug = require('debug')('OH_GOSH');
 
@@ -89,13 +90,12 @@ router.get('/playerinfo',
       //decode token received from header
       const decoded = jwt.decode(token, secret);
 
-      Player.findById(decoded.id)
+      Player.findById(decoded.id, {include: Game})
       .then(player => {
         if (!player) {
-
           res.send({success: false, msg: 'Authentication failed. Player not found.'});
         } else {
-          res.send({success: true, msg: 'Welcome in the member area ' + player.username + '!'});
+          res.send({success: true, msg: 'Welcome in the member area ' + player.username + '!', playerInfo: player});
         }
       });
     }

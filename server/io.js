@@ -51,7 +51,7 @@ module.exports = ((app,io)=>{
     */
     //create and/or join a room
     socket.on('enterGameRoom', (payload) => {
-      debug(payload)
+
       //find player in database and save
       let socketPlayer = null; 
       Player.findOne({
@@ -93,11 +93,11 @@ module.exports = ((app,io)=>{
         if(playersInGame < maxPlayers){
 
           // add player to room and let other players in room know there is a new player
-          debug(socketPlayer)
           game.addPlayers([socketPlayer.id])
           let allPlayers = game.get('players') ? game.get('players').concat(socketPlayer) : socketPlayer
-          socket.join(payload.roomName);
-          socket.in(payload.roomName).emit('players', socketPlayer);
+
+          socket.join(payload.roomName)
+          io.sockets.in(payload.roomName).emit('addPlayer', socketPlayer);
 
           //send a message to player and let them know how many more people they can invite
           socket.emit('goToGame', {game: game, room: payload.roomName, players: allPlayers});
@@ -135,3 +135,9 @@ module.exports = ((app,io)=>{
   })
 
 }) //module.exports closing
+
+        // io.of('/').in(payload.roomName).clients(function(error, clients){
+        //   if (error) throw error;
+        //   debug("clients",clients); 
+        //   debug('room', socket.rooms)
+        // });

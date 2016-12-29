@@ -1,10 +1,11 @@
-import $ from 'jquery'
+import $ from 'jquery';
+import store from '../store';
+import {SET_PLAYER_INFO} from '../actions/types'
 
 module.exports = {
   login(isRegister, username, email, password, cb) {
     cb = arguments[arguments.length - 1]
     if (localStorage.token) {
-      console.log(localStorage.token)
       if (cb) cb(true)
       this.onChange(true)
       return
@@ -28,28 +29,41 @@ module.exports = {
     }
   },
 
-  getToken: function () {
+  getToken() {
     return localStorage.token
   },
 
-  logout: function (cb) {
+  logout(cb) {
     delete localStorage.token
     if (cb) cb()
     this.onChange(false)
   },
 
-  loggedIn: function () {
+  loggedIn() {
     return !!localStorage.token
   },
 
-  onChange: function () {
+  getPlayerSecretInfo(){
     console.log("onChange")
-    // $.ajax({
-    //   url: '/api/playerInfo',
-    //   beforeSend: function (xhr) {
-    //     xhr.setRequestHeader('Authorization', this.getToken());
-    //   },
-    // })
+    $.ajax({
+      url: '/api/playerInfo',
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', localStorage.token);
+      },
+    })
+    .done(data =>{
+      const {success, playerInfo} = data
+      if(success){
+        console.log('data', data)
+        store.dispatch({
+          type: SET_PLAYER_INFO, 
+          playerInfo 
+        })
+      }
+    })
+  },
+
+  onChange() {
   }
 }
 
