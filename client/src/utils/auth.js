@@ -4,6 +4,7 @@ module.exports = {
   login(isRegister, username, email, password, cb) {
     cb = arguments[arguments.length - 1]
     if (localStorage.token) {
+      console.log(localStorage.token)
       if (cb) cb(true)
       this.onChange(true)
       return
@@ -41,14 +42,22 @@ module.exports = {
     return !!localStorage.token
   },
 
-  onChange: function () {}
+  onChange: function () {
+    console.log("onChange")
+    // $.ajax({
+    //   url: '/api/playerInfo',
+    //   beforeSend: function (xhr) {
+    //     xhr.setRequestHeader('Authorization', this.getToken());
+    //   },
+    // })
+  }
 }
 
 const signInRequest = (username, password, cb) => {
 
   //go to the back end and check if the user credentials are correct
   $.ajax({
-    url: '/api/authenticate', 
+    url: '/api/login', 
     type: 'POST',
     data: {
       username,

@@ -49,7 +49,7 @@ module.exports = function(sequelize, DataTypes) {
       },
 
       //check if password is valid
-      validPassword: function(password, passwd, cb, player){
+      validPassword: function(password, passwd, player, cb){
         bcrypt.compare(password, passwd, function(err, isMatch){
           if (err) console.log(err)
           if (isMatch) {

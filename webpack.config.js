@@ -1,4 +1,5 @@
-const path = require('path');
+const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   entry: ["./client/src/app-client.js" ],
@@ -6,6 +7,11 @@ module.exports = {
     path: path.join(__dirname, "client/public/"),
     filename: "bundle.js",
   },
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ],
   module: {
     loaders: [
       {

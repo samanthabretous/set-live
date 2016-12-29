@@ -1,28 +1,38 @@
 const router = require('express').Router(),
-      jwt = require('jwt-simple'),
+      jwt = require('jsonwebtoken'),
       passport = require('passport'),
+      passportJWT = require("passport-jwt"),
+      ExtractJwt = passportJWT.ExtractJwt,
+      JwtStrategy = passportJWT.Strategy,
       Player = require('../models').player,
-      secret = require('../config/secret').secret,
+      secret = require('../config/passport').jwtOptions.secretOrKey
       debug = require('debug')('OH_GOSH');
 
-const createNewPlayer = (req,res) =>{
+
+//create new player
+router.post('/signup', (req,res) =>{
+  debug(req.body)
   Player.create({
     username: req.body.username, 
     email: req.body.email,
     password: req.body.password,
   })
   .then(player => {
+    debug(player)
     if(player){
-      const token = jwt.encode(player, secret)
+      const token = jwt.sign({id:player.id}, secret)
       res.json({success: true, token: 'JWT ' + token, msg: 'Successful created new user.'})
     }    
   })
   .catch(err => {
+    debug(err)
     res.json({success: false, msg: 'Username or Email already exists.'})
   })
-}
+});
 
-const authenticatePlayer = (req, res) => {
+// find player in data base and send them back a token
+// else let player know they have entered the wrong password
+router.post("/login", (req, res) => {
   Player.findOne({
     where: {username: req.body.username }
   })
@@ -31,23 +41,32 @@ const authenticatePlayer = (req, res) => {
 
       //access the classMethod on player
       const validate = player['$modelOptions'].classMethods.validPassword
-      validate(req.body.password, player.password,(err,isMatch)=>{
+      validate(req.body.password, player.password, player, (err,isMatch)=>{
         if(isMatch) {
 
-          //if user is valid send them a token
-          const token = jwt.encode(player, secret)
+          //if player is valid send them a token
+          const token = jwt.sign({id: player.id}, secret)
           res.json({success: true, token: 'JWT ' + token})
         } else {
-          res.json({success: false, msg: 'Authentication failed. Wrong password.'})
+          res.status(401).json({success: false, msg: 'Authentication failed. Wrong password.'})
         }
-      }, player)
+      })
     } else {
       res.send(false)
     }
   })
-}
+});
 
-getToken = function (headers) {
+//get all authorization headers to help with debugging
+
+router.get('/secretDebug', (req, res, next) => {
+    console.log(req.get('Authorization'));
+    next();
+    res.json("debugging");
+});
+
+
+const getToken = (headers) => {
   if (headers && headers.authorization) {
     var parted = headers.authorization.split(' ');
     if (parted.length === 2) {
@@ -64,32 +83,28 @@ getToken = function (headers) {
 router.get('/playerinfo', 
   passport.authenticate('jwt', { session: false}), 
   function(req, res){
-    res.send(req.user.profile);
     const token = getToken(req.headers);
     if (token) {
-      const decoded = jwt.decode(token, config.secret);
-      Player.findOne({
-        username: decoded.username
-      })
+
+      //decode token received from header
+      const decoded = jwt.decode(token, secret);
+
+      Player.findById(decoded.id)
       .then(player => {
         if (!player) {
-          return res.status(403).send({success: false, msg: 'Authentication failed. Player not found.'});
+
+          res.send({success: false, msg: 'Authentication failed. Player not found.'});
         } else {
-          res.json({success: true, msg: 'Welcome in the member area ' + player.username + '!'});
+          res.send({success: true, msg: 'Welcome in the member area ' + player.username + '!'});
         }
       });
     }
   }
 )
 
-//api/login
-router.route('/authenticate')
-  .post(authenticatePlayer)
 
-router.route('/signup')
-  .post(createNewPlayer)
 
 
 module.exports = {
-  router
+  router, 
 }
