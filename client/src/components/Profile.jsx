@@ -1,12 +1,10 @@
 import React from 'react'
-import Radium from 'radium'
-import {Motion, spring} from 'react-motion';
 import {Link} from 'react-router'
 
 import store from '../store'
 import {socket} from '../actions/connections'
 
-const Profile = Radium( props => {
+const Profile = props => {
 
   let {roomName, username, generateRoomName, playerInfo, gameId} = props
 
@@ -49,6 +47,6 @@ const Profile = Radium( props => {
       </div>
     </div>)
   )
-})
+}
 
 export default Profile;

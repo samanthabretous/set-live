@@ -1,9 +1,11 @@
 import React from 'react';
-import store from '../store';
+import {withRouter} from 'react-router'
+
 
 const Play = React.createClass({
   componentDidMount() {
     console.log(this.props)
+    this.props.router.replace('/')
 
   },
 
@@ -12,4 +14,4 @@ const Play = React.createClass({
   }
 })
 
-export default Play
+export default withRouter(Play)

@@ -1,5 +1,4 @@
 const passport = require('passport'),
-      LocalStrategy = require('passport-local').Strategy,
       JwtStrategy = require('passport-jwt').Strategy,
       ExtractJwt = require('passport-jwt').ExtractJwt,
       secret = require('./secret'),

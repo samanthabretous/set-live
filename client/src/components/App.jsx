@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router'
-import {RouteTransition} from 'react-motion'
 import auth from '../utils/auth'
 
 import store from '../store'
@@ -9,6 +8,7 @@ import SetLogo from '../../images/set_logo.inline.svg';
 //components
 import GameMenu from './GameMenu'
 import Modal from './Modal'
+import GreenStockBox from './GreenStockBox'
 
 
 class App extends React.Component {
@@ -94,6 +94,7 @@ class App extends React.Component {
                 {this.props.children}
               </Modal>
             )}
+            <GreenStockBox />
           </div>
         </div>
       </div>
