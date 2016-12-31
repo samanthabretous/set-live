@@ -1,11 +1,13 @@
-import { ADD_PLAYER, UPDATE_CARDS, BOARD, INVITE_PLAYERS, MODAL_STATUS, CLICKED_CARDS, LEFT_PLAYERS, ADD_MEMBER, CONNECTION_STATUS,CONNECTIONS, ROOM_STATUS, SET_ROOM_NAME, GO_TO_GAME, SET_PLAYER_INFO } from '../actions/types';
+import { ADD_PLAYER, UPDATE_CARDS, BOARD, INVITE_PLAYERS, MODAL_STATUS, CLICKED_CARDS, LEFT_PLAYERS, ADD_MEMBER, CONNECTION_STATUS,CONNECTIONS, ROOM_STATUS, SET_ROOM_NAME, GO_TO_GAME, SET_PLAYER_INFO, GAME_STARTED } from '../actions/types';
 
 const INTIAL_STATE = {
   players: [],
   playerInfo: null,
   playerHasLeft: null,
   roomName: "",
-  game: null,
+  gameId: null,
+  started: false,
+  deck: null,
   modalStatus: true,
   clickedCards: [],
   status: 'disconnected',
@@ -26,9 +28,12 @@ export default function(state = INTIAL_STATE, action) {
     case CLICKED_CARDS: 
       return Object.assign({}, state, {clickedCards: action.payload})
     case GO_TO_GAME: 
-      return Object.assign({}, state, {game: action.gameInfo.game, room: action.gameInfo.roomName, players: action.gameInfo.players})
+      const {id, room, started} = action.gameInfo.game;
+      return Object.assign({}, state, {gameId: id, roomName: room, players: action.gameInfo.players, started})
     case ADD_PLAYER: 
       return Object.assign({}, state, {players: [...state.players, action.player]})
+    case GAME_STARTED: 
+      return Object.assign({}, state, {deck: action.deck, started: true})
     default: 
       return state
   }

@@ -8,9 +8,9 @@ import InvitePlayers from './InvitePlayers'
 
 
 const GameMenu = (props) => {
-  let {member, players, roomName, modalStatus, game} = props
+  let {member, players, roomName, modalStatus, gameId, deck} = props
   const startGame = roomName => {
-    socket.emit('startNewGame', game.id)
+    socket.emit('startNewGame', gameId)
   };
   const isSet = () => {
     console.log(isSetOnBoard(this.props.board))
@@ -21,7 +21,7 @@ const GameMenu = (props) => {
       <p>{players.length} players connected to Room: {roomName.roomName}</p>
       players.map((player, index)=> <p key={index}>PLAYER {index + player.name}</p>) */}
       <li><Link to="/how-to-play">About</Link></li>
-      <button onClick={()=> startGame()}>Start New Game</button>
+      {!deck && <button onClick={()=> startGame()}>Start New Game</button>}
       {
         roomName && modalStatus &&
           <Modal/>

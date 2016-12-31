@@ -2,13 +2,12 @@ import React from 'react'
 import path from 'path'
 import _ from 'lodash'
 import {socket} from '../actions/connections'
-import {CARDS} from '../actions/types'
 import cardComponents from './cardComponents'
 
 
 const Board = (props) => {
 
-  let {clickedCards, board, addClickedCard} = props
+  let {clickedCards, board, addClickedCard, deck} = props
 
   /* 
   * @param {Object} card. when user clicks on card 
@@ -52,7 +51,8 @@ const Board = (props) => {
   * based on the attributes recieved from the objects.
   * @returns {[Components]}
   */
-  let boardOfCards = (board) => {
+  let boardOfCards = (deck) => {
+    const board = deck.splice(0,12)
     return board.map((slot,i) => {
 
       // define component. imported all svg images into an object. when certain attributes are triggered look inside the object and grab import information. inorder to use that infomation as a component, it had to be saved in a variable 
@@ -74,12 +74,12 @@ const Board = (props) => {
       )
     })
   }
-
+console.log(deck)
   return (
     <div>
       <div>Board</div>
       <section className="board">
-        {boardOfCards(board)}
+        {deck && boardOfCards(deck)}
       </section>
     </div>
   )

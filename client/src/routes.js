@@ -5,6 +5,7 @@ import React from 'react';
 import { Route, IndexRoute, Link } from 'react-router';
 
 import auth from './utils/auth.js'
+import {socket} from './actions/connections'
 
 
 //====================
@@ -18,12 +19,12 @@ import LoginContainer from './containers/loginContainer'
 import Logout from './components/Logout'
 import Modal from './components/Modal'
 import ProfileContainer from './containers/profileContainer'
-import PageTwo from './components/PageTwo'
+import Play from './components/Play'
 import User from './components/User'
 
 
 
-function redirectToLogin(nextState, replace) {
+const redirectToLogin = (nextState, replace) => {
   if (!auth.loggedIn()) {
     replace({
       pathname: '/login',
@@ -31,31 +32,53 @@ function redirectToLogin(nextState, replace) {
     })
   } else {
     auth.getPlayerSecretInfo()
+    if(nextState.params.room){
+      socket.emit('startNewGame', nextState.params.room)
+    }
   }
+  console.log(nextState)
 }
 
-function redirectToProfile(nextState, replace) {
+const redirectToProfile =(nextState, replace) =>{
   if (auth.loggedIn()) {
     replace('/')
   } 
 }
 
+
 export default (
-  <Route component={AppContainer} >
-    <Route path='/how-to-play'
+  <Route path='/' component={AppContainer} >
+    <IndexRoute 
       getComponent={(nextState, cb) => {
-        require.ensure([], (require) => {
+        // Share the path
+        // Dynamically load the correct component
+        if (auth.loggedIn()) {
+          auth.getPlayerSecretInfo();
+          return require.ensure([], (require) => {
+            cb(null, ProfileContainer)
+          })
+        }
+        return require.ensure([], (require) => {
           cb(null, HowToPlay)
         })
       }}
     />
-    <Route path='/logout'
-      getComponent={(nextState, cb) => {
-        require.ensure([], (require) => {
-          cb(null, Logout)
-        })
-      }}
-    />
+
+    <Route onEnter={redirectToLogin} >
+      // Protected nested routes for the dashboard
+      <Route path='/game/:room'
+        getComponent={(nextState, cb) => {
+          require.ensure([], (require) => {
+            cb(null, GameContainer)
+          })
+        }}
+      />
+      <Route path='/play' component={Play}/>
+    </Route>
+
+    <Route path='/how-to-play' component={HowToPlay}/>
+    <Route path='/logout' component={Logout}/>
+
     <Route onEnter={redirectToProfile}>
       {/* Unauthenticated routes
         * Redirect to dashboard if player is already logged in */}
@@ -67,55 +90,7 @@ export default (
         }}
       />
     </Route>
-    
 
-    <Route onEnter={redirectToLogin} >
-      {/* Protected routes that don't share the dashboard UI*/}
-      <Route path='/play'
-        getComponent={(nextState, cb) => {
-          require.ensure([], require => {
-            cb(null, ProfileContainer)
-          })
-        }}
-      />
-    </Route>
 
-    <Route path='/'
-      getComponent={(nextState, cb) => {
-        // Share the path
-        // Dynamically load the correct component
-        if (auth.loggedIn()) {
-          
-          return require.ensure([], (require) => {
-            cb(null, ProfileContainer)
-          })
-        }
-        return require.ensure([], (require) => {
-          cb(null, HowToPlay)
-        })
-      }}
-    >
-      <IndexRoute
-        getComponent={(nextState, cb) => {
-          // Only load if we're logged in
-          if (auth.loggedIn()) {
-            return require.ensure([], (require) => {
-              cb(null, ProfileContainer)
-            })
-          }
-          return cb()
-        }}
-      />
-      <Route onEnter={redirectToLogin} >
-        // Protected nested routes for the dashboard
-        <Route path='/game/:room'
-          getComponent={(nextState, cb) => {
-            require.ensure([], (require) => {
-              cb(null, GameContainer)
-            })
-          }}
-        />
-      </Route>
-    </Route>
   </Route>
 )

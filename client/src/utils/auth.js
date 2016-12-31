@@ -24,7 +24,6 @@ module.exports = {
     if(isRegister){
       signInRequest(username, password, isAuthenicated)
     } else {
-      console.log("we made it")
       signUpRequest(username, email, password, isAuthenicated)
     }
   },
@@ -44,7 +43,6 @@ module.exports = {
   },
 
   getPlayerSecretInfo(){
-    console.log("onChange")
     $.ajax({
       url: '/api/playerInfo',
       beforeSend: function (xhr) {
@@ -54,7 +52,6 @@ module.exports = {
     .done(data =>{
       const {success, playerInfo} = data
       if(success){
-        console.log('data', data)
         store.dispatch({
           type: SET_PLAYER_INFO, 
           playerInfo 
@@ -62,7 +59,6 @@ module.exports = {
       }
     })
   },
-
   onChange() {
   }
 }
@@ -79,7 +75,6 @@ const signInRequest = (username, password, cb) => {
     }
   })
   .done(data =>{
-    console.log(data)
     setTimeout(() => {
       if (data) {
         cb({
@@ -89,7 +84,7 @@ const signInRequest = (username, password, cb) => {
       } else {
         cb({ authenticated: false })
       }
-    }, 2500)
+    }, 500)
   })
 }
 
@@ -105,7 +100,6 @@ const signUpRequest = (username, email, password, cb) =>{
     }
   })
   .done(data =>{
-    console.log(data)
     setTimeout(() => {
       if (data) {
         cb({
@@ -115,6 +109,6 @@ const signUpRequest = (username, email, password, cb) =>{
       } else {
         cb({ authenticated: false })
       }
-    }, 2500)
+    }, 500)
   })
 }

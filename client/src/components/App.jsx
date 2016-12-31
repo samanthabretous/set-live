@@ -55,6 +55,7 @@ class App extends React.Component {
       location.state.modal &&
       this.previousChildren
     )
+
     return (
       <div className={`app ${(this.props.params.room ? "game" : "")}`}>
 

@@ -14,9 +14,10 @@ const Game = React.createClass({
     }, 5000)
   },
   render(){
+    console.log(this.props.deck)
     return (
       <div className="gameView">
-        {this.props.board.length > 0 && <Board {...this.props}/>}
+        {this.props.deck && <Board {...this.props}/>}
       </div>
     )
   }

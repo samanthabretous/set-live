@@ -1,7 +1,10 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var Card = sequelize.define('card', {
-    card: DataTypes.INTEGER,
+    card: {
+      type: DataTypes.INTEGER, 
+      primaryKey: true
+    },
     number: DataTypes.INTEGER,
     color: DataTypes.STRING,
     shade: DataTypes.STRING,
@@ -12,7 +15,8 @@ module.exports = function(sequelize, DataTypes) {
         // associations can be defined here
         Card.belongsToMany(models.game, {through: 'deck_of_cards'})
       }
-    }
+    }, 
+    timestamps: false
   });
   return Card;
 };

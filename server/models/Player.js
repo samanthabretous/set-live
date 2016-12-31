@@ -45,7 +45,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        Player.belongsToMany(models.game, {through:"game_player"})
+        Player.belongsTo(models.game)
       },
 
       //check if password is valid

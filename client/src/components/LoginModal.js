@@ -25,7 +25,6 @@ const LoginModal = props => {
     if(loginFormErrors[event.target.name]){
       let errors = Object.assign({}, loginFormErrors);
       delete errors[event.target.name];
-      console.log(errors)
       whichTarget();
       loginFormErrorsAction(errors);
     } else {
@@ -46,7 +45,6 @@ const LoginModal = props => {
 
     //before sending form request to back end check to make sure there are no errors
     const isValid = Object.keys(errors).length === 0
-    console.log("isValid",isValid, loginFormErrors, errors)
     if(isValid){
 
       //display loading signal
@@ -54,15 +52,13 @@ const LoginModal = props => {
 
       //confirm create login info and send user to next page
       auth.login(isRegistered, username, email, password, (loggedIn) => {
-        console.log("loggedIn",loggedIn)
         if (!loggedIn) {
           return loginErrorAction(true)
         }
 
         const { location } = props
-        console.log("location",location)
         if (location.state && location.state.nextPathname) {
-        console.log(location.state)
+
           //if trying to access a authorized page after login it will redirect to the give path or go back to home
           props.router.replace(location.state.nextPathname)
         } else {

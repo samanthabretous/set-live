@@ -8,6 +8,7 @@ const mapDispatchToProps = (dispatch) => (
 )
 
 const appToState = state => {
+  console.log("game container")
 return {
   roomName: state.game.roomName,
   players: state.game.players,
@@ -16,7 +17,8 @@ return {
   cards: state.game.cards, 
   modalStatus: state.game.modalStatus,
   clickedCards: state.game.clickedCards,
-  gameRoom: state.game.gameRoom
+  gameId: state.game.gameId, 
+  deck: state.game.deck,
 }}
 
 

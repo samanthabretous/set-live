@@ -6,7 +6,6 @@ module.exports = function(sequelize, DataTypes) {
       unique: true,
       allowNull: false
     },
-    board: DataTypes.ARRAY(DataTypes.BOOLEAN),
     started: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
@@ -20,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
         Game.belongsToMany(models.card, {through: 'deck_of_cards'})
-        Game.belongsToMany(models.player, {through:"game_player"})
+        Game.hasMany(models.player)
       },
       createGame: function(room, board) {
         return this.build({

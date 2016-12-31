@@ -15,21 +15,21 @@ const express = require('express'),
       
       //passport
       passport = require('passport'),
-      application = require('./routes/application'),
+      //application = require('./routes/application'),
       passportJWT = require("passport-jwt"),
       ExtractJwt = passportJWT.ExtractJwt,
       JwtStrategy = passportJWT.Strategy,
       jwt  = require('jsonwebtoken');
 
 //serving webpack
-const webpack = require('webpack'),
-      webpackDevMiddleware = require('webpack-dev-middleware'),
-      webpackHotMiddleware = require('webpack-hot-middleware'),
-      config = require('../webpack.config'),
-      compiler = webpack(config);
+// const webpack = require('webpack'),
+//       webpackDevMiddleware = require('webpack-dev-middleware'),
+//       webpackHotMiddleware = require('webpack-hot-middleware'),
+//       config = require('../webpack.config'),
+//       compiler = webpack(config);
 
-app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
-app.use(webpackHotMiddleware(compiler))
+// app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
+// app.use(webpackHotMiddleware(compiler))
 
 // Client
 const staticPath = path.join(__dirname, '../client/public');
@@ -84,13 +84,13 @@ db.sequelize
     console.log("Running on port ", 4000);
   });
 
-  app.get('/logout', application.destroySession)
-  app.post('/authenticate',
-    passport.authenticate('local',{
-      successRedirect: '/play',
-      failureRedirect: '/'
-    })
-  )
+  // app.get('/logout', application.destroySession)
+  // app.post('/authenticate',
+  //   passport.authenticate('local',{
+  //     successRedirect: '/play',
+  //     failureRedirect: '/'
+  //   })
+  // )
 
   //api routes
   app.use('/api/player', routes.player)
@@ -98,11 +98,11 @@ db.sequelize
   app.use('/api/card', routes.card)
   app.use('/api', routes.api)
 
-  let reactRoute = (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/public/index.html'));
-  }
 
-  app.get('/*', application.IsAuthenticated, reactRoute);
+
+  app.get('/*',(req, res) => {
+    res.sendFile(path.join(__dirname, '../client/public/index.html'));
+  });
    
   //handle passport
   //allows the useage of jwt strategy
