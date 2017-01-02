@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter} from 'react-router'
 import auth from '../utils/auth';
 import store from '../store';
 import {RESET_LOGIN} from '../actions/types'
@@ -8,6 +9,7 @@ const Logout = React.createClass({
     store.dispatch({
       type: RESET_LOGIN,
     })
+    //this.props.router.replace('/')
   },
 
   render() {
@@ -15,4 +17,4 @@ const Logout = React.createClass({
   }
 })
 
-export default Logout
+export default withRouter(Logout)

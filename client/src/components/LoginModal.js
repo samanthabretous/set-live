@@ -1,12 +1,31 @@
 import React from 'react'
+import {Link, withRouter} from 'react-router'
 import auth from '../utils/auth.js'
 import Display from './Display'
+import GSAP from 'react-gsap-enhancer';
+ 
+class LoginModal extends React.Component {
+  constructor(props){
+    super(props)
+  }
 
-const LoginModal = props => {
-  const { username, email, password,formUsernameAction, formEmailAction, formPasswordAction, loginFormErrorsAction, loginFormErrors, loginLoadingAction, loginErrorAction, loading, signinSocketAction, isRegistered, isRegisteredAction } = props;
+  componentDidMount() {
+    this.switchAnim = this.addAnimation(switchAnim)
+  }
+
+  getCurrentPage() {
+    return this.props.location.pathname.indexOf('register') === -1
+      ? 'login'
+      : 'register'
+  }
+
+  componentDidUpdate() {
+     this.switchAnim.tweenTo(this.getCurrentPage())
+  }
 
 
-  const handleChange = (event) =>{
+  handleChange(event) {
+    const {loginFormErrors, loginErrorAction, formUsernameAction, formEmailAction, formPasswordAction, username, email, password} = this.props
 
     const whichTarget = () => {
       switch(event.target.name) {
@@ -32,7 +51,8 @@ const LoginModal = props => {
     };
   };
 
-  const handleSubmit = () => {
+  handleSubmit() {
+    const { username, email, password,loginFormErrorsAction, loginLoadingAction, loginErrorAction, isRegistered, router, location } = this.props;
 
     //form validation
     let errors = {};
@@ -56,11 +76,14 @@ const LoginModal = props => {
           return loginErrorAction(true)
         }
 
-        const { location } = props
         if (location.state && location.state.nextPathname) {
 
-          //if trying to access a authorized page after login it will redirect to the give path or go back to home
-          props.router.replace(location.state.nextPathname)
+          if(location.state.nextPathname === '/play'){
+
+          } else {
+            //if trying to access a authorized page after login it will redirect to the give path or go back to home
+            router.replace(location.state.nextPathname)
+          }
         } else {
           props.router.replace('/')
         }
@@ -68,52 +91,114 @@ const LoginModal = props => {
     }
 
   };
-
-  return (
-    <div style={{width: 500, height: 400, backgroundColor: 'white'}}>
-      {loading && <span>Loading...</span>}
-      <Display if={!loading}>
-        <h2>{isRegistered ? "Login" : "Sign Up"}</h2>
-        <div className={`loginInput ${!!loginFormErrors.username ? "error" : ""}`}>
-          <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            onChange={handleChange}
-            name='username'
-            value={username}
-            placeholder="Enter Username"
-          />
-          <span>{loginFormErrors.username}</span>
-        </div>
-        <Display if={!isRegistered} >
-          <div className={`loginInput ${!!loginFormErrors.email ? "error" : ""}`}>
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              onChange={handleChange}
-              name='email'
-              value={email}
-              placeholder="Enter Email"
-            />
-            <span>{loginFormErrors.email}</span>
-          </div>
-        </Display>
-        <div className={`loginInput ${!!loginFormErrors.password ? "error" : ""}`}>
-          <label htmlFor="passowrd">Password</label>
-          <input
-            id="passowrd"
-            onChange={handleChange}
-            name='password'
-            value={password}
-            placeholder="Enter Password"
-          />
-          <span>{loginFormErrors.password}</span>
-        </div>
-        <button onClick={handleSubmit}>Submit</button>
-        <button onClick={()=>isRegisteredAction(!isRegistered)}>{isRegistered ? "Register" : "Already Signed Up?" }</button>
-      </Display>
+  
+  renderInput(type, variable) {
+    const { loginFormErrors, username, email, password } = this.props;
+    return (
+    <div className={`input ${!!loginFormErrors[variable] ? "error" : ""}`}>
+      <label htmlFor={`${type}`}></label>
+      <input
+        id={type}
+        onChange={this.handleChange.bind(this)}
+        name={`${type}`}
+        value={variable}
+        placeholder={`Enter ${type}`}
+      />
+      <span>{loginFormErrors[variable]}</span>
     </div>
-  )
+  )}
+
+  switchPath(){
+    const pathTo =
+      `/${this.getCurrentPage() === 'register' ? 'login' : 'register'}`
+    this.props.router.replace({
+      pathname: pathTo,
+      state: { modal: true}
+    })
+  }
+
+  render() {
+
+    const { username, email, password, loading, isRegistered } = this.props;
+
+    return (
+      <div className="materialContainer">
+
+        <div className="box">
+          <div className="title">LOGIN</div>
+          {this.renderInput('username', username)}
+          {this.renderInput('password')}
+          <div className="button login">
+             <button onClick={this.handleSubmit.bind(this)}><span>GO</span><i className="fa fa-check"></i></button>
+          </div>
+          <a href="" className="pass-forgot">Forgot your password?</a>
+        </div>
+
+       <div className="overbox">
+          <div onClick={this.switchPath.bind(this)}>
+            <div name="switch" className="material-button alt-2">
+               <span className="shape"/>
+            </div>
+          </div>
+          <div className="register-content">
+            <div className="title">REGISTER</div>
+            {this.renderInput('username', username)}
+            {this.renderInput('email', email)}
+            {this.renderInput('password', password)}
+            <div className="button">
+              <button onClick={this.handleSubmit.bind(this)}><span>NEXT</span></button>
+            </div>
+          </div>
+       </div>
+       <div className="play">
+        Play
+       </div>
+
+      </div>
+    )
+  }
 }
 
-export default LoginModal
+export default GSAP(LoginModal)
+
+
+function switchAnim({target}) {
+   const shape = target.find({className: 'shape'})
+   const box = target.find({className: 'box'})
+   const registerContent = target
+      .find({className: 'register-content'})
+      .findAllInChildren()
+      console.log(registerContent)
+   const switchButton = target.find({name: 'switch'})
+
+   return new TimelineMax()
+      .pause()
+      .add('login')
+      .to(switchButton, 0.3, {
+        left: '160px',
+        top: '160px',
+        ease: Sine.easeInOut,
+      }, 'login')
+      .add('middle')
+      .to(switchButton, 0.4, {
+         left: '0px',
+         width: '100%',
+         height: '100%',
+         top: '0',
+         borderRadius: '10px',
+         ease: Sine.easeInOut,
+      })
+      .to(box, 0.4, {
+         scale: 0.94,
+         y: '-=29',
+         ease: Sine.easeInOut,
+      }, 'middle')
+      .staggerFromTo(registerContent, 0.32, {scale: 0.95}, {scale: 1, autoAlpha: 1}, 0.032)
+      .to(shape, 0.55, {
+         xPercent: 43,
+         yPercent: -43,
+         rotation: 45,
+         ease: Sine.easeInOut,
+      }, 'middle')
+      .add('register')
+}

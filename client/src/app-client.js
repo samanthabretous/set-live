@@ -9,6 +9,7 @@ import ConnectionsSocketListeners from './actions/connections'
 import BoardSocketListeners from './actions/game-connections'
 
 import '../css/app.scss'
+import 'gsap'
 
 
 ConnectionsSocketListeners(store)

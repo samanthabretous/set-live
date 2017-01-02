@@ -6,10 +6,7 @@ import store from '../store'
 import SetLogo from '../../images/set_logo.inline.svg';
 
 //components
-import GameMenu from './GameMenu'
 import Modal from './Modal'
-import GreenStockBox from './GreenStockBox'
-
 
 class App extends React.Component {
   constructor() {
@@ -48,39 +45,19 @@ class App extends React.Component {
   }
 
   render() {
-    let { location } = this.props
+    const { location } = this.props
 
-    let isModal = (
+    const isModal = (
       location.state &&
       location.state.modal &&
       this.previousChildren
     )
-
     return (
-      <div className={`app ${(this.props.params.room ? "game" : "")}`}>
-
-        <div className={this.props.params.room ? "gameMenu" : ""}>
+      <div className={`app ${(this.props.params.room && "game")}`}>
           <div className={this.props.params.room ? "logoTransition" : "set_logo"}>
-            <SetLogo /> 
+            {this.props.location.pathname !== '/' ? <Link to="/"> <SetLogo className="small_logo"/></Link> : <SetLogo className="logo"/> 
+            }
           </div> 
-          <Link to={{
-            pathname: '/user/1',
-            state: { modal: true, returnTo: this.props.location.pathname }
-          }}> Login </Link>
-          {this.props.params.room && <GameMenu {...this.props}/>}
-        </div>
-        <ul>
-          <li>
-            {this.state.loggedIn ? (
-              <Link to="/logout">Log out</Link>
-            ) : (
-              <Link to="/login">Sign in</Link>
-            )}
-          </li>
-        
-          <li><Link to="/">Home</Link> (changes depending on auth status)</li>
-          <li><Link to="/play">Play Game</Link> (authenticated)</li>
-        </ul>
         <div>
 
           <div>
@@ -94,7 +71,7 @@ class App extends React.Component {
                 {this.props.children}
               </Modal>
             )}
-            <GreenStockBox />
+
           </div>
         </div>
       </div>

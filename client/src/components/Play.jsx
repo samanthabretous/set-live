@@ -4,7 +4,7 @@ import {withRouter} from 'react-router'
 
 const Play = React.createClass({
   componentDidMount() {
-    console.log(this.props)
+    console.log("play",this.props)
     this.props.router.replace('/')
 
   },

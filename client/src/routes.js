@@ -18,6 +18,7 @@ import HowToPlay from './components/HowToPlay';
 import LoginContainer from './containers/loginContainer'
 import Logout from './components/Logout'
 import Modal from './components/Modal'
+import NavBarContainer from './containers/navBarContainer'
 import ProfileContainer from './containers/profileContainer'
 import Play from './components/Play'
 import User from './components/User'
@@ -36,7 +37,6 @@ const redirectToLogin = (nextState, replace) => {
       socket.emit('startNewGame', nextState.params.room)
     }
   }
-  console.log(nextState)
 }
 
 const redirectToProfile =(nextState, replace) =>{
@@ -48,21 +48,7 @@ const redirectToProfile =(nextState, replace) =>{
 
 export default (
   <Route path='/' component={AppContainer} >
-    <IndexRoute 
-      getComponent={(nextState, cb) => {
-        // Share the path
-        // Dynamically load the correct component
-        if (auth.loggedIn()) {
-          auth.getPlayerSecretInfo();
-          return require.ensure([], (require) => {
-            cb(null, ProfileContainer)
-          })
-        }
-        return require.ensure([], (require) => {
-          cb(null, HowToPlay)
-        })
-      }}
-    />
+    <IndexRoute component={NavBarContainer}/>
 
     <Route onEnter={redirectToLogin} >
       // Protected nested routes for the dashboard
@@ -83,6 +69,13 @@ export default (
       {/* Unauthenticated routes
         * Redirect to dashboard if player is already logged in */}
       <Route path='/login'
+        getComponent={(nextState, cb) => {
+          require.ensure([], (require) => {
+            cb(null, LoginContainer)
+          })
+        }}
+      />
+      <Route path='/register'
         getComponent={(nextState, cb) => {
           require.ensure([], (require) => {
             cb(null, LoginContainer)

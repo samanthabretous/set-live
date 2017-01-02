@@ -3,6 +3,7 @@ import store from '../store'
 
 //components
 import Board from './Board';
+import GameMenu from './GameMenu'
 import ChatBar from './chatBar';
 
 import isSetOnBoard from '../utils/isSetOnBoard'
@@ -17,6 +18,7 @@ const Game = React.createClass({
     console.log(this.props.deck)
     return (
       <div className="gameView">
+        <GameMenu />
         {this.props.deck && <Board {...this.props}/>}
       </div>
     )
