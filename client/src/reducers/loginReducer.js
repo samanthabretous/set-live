@@ -7,7 +7,6 @@ const INTIAL_STATE = {
   loginFormErrors: {},
   loginError: false,
   loading: false,
-  isRegistered: true,
 }
 
 export default function(state = INTIAL_STATE, action) {

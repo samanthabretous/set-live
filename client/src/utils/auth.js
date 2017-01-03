@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import store from '../store';
+import {socket} from '../actions/connections'
 import {SET_PLAYER_INFO} from '../actions/types'
 
 module.exports = {
@@ -58,6 +59,9 @@ module.exports = {
         })
       }
     })
+  },
+  getGameInfo(gameId){
+    socket.emit('isGameStarted', {gameId, token: localStorage.token})
   },
   onChange() {
   }

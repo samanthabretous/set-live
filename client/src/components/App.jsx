@@ -53,8 +53,8 @@ class App extends React.Component {
       this.previousChildren
     )
     return (
-      <div className={`app ${(this.props.params.room && "game")}`}>
-          <div className={this.props.params.room ? "logoTransition" : "set_logo"}>
+      <div className="app">
+          <div className={this.props.params.room ? "game_logo" : "set_logo"}>
             {this.props.location.pathname !== '/' ? <Link to="/"> <SetLogo className="small_logo"/></Link> : <SetLogo className="logo"/> 
             }
           </div> 

@@ -59,10 +59,11 @@ const passport = require('passport'),
 //     .catch(err => debug(err));
 //   }
 // ));
-var jwtOptions = {}
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
-jwtOptions.secretOrKey = 'setLiveSecurity';
+
+const jwtFromRequest = ExtractJwt.fromAuthHeader();
+const secretOrKey = 'setLiveSecurity';
 
 module.exports = {
-  jwtOptions,
+  jwtFromRequest,
+  secretOrKey
 }

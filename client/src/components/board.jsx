@@ -3,11 +3,12 @@ import path from 'path'
 import _ from 'lodash'
 import {socket} from '../actions/connections'
 import cardComponents from './cardComponents'
+import checkSet from '../utils/checkSet'
 
 
 const Board = (props) => {
 
-  let {clickedCards, board, addClickedCard, deck} = props
+  const {gameId, clickedCards, board, addClickedCard, deck} = props
 
   /* 
   * @param {Object} card. when user clicks on card 
@@ -24,7 +25,7 @@ const Board = (props) => {
     // let clicked = _.filter(clickedCards, (cardClick) =>
     //   card.card !== cardClick.card 
     // )
-    let cardNumbers = _.map(clickedCards, 'card')
+    const cardNumbers = _.map(clickedCards, 'card')
     if(! _.includes(cardNumbers, card.card)) {
       var clicked = [...clickedCards, card]
     } else {
@@ -34,6 +35,9 @@ const Board = (props) => {
     console.log(clicked)
     if(clicked.length === 3) {
       //check if set
+      //if(checkSet(clicked)){
+        socket.emit('set', {clickedCards: clicked, gameId,  })
+      //}
       addClickedCard([])
     } else {
       addClickedCard(clicked)
@@ -51,8 +55,7 @@ const Board = (props) => {
   * based on the attributes recieved from the objects.
   * @returns {[Components]}
   */
-  let boardOfCards = (deck) => {
-    const board = deck.splice(0,12)
+  let boardOfCards = () => {
     return board.map((slot,i) => {
 
       // define component. imported all svg images into an object. when certain attributes are triggered look inside the object and grab import information. inorder to use that infomation as a component, it had to be saved in a variable 
@@ -74,12 +77,12 @@ const Board = (props) => {
       )
     })
   }
-console.log(deck)
+
   return (
     <div>
       <div>Board</div>
       <section className="board">
-        {deck && boardOfCards(deck)}
+        {board && boardOfCards()}
       </section>
     </div>
   )

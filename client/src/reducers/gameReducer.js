@@ -1,4 +1,4 @@
-import { ADD_PLAYER, UPDATE_CARDS, BOARD, INVITE_PLAYERS, MODAL_STATUS, CLICKED_CARDS, LEFT_PLAYERS, ADD_MEMBER, CONNECTION_STATUS,CONNECTIONS, ROOM_STATUS, SET_ROOM_NAME, GO_TO_GAME, SET_PLAYER_INFO, GAME_STARTED } from '../actions/types';
+import { ADD_PLAYER, UPDATE_CARDS, INVITE_PLAYERS, CLICKED_CARDS, LEFT_PLAYERS, ADD_MEMBER, CONNECTION_STATUS,CONNECTIONS, ROOM_STATUS, SET_ROOM_NAME, GO_TO_GAME, SET_PLAYER_INFO, GAME_STARTED, RELOAD_GAME } from '../actions/types';
 
 const INTIAL_STATE = {
   players: [],
@@ -7,8 +7,8 @@ const INTIAL_STATE = {
   roomName: "",
   gameId: null,
   started: false,
-  deck: null,
-  modalStatus: true,
+  deck: [],
+  board: [],
   clickedCards: [],
   status: 'disconnected',
 }
@@ -16,9 +16,7 @@ const INTIAL_STATE = {
 export default function(state = INTIAL_STATE, action) {
   switch(action.type){
     case INVITE_PLAYERS: 
-    case UPDATE_CARDS: 
-    case BOARD: 
-    case MODAL_STATUS: 
+    case UPDATE_CARDS:  
     case ADD_MEMBER: 
     case CONNECTION_STATUS: 
     case SET_ROOM_NAME:
@@ -28,12 +26,14 @@ export default function(state = INTIAL_STATE, action) {
     case CLICKED_CARDS: 
       return Object.assign({}, state, {clickedCards: action.payload})
     case GO_TO_GAME: 
-      const {id, room, started} = action.gameInfo.game;
-      return Object.assign({}, state, {gameId: id, roomName: room, players: action.gameInfo.players, started})
+      const {id, room} = action.gameInfo.game;
+      return Object.assign({}, state, {gameId: id, roomName: room, players: action.gameInfo.players})
     case ADD_PLAYER: 
       return Object.assign({}, state, {players: [...state.players, action.player]})
     case GAME_STARTED: 
-      return Object.assign({}, state, {deck: action.deck, started: true})
+      return Object.assign({}, state, {deck: action.deck, started: true, board: action.board})
+    case RELOAD_GAME:
+      return Object.assign({}, state, {deck: action.deck, started: action.started, players: action.players, game: action.game, board:action.board})
     default: 
       return state
   }

@@ -10,7 +10,6 @@ import {
   loginErrorAction,
   loginLoadingAction,
   signinSocketAction,
-  isRegisteredAction,
 } from '../actions/loginActions'
 
 
@@ -22,7 +21,6 @@ const mapDispatchToProps = (dispatch) => (
     loginFormErrorsAction,
     loginErrorAction,
     loginLoadingAction,
-    isRegisteredAction, 
   }, dispatch)
 )
 
@@ -33,7 +31,6 @@ const mapStateToState = state => ({
   loginFormErrors: state.login.loginFormErrors,
   loading: state.login.loading,
   loginError: state.login.loginError,
-  isRegistered: state.login.isRegistered,
 })
 
 

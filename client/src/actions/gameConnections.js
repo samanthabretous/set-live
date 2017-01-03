@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { UPDATE_CARDS, ADD_PLAYER, INVITE_PLAYERS, BOARD, LEFT_PLAYER, GO_TO_GAME, GAME_STARTED } from './types';
+import { UPDATE_CARDS, ADD_PLAYER, INVITE_PLAYERS, BOARD, LEFT_PLAYER, GO_TO_GAME, GAME_STARTED, RELOAD_GAME } from './types';
 import {socket} from './connections'
 
 export default (store) => {
@@ -32,15 +32,29 @@ export default (store) => {
     })
   })
 
-  socket.on('gameStarted', cards =>{
-    let deck = _.sortBy(cards, [(card) => {
+  const sortCards = (cards) => {
+    return _.sortBy(cards, [(card) => {
       return card['deck_of_cards'].cardOrder
     }])
-    console.log("GAME STARTED SOCKET", deck)
-
+  }
+  socket.on('gameStarted', cards =>{
+    const deck = sortCards(cards)
     store.dispatch({
       type: GAME_STARTED,
-      deck
+      deck,
+      board: deck.splice(0,12)
+    })
+  })
+
+  socket.on('reloadGame', payload => {
+    const deck = sortCards(payload.cards)
+    store.dispatch({
+      type: RELOAD_GAME,
+      deck,
+      started: payload.started,
+      players: payload.players,
+      game: payload.game,
+      board: deck.splice(0,12)
     })
   })
 

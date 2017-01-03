@@ -6,23 +6,21 @@ import Board from './Board';
 import GameMenu from './GameMenu'
 import ChatBar from './chatBar';
 
-import isSetOnBoard from '../utils/isSetOnBoard'
-
-const Game = React.createClass({
+class Game extends React.Component {
   componentDidMount(){
     setTimeout(() => {
       //props.inviteModalAction(false)
     }, 5000)
-  },
+  }
   render(){
-    console.log(this.props.deck)
+
     return (
       <div className="gameView">
-        <GameMenu />
+        <GameMenu {...this.props}/>
         {this.props.deck && <Board {...this.props}/>}
       </div>
     )
   }
-})
+}
 
 export default Game;

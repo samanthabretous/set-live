@@ -1,10 +1,12 @@
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {inviteModalAction} from '../actions'
+import {inviteModalAction, addClickedCard} from '../actions/gameActions'
 import Game from '../components/Game'
 
 const mapDispatchToProps = (dispatch) => (
-  bindActionCreators({inviteModalAction}, dispatch)
+  bindActionCreators({
+    inviteModalAction, addClickedCard
+  }, dispatch)
 )
 
 const appToState = state => {

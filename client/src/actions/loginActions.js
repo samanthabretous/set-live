@@ -30,8 +30,4 @@ export const loginLoadingAction = loading => ({
   loading
 })
 
-export const isRegisteredAction = isRegistered => ({
-  type: REGISTER,
-  isRegistered
-})
 
