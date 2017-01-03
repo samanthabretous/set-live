@@ -13,8 +13,10 @@ module.exports = {
     }
 
     const isAuthenicated = (res) => {
+      console.log(res)
       if (res.authenticated) {
         localStorage.token = res.token
+        socket.emit('authenticate', {token: res.token.split(' ')[1]})
         if (cb) cb(true)
         this.onChange(true)
       } else {
@@ -59,6 +61,9 @@ module.exports = {
         })
       }
     })
+  },
+  getPlayerInfo(){
+    socket.emit('getPlayerInfo', {token: localStorage.token})
   },
   getGameInfo(gameId){
     socket.emit('isGameStarted', {gameId, token: localStorage.token})
@@ -105,6 +110,7 @@ const signUpRequest = (username, email, password, cb) =>{
   })
   .done(data =>{
     setTimeout(() => {
+      console.log("data",data)
       if (data) {
         cb({
           authenticated: data.success,

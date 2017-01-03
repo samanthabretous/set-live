@@ -8,7 +8,7 @@ import InvitePlayers from './InvitePlayers'
 
 
 const GameMenu = (props) => {
-  let {member, players, roomName, modalStatus, gameId, deck} = props
+  let {member, players, roomName, modalStatus, gameId, deck, playerSet} = props
   const startGame = roomName => {
     socket.emit('startNewGame', gameId)
   };
@@ -21,11 +21,12 @@ const GameMenu = (props) => {
       <p>{players.length} players connected to Room: {roomName.roomName}</p>
       players.map((player, index)=> <p key={index}>PLAYER {index + player.name}</p>) */}
       <li><Link to="/how-to-play">About</Link></li>
-      {!deck && <button onClick={()=> startGame()}>Start New Game</button>}
+      {deck.length === 0 && <button onClick={()=> startGame()}>Start New Game</button>}
       {
         roomName && modalStatus &&
           <Modal/>
       }
+      {playerSet && <h1>Last Set By: {playerSet}</h1>}
       <button onClick={isSet}></button>
     </div>
   )

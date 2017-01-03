@@ -10,17 +10,16 @@ const mapDispatchToProps = (dispatch) => (
 )
 
 const appToState = state => {
-  console.log("game container")
 return {
   roomName: state.game.roomName,
   players: state.game.players,
   playerHasLeft: state.game.playerHasLeft,
   board: state.game.board,
   cards: state.game.cards, 
-  modalStatus: state.game.modalStatus,
   clickedCards: state.game.clickedCards,
   gameId: state.game.gameId, 
   deck: state.game.deck,
+  playerSet: state.game.playerSet,
 }}
 
 

@@ -17,7 +17,7 @@ class Game extends React.Component {
     return (
       <div className="gameView">
         <GameMenu {...this.props}/>
-        {this.props.deck && <Board {...this.props}/>}
+        {this.props.deck.length > 0 && <Board {...this.props}/>}
       </div>
     )
   }

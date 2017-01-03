@@ -44,11 +44,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-// var jwtOptions = {}
-// jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
-// jwtOptions.secretOrKey = 'setLiveSecurity';
-debug(secretOrKey)
-debug(jwtFromRequest)
 const strategy = new JwtStrategy({secretOrKey, jwtFromRequest}, function(jwt_payload, done) {
   debug('payload received', jwt_payload);
   // usually this would be a database call:

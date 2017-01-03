@@ -26,7 +26,6 @@ router.post('/signup', (req,res) =>{
     }    
   })
   .catch(err => {
-    debug(err)
     res.json({success: false, msg: 'Username or Email already exists.'})
   })
 });
@@ -34,6 +33,7 @@ router.post('/signup', (req,res) =>{
 // find player in data base and send them back a token
 // else let player know they have entered the wrong password
 router.post("/login", (req, res) => {
+  debug("login",req.body)
   Player.findOne({
     where: {username: req.body.username }
   })

@@ -19,12 +19,8 @@ const Board = (props) => {
   * @returns {}
   */
   let handleCardClick = (card) => {
-    console.log("clicked")
 
     //check to see if card had been clicked
-    // let clicked = _.filter(clickedCards, (cardClick) =>
-    //   card.card !== cardClick.card 
-    // )
     const cardNumbers = _.map(clickedCards, 'card')
     if(! _.includes(cardNumbers, card.card)) {
       var clicked = [...clickedCards, card]
@@ -32,10 +28,11 @@ const Board = (props) => {
       //remove obj from array
       var clicked = _.filter(clickedCards, (cardClick) => card.card !== cardClick.card)
     }
-    console.log(clicked)
+
     if(clicked.length === 3) {
       //check if set
       //if(checkSet(clicked)){
+        console.log('checkSet')
         socket.emit('set', {clickedCards: clicked, gameId,  })
       //}
       addClickedCard([])

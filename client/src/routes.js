@@ -35,7 +35,7 @@ const redirectToLogin = (nextState, replace) => {
       //check to see if gsme has started, if so display game board
       auth.getGameInfo(nextState.params.room)
     } else {
-      auth.getPlayerSecretInfo()
+      auth.getPlayerInfo()
     }
   }
 }
