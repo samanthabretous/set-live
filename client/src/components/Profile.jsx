@@ -1,12 +1,13 @@
 import React from 'react'
 import {Link} from 'react-router'
+import _ from 'lodash'
+import store from '../store';
+import {socket} from '../actions/connections';
 
-import store from '../store'
-import {socket} from '../actions/connections'
 
 const Profile = props => {
 
-  let {roomName, username, generateRoomName, playerInfo, gameId} = props
+  let {roomName, username, generateRoomName, playerInfo, gameId, players} = props
 
   let handleRoomChange = (event) => {
     generateRoomName(event.target.value)
@@ -18,7 +19,7 @@ const Profile = props => {
       username: playerInfo.username,
     });
   };
-
+  console.log(gameId, players)
   return (
     (!props.params.room && 
     <div className="landingPage">
@@ -39,7 +40,9 @@ const Profile = props => {
           onClick={joinRoom}>
           Enter Room
         </button>
-        {gameId && (
+        {gameId && _.map(players, player => {
+          <h1>{player.username}</h1>
+        })
           <Link to={`/game/${gameId}`}>
             Go To Game
           </Link>

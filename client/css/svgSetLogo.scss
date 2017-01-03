@@ -28,7 +28,7 @@
   }
 }
 
-$sloganDelay: 2.5s;
+$sloganDelay: 3s;
 
 #sloganA1 .st7{
   animation-delay: $sloganDelay;
@@ -67,6 +67,7 @@ $sloganDelay: 2.5s;
 #setLogo{
   transform-origin: 50% 50%;
   animation: larger 500ms 1 alternate;
+  animation-delay: .5;
 }
 
 @keyframes larger {
@@ -85,6 +86,7 @@ $sloganDelay: 2.5s;
   stroke-dasharray: 2500;
   stroke-dashoffset:20;
   animation: dash 3.25s linear forwards;
+  animation-delay: .5;
 }
 
 @keyframes dash {

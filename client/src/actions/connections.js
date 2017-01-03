@@ -49,7 +49,9 @@ export default (store) => {
       })
     }
   })
-  socket.emit('authenticate', {token: localStorage.token.split(' ')[1]})
+  if(localStorage.token) {
+    socket.emit('authenticate', {token: localStorage.token.split(' ')[1]})
+  }
   socket.on("unauthorized", function(error) {
     if (error.data.type == "UnauthorizedError" || error.data.code == "invalid_token") {
       console.log("User's token has expired");

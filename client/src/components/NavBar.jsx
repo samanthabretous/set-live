@@ -31,7 +31,7 @@ class NavBar extends React.Component{
          <Link to="/how-to-play">
           <HowToPlayButton />
          </Link>
-         <Link to="/stats">
+         <Link to="/profile">
           <ProfileButton />
          </Link>
       </div>

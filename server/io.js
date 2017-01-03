@@ -206,7 +206,7 @@ module.exports = ((app,io)=>{
       })
       .then(cards => {
         debug("set2",game.room)
-        io.sockets.in('loop').emit('updateGame', {cards, playerSet: player.username});
+        io.sockets.in(game.room).emit('updateGame', {cards, playerSet: player.username});
       })
     })
 

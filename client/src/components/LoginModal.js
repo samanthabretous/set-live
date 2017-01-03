@@ -118,6 +118,12 @@ class LoginModal extends React.Component {
       state: { modal: true}
     })
   }
+  showPlay(){
+    this.props.router.replace({
+      pathname: '/play',
+      state: { modal: true}
+    })
+  }
 
   render() {
 
@@ -153,6 +159,7 @@ class LoginModal extends React.Component {
           </div>
        </div>
        <div className="play">
+        <button style={{backgroundColor: 'red'}} className="playBtn" onClick={this.showPlay.bind(this)}></button>
         Play
        </div>
 
@@ -170,8 +177,8 @@ function switchAnim({target}) {
    const registerContent = target
       .find({className: 'register-content'})
       .findAllInChildren()
-      console.log(registerContent)
    const switchButton = target.find({name: 'switch'})
+   const playBtn = target.find({className: 'playBtn'})
 
    return new TimelineMax()
       .pause()

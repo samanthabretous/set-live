@@ -40,7 +40,7 @@ body {
   .app {
     width: 90vw;
     height: 100vh;
-    border: 6px solid purple;
+    //border: 6px solid purple;
     margin: 0 auto;
     margin-top: 2%;
     position: relative;
@@ -50,7 +50,7 @@ body {
     padding-right: 5vw;
  
     .set_logo{
-      border: 3px solid black;
+      //border: 3px solid black;
       width: 55vw;
       display: flex;
       justify-content: center;
@@ -73,7 +73,7 @@ body {
     }
     
     .nav_bar{
-      border: 3px dashed blue;
+      //border: 3px dashed blue;
       width: 20vw;
       display: flex;
       flex-direction: column;

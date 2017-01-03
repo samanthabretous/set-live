@@ -9,13 +9,16 @@ const mapDispatchToProps = (dispatch) => (
   }, dispatch)
 )
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => {
+  console.log(state.game.players)
+return {
   status: state.game.status,
   username: state.login.username,
   roomName: state.game.roomName,
   gameId: state.game.gameId,
   playerInfo: state.game.playerInfo,
-})
+  players: state.game.players,
+}}
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

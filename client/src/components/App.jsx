@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router'
-import auth from '../utils/auth'
+import { Link, withRouter } from 'react-router';
+import GSAP from 'react-gsap-enhancer';
+import auth from '../utils/auth';
 
 import store from '../store'
 import SetLogo from '../../images/set_logo.inline.svg';
@@ -37,6 +38,10 @@ class App extends React.Component {
   componentWillMount() {
     auth.onChange = this.updateAuth.bind(this)
     auth.login()
+  }
+
+  componentDidMount(){
+    this.addAnimation(svgAnimation)
   }
 
   //show login/resigter modal
@@ -79,6 +84,16 @@ class App extends React.Component {
   }
 }
 
-export default App
+export default GSAP(App)
+
+const svgAnimation = ({target}) => {
+  const logo = target.find({className: 'logo'})
+  const letters = logo.findAllInChildren()
+  console.log(letters)
+  return new TimelineMax()
+    .from(logo, 1.5, {scale: .2}, 'start')
+    .to(logo, 1.5, {rotation:360, transformOrigin:"50% 50%", ease: Elastic.easeOut.config(1, 0.3)}, 'start')
+
+}
 
 

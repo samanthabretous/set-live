@@ -60,7 +60,8 @@ export default (
           })
         }}
       />
-      <Route path='/play' component={ProfileContainer}/>
+      <Route path='/play' component={LoginContainer}/>
+      <Route path='/profile' component={ProfileContainer}/>
     </Route>
 
     <Route path='/how-to-play' component={HowToPlay}/>

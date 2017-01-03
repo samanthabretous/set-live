@@ -10,6 +10,7 @@ const mapDispatchToProps = (dispatch) => (
 )
 
 const appToState = state => {
+  console.log(state.game.players)
 return {
   roomName: state.game.roomName,
   players: state.game.players,
