@@ -6,43 +6,40 @@ module.exports = ((app,io)=>{
         DeckOfCards = require('./models')['deck_of_cards'],
         db = require('./models'),
         dealCards = require('./utils/game').dealCards,
-        debug = require('debug')('OH_GOSH');
+
+        //passport 
+        secret = require('./config/passport').secretOrKey,
+        jwt = require('jsonwebtoken'),
+        socketioJwt = require('socketio-jwt'),
+        debug = require('debug')('SOCKET');
 
 
   //Connect to the socket
-  io.sockets.on('connection', function(socket){
+  io.sockets.on('connection', socketioJwt.authorize({
+    secret: secret,
+    timeout: 15000 // 15 seconds to send the authentication message 
+  })).on('authenticated', socket => {
+
+    debug('hello! ' + socket.decoded_token);
 
     //when socket is disconnected remove player from the connections array
     socket.once('disconnect', function() {
       socket.leave();
-      // //find player within all the games
-      // let listOfGames = Object.keys(games)
-      // let foundPlayer = listOfGames.map(game => {
-      //   return _.find(games[game].players, (o) => { return o.id === socket.id
-      //   })
-      // })
-
-      // //once player is found, remove that player from the game object
-      // let foundRoom = foundPlayer[0] && foundPlayer[0].room ? foundPlayer[0].room : null;
-      // if(foundRoom) {
-
-      //   let players = games[foundRoom].players
-      //   let index = _.findIndex(players, (o) => o.id === socket.id)
-      //   players.splice(index, 1)
-
-      //   //let all players in the room know that the player has left
-      //   if(games[foundRoom].players.length > 0) {
-      //     io.sockets.in(foundPlayer.room).emit('leftPlayer', foundPlayer)
-
-      //   //if there are no players left in the room remove the room from the game obj
-      //   } else {
-      //     delete games[foundRoom];
-      //   }
-      // }
-      // console.log(games)
       socket.disconnect();
       console.log("Disconnected");
     });
+
+    socket.on('getPlayerInfo', payload => {
+      const playerId = socket.decoded_token.id;
+      Player.findById(playerId, {include: Game})
+      .then(player => {
+        if (!player) {
+          socket.emit('receivePlayerInfo',{success: false, msg: 'Authentication failed. Player not found.'});
+        } else {
+          socket.emit('receivePlayerInfo',{success: true, msg: 'Welcome in the member area ' + player.username + '!', playerInfo: player});
+        }
+      });
+    })
 
     /*
     * @param {String} payload. holds room name and username
@@ -50,7 +47,7 @@ module.exports = ((app,io)=>{
     */
     //create and/or join a room
     socket.on('enterGameRoom', (payload) => {
-
+      debug(payload)
       //find player in database and save
       let socketPlayer = null; 
       let currentGame = null;
@@ -92,14 +89,21 @@ module.exports = ((app,io)=>{
 
           // add player to room and let other players in room know there is a new player
           game.addPlayers([socketPlayer.id])
-          game.addCards(_.range(1,82), {cardOrder: 100})
-          let allPlayers = game.get('players') ? game.get('players').concat(socketPlayer) : socketPlayer
+
+          const allPlayers = game.get('players') ? game.get('players').concat(socketPlayer) : socketPlayer
 
           socket.join(payload.roomName)
           io.sockets.in(payload.roomName).emit('addPlayer', socketPlayer);
 
           //send a message to player and let them know how many more people they can invite
           socket.emit('goToGame', {game, players: allPlayers});
+
+          //add card randomly to deck
+          const shuffledNumbers = _.shuffle(_.range(1,82))
+          _.map(shuffledNumbers, (number, index) => {
+            game.addCards(number, {cardOrder: index})
+          })
+
           return game
         } else {
           
@@ -107,41 +111,6 @@ module.exports = ((app,io)=>{
           socket.emit('roomFull', true);
         }
 
-      })
-      //shuffle cards now and update card order in joins table
-      .then(game => {
-        if(game) {
-          return Game.findById(game.id, 
-            {include:[Card]})
-        }
-      })
-      .then(game =>{
-        currentGame = game
-        return game.getCards()
-      })
-      .then(cards => {
-        if(cards){
-
-          let shuffledCards = _.shuffle(cards)
-          
-          return shuffledCards.map((card, index) => {
-
-            //update place in minic array
-            return DeckOfCards.update(
-              {
-                cardOrder: index
-              },
-              {
-                where : {
-                  cardCard: card.card,
-                  $and: {
-                    gameId: currentGame.id
-                  }
-                }
-              }
-            )
-          })
-        }//if(game)
       })
       .catch(err =>{
         debug(err)
@@ -170,14 +139,76 @@ module.exports = ((app,io)=>{
         return game.getCards();
       })
       .then(cards =>{
-        //         io.of('/').in(payload.roomName).clients(function(error, clients){
-        //   if (error) throw error;
-        //   debug("clients",clients); 
-        //   debug('room', socket.rooms)
-        // });
         io.sockets.in(currentGame.room).emit('gameStarted', cards)
+
       })
     }) //startNewGame
+
+    /* @params {Object} payload gameId and token
+    */
+    socket.on('isGameStarted', payload =>{
+      let game = null;
+      let cards = null;
+      let players = null;
+      const {gameId, token} = payload
+
+      Game.findById(gameId, {include: [Card, Player]})
+      .then(currentGame => {
+        socket.join(currentGame.room)
+        game = currentGame;
+        return currentGame.getCards();
+      })
+      .then(gameCards => {
+        cards = gameCards
+        return game.get('players')
+      })
+      .then(allPlayers =>{
+        players = allPlayers;
+        return game.get('started');
+      })
+      .then(started =>{
+        if(started){
+          socket.emit('reloadGame', {cards, players, game, started})
+        } else {
+          socket.emit('goToGame', {game, players});
+        } 
+      })
+    })
+
+    /* @params {Object} payload
+    * return {Object} playerInfo, updatedDeck 
+    */
+    socket.on('set', payload =>{
+      debug("set", payload)
+      const {clickedCards, gameId} = payload
+      let game = null;
+      let player = null;
+      Game.findById(gameId, {
+        include: Card
+      })
+      .then(currentGame =>{
+        game = currentGame;
+        return currentGame.getCards();
+      })
+      .then(gameCards =>{
+        _.map(clickedCards, (card) => {
+          //remove association with game
+          game.removeCard(card.card)
+        })
+        return Player.findById(socket.decoded_token.id);
+      })
+      .then(socketPlayer => {
+        player = socketPlayer;
+        socketPlayer.increment('matches');
+      })
+      .then(()=>{
+        return game.getCards();
+      })
+      .then(cards => {
+        debug("set2",game.room)
+        io.sockets.in('loop').emit('updateGame', {cards, playerSet: player.username});
+      })
+    })
 
     //refactor this to work with the newMember variable
     // socket.on('new message', (msg) => {

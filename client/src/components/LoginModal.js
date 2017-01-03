@@ -25,7 +25,7 @@ class LoginModal extends React.Component {
 
 
   handleChange(event) {
-    const {loginFormErrors, loginErrorAction, formUsernameAction, formEmailAction, formPasswordAction, username, email, password} = this.props
+    const {loginFormErrors, loginErrorAction, formUsernameAction, formEmailAction, formPasswordAction, username, email, password, loginFormErrorsAction} = this.props
 
     const whichTarget = () => {
       switch(event.target.name) {
@@ -52,8 +52,10 @@ class LoginModal extends React.Component {
   };
 
   handleSubmit() {
-    const { username, email, password,loginFormErrorsAction, loginLoadingAction, loginErrorAction, isRegistered, router, location } = this.props;
+    const { username, email, password,loginFormErrorsAction, loginLoadingAction, loginErrorAction, router, location } = this.props;
 
+    const isRegistered = this.getCurrentPage() === 'login'
+      console.log("isRegistered",isRegistered)
     //form validation
     let errors = {};
     if(username === '') errors.username = "Can not be empty";
@@ -78,14 +80,14 @@ class LoginModal extends React.Component {
 
         if (location.state && location.state.nextPathname) {
 
-          if(location.state.nextPathname === '/play'){
+          // if(location.state.nextPathname === '/play'){
 
-          } else {
+          // } else {
             //if trying to access a authorized page after login it will redirect to the give path or go back to home
             router.replace(location.state.nextPathname)
-          }
+          //}
         } else {
-          props.router.replace('/')
+          router.replace('/play')
         }
       })
     }

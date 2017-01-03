@@ -17,19 +17,13 @@ const express = require('express'),
       passport = require('passport'),
       //application = require('./routes/application'),
       passportJWT = require("passport-jwt"),
+      socketioJwt = require('socketio-jwt'),
+      secretOrKey = require('./config/passport').secretOrKey,
+      jwtFromRequest = require('./config/passport').jwtFromRequest,
       ExtractJwt = passportJWT.ExtractJwt,
       JwtStrategy = passportJWT.Strategy,
       jwt  = require('jsonwebtoken');
 
-//serving webpack
-// const webpack = require('webpack'),
-//       webpackDevMiddleware = require('webpack-dev-middleware'),
-//       webpackHotMiddleware = require('webpack-hot-middleware'),
-//       config = require('../webpack.config'),
-//       compiler = webpack(config);
-
-// app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
-// app.use(webpackHotMiddleware(compiler))
 
 // Client
 const staticPath = path.join(__dirname, '../client/public');
@@ -50,11 +44,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-var jwtOptions = {}
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
-jwtOptions.secretOrKey = 'setLiveSecurity';
-
-const strategy = new JwtStrategy(jwtOptions, function(jwt_payload, done) {
+const strategy = new JwtStrategy({secretOrKey, jwtFromRequest}, function(jwt_payload, done) {
   debug('payload received', jwt_payload);
   // usually this would be a database call:
   Player.findOne({id: jwt_payload.id})

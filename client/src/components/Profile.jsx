@@ -15,7 +15,7 @@ const Profile = props => {
   let joinRoom = () =>{
     socket.emit('enterGameRoom', {
       roomName,
-      username: playerInfo.username || username,
+      username: playerInfo.username,
     });
   };
 

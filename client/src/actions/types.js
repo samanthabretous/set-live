@@ -29,6 +29,8 @@ export const BOARD = 'board';
 export const CLICKED_CARDS = 'clicked_cards';
 export const LEFT_PLAYERS = 'left_players';
 export const SET_PLAYER_INFO = 'set_player_info';
+export const RELOAD_GAME = 'reload_game';
+export const UPDATE_GAME = 'update_game';
 
 
 

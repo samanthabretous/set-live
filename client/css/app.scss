@@ -62,6 +62,16 @@ body {
       }
 
     }
+
+    .game_logo {
+      width: 20vw;
+
+      .small_logo {
+        width: 100%;
+        height: auto;
+      }
+    }
+    
     .nav_bar{
       border: 3px dashed blue;
       width: 20vw;
@@ -80,68 +90,8 @@ body {
         font-size: 5em;
       }
     }
-  }
-
-  .game{
-    display: flex;
-
-    .gameMenu {
-      width: 20%;
-      height: 100%;
-      border: 2px dashed red;
-
-      @mixin centerFlex() {
-        display: flex;
-        justify-content: center;
-        align-content: center;
-      }
-
-      .set_logo {
-        @include centerFlex()
-        height: 30%;
-        border: 3px solid red;
-
-        svg{
-          width:30%;
-          height: auto;
-        }
-      }
-
-      .logoTransition {
-        @include centerFlex()
-        height: 60vh;
-        padding: 0 auto;
-        animation: strink 1s forwards;
-
-        svg{
-          width:30%;
-          height: auto;
-          animation: moveLogo 1s forwards;
-        }
-      }
-
-      @keyframes moveLogo {
-        from {
-          width: 30%;
-        }
-        to{
-          width: 100%;
-        }
-      }
-
-      @keyframes strink {
-        from{
-          height: 60vh;
-          width: 100%;
-        }
-        to {
-          height: 20vh;
-          width: 20%;
-        }
-      }
-
-    }//gameMenu
   }//app
+
 }//body
 
 

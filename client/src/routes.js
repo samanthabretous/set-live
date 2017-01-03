@@ -5,7 +5,6 @@ import React from 'react';
 import { Route, IndexRoute, Link } from 'react-router';
 
 import auth from './utils/auth.js'
-import {socket} from './actions/connections'
 
 
 //====================
@@ -32,9 +31,11 @@ const redirectToLogin = (nextState, replace) => {
       state: { modal: true, nextPathname: nextState.location.pathname }
     })
   } else {
-    auth.getPlayerSecretInfo()
     if(nextState.params.room){
-      socket.emit('startNewGame', nextState.params.room)
+      //check to see if gsme has started, if so display game board
+      auth.getGameInfo(nextState.params.room)
+    } else {
+      auth.getPlayerInfo()
     }
   }
 }
@@ -59,7 +60,7 @@ export default (
           })
         }}
       />
-      <Route path='/play' component={Play}/>
+      <Route path='/play' component={ProfileContainer}/>
     </Route>
 
     <Route path='/how-to-play' component={HowToPlay}/>

@@ -6,7 +6,7 @@ import store from './store'
 import routes from './routes'
 
 import ConnectionsSocketListeners from './actions/connections'
-import BoardSocketListeners from './actions/game-connections'
+import BoardSocketListeners from './actions/gameConnections'
 
 import '../css/app.scss'
 import 'gsap'

@@ -6,7 +6,7 @@ const router = require('express').Router(),
       JwtStrategy = passportJWT.Strategy,
       Player = require('../models').player,
       Game = require('../models').game,
-      secret = require('../config/passport').jwtOptions.secretOrKey
+      secret = require('../config/passport').secretOrKey
       debug = require('debug')('OH_GOSH');
 
 
@@ -26,7 +26,6 @@ router.post('/signup', (req,res) =>{
     }    
   })
   .catch(err => {
-    debug(err)
     res.json({success: false, msg: 'Username or Email already exists.'})
   })
 });
@@ -34,6 +33,7 @@ router.post('/signup', (req,res) =>{
 // find player in data base and send them back a token
 // else let player know they have entered the wrong password
 router.post("/login", (req, res) => {
+  debug("login",req.body)
   Player.findOne({
     where: {username: req.body.username }
   })
@@ -84,6 +84,7 @@ const getToken = (headers) => {
 router.get('/playerinfo', 
   passport.authenticate('jwt', { session: false}), 
   function(req, res){
+    debug(req.headers)
     const token = getToken(req.headers);
     if (token) {
 
@@ -107,4 +108,5 @@ router.get('/playerinfo',
 
 module.exports = {
   router, 
+  getToken
 }
