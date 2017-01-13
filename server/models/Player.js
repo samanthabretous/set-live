@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt-nodejs'),
       SALT_WORK_FACTOR = 12;
 
 module.exports = function(sequelize, DataTypes) {
-  var Player = sequelize.define('player', {
+  const Player = sequelize.define('player', {
     username: {
       type: DataTypes.STRING,
       unique: true,

@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var Game = sequelize.define('game', {
+  const Game = sequelize.define('game', {
     room: {
       type: DataTypes.STRING,
       unique: true,

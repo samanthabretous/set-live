@@ -14,12 +14,21 @@ module.exports = ((app,io)=>{
         debug = require('debug')('SOCKET');
 
 
-  //Connect to the socket
+
+  // DeckOfCards.findAll({
+  //   where:{
+  //     gameId: 12
+  //   },
+  //   order: ['cardOrder']
+  // })
+  // .then(deck => {
+  //   debug(deck)
+  // })
   io.sockets.on('connection', socketioJwt.authorize({
     secret: secret,
     timeout: 15000 // 15 seconds to send the authentication message 
   })).on('authenticated', socket => {
-
+    debug(socket.id)
     debug('hello! ' + socket.decoded_token);
 
     //when socket is disconnected remove player from the connections array

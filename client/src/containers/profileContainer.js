@@ -11,6 +11,7 @@ const mapDispatchToProps = (dispatch) => (
 
 const mapStateToProps = state => {
   console.log(state.game.players)
+  console.log("gameId",state.game.gameId)
 return {
   status: state.game.status,
   username: state.login.username,
