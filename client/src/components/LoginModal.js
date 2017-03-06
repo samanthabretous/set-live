@@ -101,6 +101,7 @@ class LoginModal extends React.Component {
       <label htmlFor={`${type}`}></label>
       <input
         id={type}
+        type={type === 'password' ? 'password' : 'text' }
         onChange={this.handleChange.bind(this)}
         name={`${type}`}
         value={variable}

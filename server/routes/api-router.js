@@ -21,6 +21,8 @@ router.post('/signup', (req,res) =>{
   .then(player => {
     debug(player)
     if(player){
+
+      //create a token that has player id infomation hidden about the player
       const token = jwt.sign({id:player.id}, secret)
       res.json({success: true, token: 'JWT ' + token, msg: 'Successful created new user.'})
     }    

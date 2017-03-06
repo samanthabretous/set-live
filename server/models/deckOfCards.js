@@ -1,7 +1,8 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var DeckOfCards = sequelize.define('deck_of_cards', {
-    cardOrder: DataTypes.INTEGER
+  const DeckOfCards = sequelize.define('deck_of_cards', {
+    cardOrder: DataTypes.INTEGER,
+    status: DataTypes.STRING
   });
   return DeckOfCards;
 };

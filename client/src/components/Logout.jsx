@@ -9,7 +9,7 @@ const Logout = React.createClass({
     store.dispatch({
       type: RESET_LOGIN,
     })
-    //this.props.router.replace('/')
+    this.props.router.replace('/')
   },
 
   render() {

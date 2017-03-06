@@ -4,8 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "DEBUG=OH_GOSH,SERVER,PASSPORT,SOCKET nodemon server/app-server.js & webpack --watch",
-    "test": "mocha"
+    "start": "npm run test & DEBUG=OH_GOSH,SERVER,PASSPORT,SOCKET node_modules/.bin/nodemon server/start.js & webpack --watch",
+    "test": "mocha --watch"
+  },
+  "engines": {
+    "node": "4.1.1"
   },
   "keywords": [],
   "author": "Samantha Bretous <sam@samanthabretous.com>",

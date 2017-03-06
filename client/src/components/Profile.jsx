@@ -19,7 +19,7 @@ const Profile = props => {
       username: playerInfo.username,
     });
   };
-  console.log(gameId, players)
+
   return (
     (!props.params.room && 
     <div className="landingPage">
@@ -40,13 +40,16 @@ const Profile = props => {
           onClick={joinRoom}>
           Enter Room
         </button>
-        {gameId && _.map(players, player => {
-          <h1>{player.username}</h1>
-        })
+        {players.length !== 0 && <h1>{players[0].username}</h1>} 
+        {players.length !== 0 && _.map(players, (player, index) => {
+          return <h1 key={index}>{player.username}</h1>
+        })}
+        {gameId && (
           <Link to={`/game/${gameId}`}>
             Go To Game
           </Link>
         )}
+        <Link to='/logout'>Logout</Link>
       </div>
     </div>)
   )

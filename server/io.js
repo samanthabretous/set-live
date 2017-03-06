@@ -14,13 +14,17 @@ module.exports = ((app,io)=>{
         debug = require('debug')('SOCKET');
 
 
-  //Connect to the socket
   io.sockets.on('connection', socketioJwt.authorize({
     secret: secret,
     timeout: 15000 // 15 seconds to send the authentication message 
   })).on('authenticated', socket => {
-
+    debug(socket.id)
     debug('hello! ' + socket.decoded_token);
+
+    //listener for test to make sure socket has connected
+    socket.on('connection-name',function(user){
+      io.sockets.emit('new token', socket.decoded_token);
+    }); 
 
     //when socket is disconnected remove player from the connections array
     socket.once('disconnect', function() {
@@ -58,8 +62,7 @@ module.exports = ((app,io)=>{
       })
       .then(foundPlayer => {
         socketPlayer = foundPlayer
-      })
-      .then(()=>{
+
         //see if room exist in the database
         return Game.findOne({
           where: {
@@ -101,7 +104,13 @@ module.exports = ((app,io)=>{
           //add card randomly to deck
           const shuffledNumbers = _.shuffle(_.range(1,82))
           _.map(shuffledNumbers, (number, index) => {
-            game.addCards(number, {cardOrder: index})
+
+            //add the first 12 cards to the board and the rest to the deck
+            if(index > 12){
+              game.addCards(number, {cardOrder: index, status: 'board'})
+            } else {
+              game.addCards(number, {cardOrder: index, status: 'deck'})
+            }
           })
 
           return game
@@ -220,6 +229,17 @@ module.exports = ((app,io)=>{
   })
 
 }) //module.exports closing
+
+
+  // DeckOfCards.findAll({
+  //   where:{
+  //     gameId: 12
+  //   },
+  //   order: ['cardOrder']
+  // })
+  // .then(deck => {
+  //   debug(deck)
+  // })
 
 //remove association with deck
  // currentGame.removeCard(card.card)
