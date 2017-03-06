@@ -1,33 +1,32 @@
-'use strict';
-module.exports = function(sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
   const Game = sequelize.define('game', {
     room: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: false
+      allowNull: false,
     },
     started: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false
+      defaultValue: false,
     },
     maxPlayers: {
-      type: DataTypes.INTEGER, 
-      defaultValue: 6
+      type: DataTypes.INTEGER,
+      defaultValue: 6,
     },
   }, {
     classMethods: {
-      associate: function(models) {
+      associate: (models) => {
         // associations can be defined here
-        Game.belongsToMany(models.card, {through: 'deck_of_cards'})
-        Game.hasMany(models.player)
+        Game.belongsToMany(models.card, { through: 'deck_of_cards' });
+        Game.hasMany(models.player);
       },
-      createGame: function(room, board) {
-        return this.build({
+      createGame: (room, board) => (
+        this.build({
           room,
-          board
+          board,
         })
-      }
-    }
+      ),
+    },
   });
   return Game;
 };

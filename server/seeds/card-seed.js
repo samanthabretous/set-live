@@ -1,14 +1,12 @@
 const db = require('../models');
 const Card = require('../models').card;
 
-Card.sync({force: true})
+Card.sync({ force: true })
 .then(() => db.sequelize.sync())
-//add the following post to the database:
+// add the following post to the database:
 .then(() => Card.bulkCreate(
   [
-
     // ------------squiggle solid------------
-    
     { card: 1, number: 1, color: 'red', shade: 'solid', shape: 'squiggle' },
     { card: 2, number: 2, color: 'red', shade: 'solid', shape: 'squiggle' },
     { card: 3, number: 3, color: 'red', shade: 'solid', shape: 'squiggle' },
@@ -80,36 +78,36 @@ Card.sync({force: true})
      { card: 54, number: 3, color: 'purple', shade: 'striped', shape: 'oval' },
 
     // ------------squiggles outline------------
-    { card: 55, number: 1, color: "red", shade: "outline", shape: "squiggle" },
-    { card: 56, number: 2, color: "red", shade: "outline", shape: "squiggle" },
-    { card: 57, number: 3, color: "red", shade: "outline", shape: "squiggle" },
-    { card: 58, number: 1, color: "red", shade: "outline", shape: "squiggle" },
-    { card: 59, number: 2, color: "green", shade: "outline", shape: "squiggle" },
-    { card: 60, number: 3, color: "green", shade: "outline", shape: "squiggle" },
-    { card: 61, number: 1, color: "purple", shade: "outline", shape: "squiggle" },
-    { card: 62, number: 2, color: "purple", shade: "outline", shape: "squiggle" },
-    { card: 63, number: 3, color: "purple", shade: "outline", shape: "squiggle" },
+    { card: 55, number: 1, color: 'red', shade: 'outline', shape: 'squiggle' },
+    { card: 56, number: 2, color: 'red', shade: 'outline', shape: 'squiggle' },
+    { card: 57, number: 3, color: 'red', shade: 'outline', shape: 'squiggle' },
+    { card: 58, number: 1, color: 'red', shade: 'outline', shape: 'squiggle' },
+    { card: 59, number: 2, color: 'green', shade: 'outline', shape: 'squiggle' },
+    { card: 60, number: 3, color: 'green', shade: 'outline', shape: 'squiggle' },
+    { card: 61, number: 1, color: 'purple', shade: 'outline', shape: 'squiggle' },
+    { card: 62, number: 2, color: 'purple', shade: 'outline', shape: 'squiggle' },
+    { card: 63, number: 3, color: 'purple', shade: 'outline', shape: 'squiggle' },
 
     // ----------------diamond outline---------------
-    { card: 64, number: 1, color: "red", shade: "outline", shape: "diamond" },
-    { card: 65, number: 2, color: "red", shade: "outline", shape: "diamond" },
-    { card: 66, number: 3, color: "red", shade: "outline", shape: "diamond" },
-    { card: 67, number: 1, color: "red", shade: "outline", shape: "diamond" },
-    { card: 68, number: 2, color: "green", shade: "outline", shape: "diamond" },
-    { card: 69, number: 3, color: "green", shade: "outline", shape: "diamond" },
-    { card: 70, number: 1, color: "purple", shade: "outline", shape: "diamond" },
-    { card: 71, number: 2, color: "purple", shade: "outline", shape: "diamond" },
-    { card: 72, number: 3, color: "purple", shade: "outline", shape: "diamond" },
+    { card: 64, number: 1, color: 'red', shade: 'outline', shape: 'diamond' },
+    { card: 65, number: 2, color: 'red', shade: 'outline', shape: 'diamond' },
+    { card: 66, number: 3, color: 'red', shade: 'outline', shape: 'diamond' },
+    { card: 67, number: 1, color: 'red', shade: 'outline', shape: 'diamond' },
+    { card: 68, number: 2, color: 'green', shade: 'outline', shape: 'diamond' },
+    { card: 69, number: 3, color: 'green', shade: 'outline', shape: 'diamond' },
+    { card: 70, number: 1, color: 'purple', shade: 'outline', shape: 'diamond' },
+    { card: 71, number: 2, color: 'purple', shade: 'outline', shape: 'diamond' },
+    { card: 72, number: 3, color: 'purple', shade: 'outline', shape: 'diamond' },
 
-    //------------------oval outline---------------
-    { card: 73, number: 1, color: "red", shade: "outline", shape: "oval" },
-    { card: 74, number: 2, color: "red", shade: "outline", shape: "oval" },
-    { card: 75, number: 3, color: "red", shade: "outline", shape: "oval" },
-    { card: 76, number: 1, color: "red", shade: "outline", shape: "oval" },
-    { card: 77, number: 2, color: "green", shade: "outline", shape: "oval" },
-    { card: 78, number: 3, color: "green", shade: "outline", shape: "oval" },
-    { card: 79, number: 1, color: "purple", shade: "outline", shape: "oval" },
-    { card: 80, number: 2, color: "purple", shade: "outline", shape: "oval" },
-    { card: 81, number: 3, color: "purple", shade: "outline", shape: "oval" }
-  ], {validate: true}
-))
+    // ------------------oval outline---------------
+    { card: 73, number: 1, color: 'red', shade: 'outline', shape: 'oval' },
+    { card: 74, number: 2, color: 'red', shade: 'outline', shape: 'oval' },
+    { card: 75, number: 3, color: 'red', shade: 'outline', shape: 'oval' },
+    { card: 76, number: 1, color: 'red', shade: 'outline', shape: 'oval' },
+    { card: 77, number: 2, color: 'green', shade: 'outline', shape: 'oval' },
+    { card: 78, number: 3, color: 'green', shade: 'outline', shape: 'oval' },
+    { card: 79, number: 1, color: 'purple', shade: 'outline', shape: 'oval' },
+    { card: 80, number: 2, color: 'purple', shade: 'outline', shape: 'oval' },
+    { card: 81, number: 3, color: 'purple', shade: 'outline', shape: 'oval' },
+  ], { validate: true }
+));

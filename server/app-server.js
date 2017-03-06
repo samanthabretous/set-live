@@ -1,62 +1,56 @@
-const express = require('express'),
-      cookieParser = require('cookie-parser'),
-      session = require('express-session'),
-      path = require('path'),
-      app = express(),
-      applyExpressMiddleware = require('./middleware'),
-      routes = require('./routes'),
-      _ = require('lodash'),
-      debug = require('debug')('SERVER'),
-      
-      //passport
-      passport = require('passport'),
-      //application = require('./routes/application'),
-      passportJWT = require("passport-jwt"),
-      socketioJwt = require('socketio-jwt'),
-      secretOrKey = require('./config/passport').secretOrKey,
-      jwtFromRequest = require('./config/passport').jwtFromRequest,
-      ExtractJwt = passportJWT.ExtractJwt,
-      JwtStrategy = passportJWT.Strategy,
-      jwt  = require('jsonwebtoken');
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const path = require('path');
+const applyExpressMiddleware = require('./middleware');
+const routes = require('./routes');
+const _ = require('lodash');
+const debug = require('debug')('SERVER');
 
+// passport
+const passport = require('passport');
+const passportJWT = require('passport-jwt');
+const socketioJwt = require('socketio-jwt');
+const secretOrKey = require('./config/passport').secretOrKey;
+const jwtFromRequest = require('./config/passport').jwtFromRequest;
+const jwt = require('jsonwebtoken');
+
+const ExtractJwt = passportJWT.ExtractJwt;
+const JwtStrategy = passportJWT.Strategy;
+
+const app = express();
 applyExpressMiddleware(app);
-app.use(passport.initialize())
+app.use(passport.initialize());
 
-const strategy = new JwtStrategy({secretOrKey, jwtFromRequest}, function(jwt_payload, done) {
+const strategy = new JwtStrategy({ secretOrKey, jwtFromRequest }, (jwt_payload, done) => {
   debug('payload received', jwt_payload);
   // usually this would be a database call:
-  Player.findOne({id: jwt_payload.id})
-  .then(player => {
-      if (player) {
-          done(null, player);
-      } else {
-          done(null, false);
-      }
-  }) 
-  .catch(err =>{
-    return done(err, false);
-  });
-}); 
+  Player.findOne({ id: jwt_payload.id })
+  .then((player) => {
+    if (player) {
+      done(null, player);
+    } else {
+      done(null, false);
+    }
+  })
+  .catch(err => done(err, false));
+});
 
 passport.use(strategy);
 
-//api routes
-app.use('/api/player', routes.player)
-app.use('/api/game', routes.game)
-app.use('/api/card', routes.card)
-app.use('/api', routes.api)
+// api routes
+app.use('/api/player', routes.player);
+app.use('/api/game', routes.game);
+app.use('/api/card', routes.card);
+app.use('/api', routes.api);
 
-app.get('/*',(req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/public/index.html'));
 });
 
 // Handle socket.io
-const server = require('http').Server(app),
-      io = require('socket.io')(server);
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 require('./io.js')(app, io);
-  
-module.exports = server
 
-
-
-
+module.exports = server;
