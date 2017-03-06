@@ -5,10 +5,12 @@
   "main": "app.js",
   "scripts": {
     "start": "npm run test & DEBUG=OH_GOSH,SERVER,PASSPORT,SOCKET node_modules/.bin/nodemon server/start.js & webpack --watch",
-    "test": "mocha --watch"
+    "test": "mocha --watch",
+    "heroku-postbuild": "webpack"
   },
   "engines": {
-    "node": "4.1.1"
+    "node": "7.4.0",
+    "npm": "1.1.x"
   },
   "keywords": [],
   "author": "Samantha Bretous <sam@samanthabretous.com>",
