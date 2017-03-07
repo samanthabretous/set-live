@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "DEBUG=OH_GOSH,SERVER,PASSPORT,SOCKET node_modules/.bin/nodemon server/start.js & webpack --watch",
-    "test": "mocha --watch",
-    "heroku-postbuild": "webpack"
+    "build": "NODE_ENV=production concurrently -k 'webpack --config ./webpack.prod.config.js --progress --colors'",
+    "start": "DEBUG=OH_GOSH,SERVER,PASSPORT,SOCKET concurrently -k 'node_modules/.bin/nodemon server/start.js'",
+    "test": "mocha --watch"
   },
   "engines": {
     "node": "7.4.0",
@@ -16,8 +16,11 @@
   "author": "Samantha Bretous <sam@samanthabretous.com>",
   "license": "ISC",
   "dependencies": {
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-0": "^6.22.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
+    "concurrently": "^3.4.0",
     "cookie-parser": "^1.4.3",
     "eslint": "^3.17.0",
     "express": "^4.14.0",
