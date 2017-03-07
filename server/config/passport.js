@@ -1,7 +1,6 @@
 const passport = require('passport'),
       JwtStrategy = require('passport-jwt').Strategy,
       ExtractJwt = require('passport-jwt').ExtractJwt,
-      // secret = require('./secret'),
       db = require('../models'),
       Player = require('../models').player,
       debug = require('debug')('PASSPORT')
