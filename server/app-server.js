@@ -11,12 +11,14 @@ const debug = require('debug')('SERVER');
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
 const socketioJwt = require('socketio-jwt');
-const secretOrKey = require('./config/passport').secretOrKey;
+const secretOrKey = 'setLiveSecurity';
 const jwtFromRequest = require('./config/passport').jwtFromRequest;
 const jwt = require('jsonwebtoken');
 
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
+const jwtFromRequest = ExtractJwt.fromAuthHeader();
+
 
 const app = express();
 applyExpressMiddleware(app);
