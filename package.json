@@ -44,6 +44,7 @@
     "sequelize": "^3.28.0",
     "sequelize-cli": "^2.5.1",
     "socket.io": "^1.5.0",
+    "webpack": "^1.13.2",
     "socket.io-client": "^1.4.8",
     "socketio-jwt": "^4.5.0"
   },
@@ -71,7 +72,6 @@
     "supertest": "^2.0.1",
     "svg-react-loader": "^0.3.7",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.9.0",
     "webpack-hot-middleware": "^2.14.0"
   }
