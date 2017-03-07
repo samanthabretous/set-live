@@ -2,7 +2,7 @@ import React from 'react';
 import store from '../store';
 
 // components
-import Board from './Board';
+// import Board from './Board';
 import GameMenu from './GameMenu';
 import ChatBar from './chatBar';
 
@@ -16,7 +16,7 @@ class Game extends React.Component {
     return (
       <div className="gameView">
         <GameMenu {...this.props}/>
-        {this.props.deck.length > 0 && <Board {...this.props}/>}
+        {/*this.props.deck.length > 0 && <Board {...this.props}/>*/}
       </div>
     );
   }
