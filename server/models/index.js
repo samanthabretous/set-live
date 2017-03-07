@@ -13,7 +13,7 @@ if (process.env.DATABASE_URL) {
     protocol: 'postgres',
     dialectOptions: {
       ssl: true,
-    },
+    }, 
     logging: true, //false
   });
 } else if (config.use_env_variable) {
