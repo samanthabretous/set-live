@@ -4,7 +4,7 @@ const passport = require('passport');
 const passportJWT = require('passport-jwt');
 const Player = require('../models').player;
 const Game = require('../models').game;
-const secret = require('../config/passport').secretOrKey;
+const secret = 'setLiveSecurity';
 const debug = require('debug')('OH_GOSH');
 
 const ExtractJwt = passportJWT.ExtractJwt;

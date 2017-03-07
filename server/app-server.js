@@ -12,7 +12,7 @@ const passport = require('passport');
 const passportJWT = require('passport-jwt');
 const socketioJwt = require('socketio-jwt');
 const secretOrKey = 'setLiveSecurity';
-const jwt = require('jsonwebtoken'); 
+const jwt = require('jsonwebtoken');
 
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;

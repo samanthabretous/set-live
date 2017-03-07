@@ -4,7 +4,7 @@ module.exports = ((app, io) => {
   const db = require('./models');
   const dealCards = require('./utils/game').dealCards;
   // passport
-  const secret = require('./config/passport').secretOrKey;
+  const secret = 'setLiveSecurity';
   const jwt = require('jsonwebtoken');
   const socketioJwt = require('socketio-jwt');
   const debug = require('debug')('SOCKET');
