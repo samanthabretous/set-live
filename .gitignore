@@ -39,7 +39,6 @@ dist/
 maps/
 bundle.js
 bundle.js.map
-config.json
 secret.js
 *.hot-update.js
 *.hot-update.js.map

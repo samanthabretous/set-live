@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "Samantha",
+    "password": "2d?e>oy:6,I1",
+    "database": "set_live",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "Samantha",
+    "password": "2d?e>oy:6,I1",
+    "database": "set_live",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "Samantha",
+    "password": "2d?e>oy:6,I1",
+    "database": "set_live",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
