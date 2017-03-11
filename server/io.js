@@ -32,8 +32,7 @@ module.exports = ((app, io) => {
       socket.disconnect();
     });
 
-    socket.on('getPlayerInfo', (payload) => {
-      console.log(socket.decoded_token);
+    socket.on('getPlayerInfo', () => {
       const playerId = socket.decoded_token.id;
       Player.findById(playerId, { include: Game })
       .then((player) => {
@@ -141,7 +140,6 @@ module.exports = ((app, io) => {
       })
       .then((cards) => {
         io.sockets.in(currentGame.room).emit('gameStarted', cards);
-
       });
     }); // startNewGame
 

@@ -4,8 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "NODE_ENV=production concurrently -k 'webpack --config ./webpack.prod.config.js --progress --colors'",
-    "start": "DEBUG=OH_GOSH,SERVER,PASSPORT,SOCKET concurrently -k 'node_modules/.bin/nodemon server/start.js'",
+    "start": "DEBUG=OH_GOSH,SERVER,PASSPORT,SOCKET concurrently -k 'node_modules/.bin/nodemon server/start.js' 'node_modules/.bin/webpack --config ./webpack.dev.config.js'",
     "heroku-postbuild": "node_modules/.bin/webpack -p --config ./webpack.prod.config.js --progress",
     "test": "mocha --watch"
   },

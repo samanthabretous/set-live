@@ -5,8 +5,8 @@ import { socket } from '../actions/connections';
 
 
 const Profile = (props) => {
-  const { roomName, generateRoomName, playerInfo, playerInfo: { username, wins }, gameId, players } = props;
-
+  console.log(props.players.length ? props.players : props.players)
+  const { roomName, generateRoomName, playerInfo, gameId, players } = props;
   const handleRoomChange = (event) => {
     generateRoomName(event.target.value);
   };
@@ -14,7 +14,7 @@ const Profile = (props) => {
   const joinRoom = () => {
     socket.emit('enterGameRoom', {
       roomName,
-      username,
+      username: playerInfo.username,
     });
   };
 
@@ -23,8 +23,8 @@ const Profile = (props) => {
     <div className="landingPage">
       <h1>Profile Page</h1>
       {playerInfo && (<div>
-        <h1>Username: {username}</h1>
-        <h1>Total Game Wins: {wins}</h1>
+        <h1>Username: {playerInfo.username}</h1>
+        <h1>Total Game Wins: {playerInfo.wins}</h1>
       </div>)}
       <div>
         <input
@@ -39,8 +39,8 @@ const Profile = (props) => {
         >
           Enter Room
         </button>
-        {players.length !== 0 && <h1>{players[0].username}</h1>}
-        {players.length !== 0 && _.map(players, (player, index) => (
+        {players[0] && <h1>{players[0].username}</h1>}
+        {players.length && _.map(players, (player, index) => (
           <h1 key={index}>{player.username}</h1>
         ))}
         {gameId && (

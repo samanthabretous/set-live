@@ -6,6 +6,6 @@ export const addClickedCard = payload => ({
 });
 
 export const inviteModalAction = modalStatus => ({
-  type: MODAL_STATUS, 
+  type: MODAL_STATUS,
   modalStatus,
 });

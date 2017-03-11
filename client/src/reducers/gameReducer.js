@@ -4,7 +4,7 @@ const INTIAL_STATE = {
   players: [],
   playerInfo: null,
   playerHasLeft: null,
-  roomName: "",
+  roomName: '',
   gameId: null,
   started: false,
   deck: [],
@@ -14,7 +14,7 @@ const INTIAL_STATE = {
   playerSet: null,
 };
 
-export default function(state = INTIAL_STATE, action) {
+export default function (state = INTIAL_STATE, action) {
   switch (action.type) {
     case INVITE_PLAYERS:
     case UPDATE_CARDS:
