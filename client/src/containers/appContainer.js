@@ -1,7 +1,7 @@
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {withRouter} from 'react-router'
-import App from '../components/App'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router';
+import App from '../components/App';
 import {
   loginModalAction,
   formUsernameAction,
@@ -10,20 +10,20 @@ import {
   loginErrorsAction,
   loginLoadingAction,
   signinSocketAction,
-} from '../actions/loginActions'
+} from '../actions/loginActions';
 
 
-const mapDispatchToProps = (dispatch) => (
+const mapDispatchToProps = dispatch => (
   bindActionCreators({
     loginModalAction,
     formUsernameAction,
     formEmailAction,
-    formPasswordAction, 
+    formPasswordAction,
     loginErrorsAction,
     loginLoadingAction,
     signinSocketAction,
   }, dispatch)
-)
+);
 
 const mapStateToState = state => ({
   loginModal: state.login.loginModal,
@@ -34,7 +34,6 @@ const mapStateToState = state => ({
   loading: state.login.loading,
   gameId: state.game.gameId,
   deck: state.game.deck,
-})
+});
 
-
-export default withRouter(connect(mapStateToState, mapDispatchToProps)(App))
+export default withRouter(connect(mapStateToState, mapDispatchToProps)(App));

@@ -1,17 +1,19 @@
-import React from 'react';
-import {withRouter} from 'react-router'
+import React, { Component, PropTypes } from 'react';
+import { withRouter } from 'react-router';
 
 
-const Play = React.createClass({
+class Play extends Component {
   componentDidMount() {
-    console.log("play",this.props)
-    this.props.router.replace('/')
-
-  },
+    this.props.router.replace('/');
+  }
 
   render() {
-    return <p>Please wait while our little ninjas redirect you to the correct page</p>
+    return <p>Please wait while our little ninjas redirect you to the correct page</p>;
   }
-})
+}
 
-export default withRouter(Play)
+Play.propTypes = {
+  router: PropTypes.object.isRequired,
+};
+
+export default withRouter(Play);

@@ -3,7 +3,7 @@
  */
 export const SHOW_BOARD = 'show_board';
 
-//LOGIN FORM
+// LOGIN FORM
 export const SET_USER_NAME = 'set_user_name';
 export const SET_EMAIL = 'set_email';
 export const SET_PASSWORD = 'set_password';
@@ -14,13 +14,13 @@ export const REGISTER = 'register';
 export const RESET_LOGIN = 'reset_login';
 
 
-//LandingPage
+// LandingPage
 export const SET_ROOM_NAME = 'set_room_name';
 export const ADD_MEMBER = 'add_member';
 export const CONNECTION_STATUS = 'change_status';
 export const ROOM_STATUS = 'room_status';
 
-//GAME PAGE
+// GAME PAGE
 export const GO_TO_GAME = 'go_to_game';
 export const GAME_STARTED = 'game_started';
 export const ADD_PLAYER = 'players';
@@ -31,6 +31,3 @@ export const LEFT_PLAYERS = 'left_players';
 export const SET_PLAYER_INFO = 'set_player_info';
 export const RELOAD_GAME = 'reload_game';
 export const UPDATE_GAME = 'update_game';
-
-
-

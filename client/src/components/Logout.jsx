@@ -1,20 +1,26 @@
-import React from 'react';
-import {withRouter} from 'react-router'
+import React, { Component, PropTypes } from 'react';
+import { withRouter } from 'react-router';
 import auth from '../utils/auth';
 import store from '../store';
-import {RESET_LOGIN} from '../actions/types'
-const Logout = React.createClass({
+import { RESET_LOGIN } from '../actions/types';
+
+class Logout extends Component {
   componentDidMount() {
-    auth.logout()
+    auth.logout();
     store.dispatch({
       type: RESET_LOGIN,
-    })
-    this.props.router.replace('/')
-  },
+    });
+    this.props.router.replace('/');
+  }
 
   render() {
-    return <p>You are now logged out</p>
+    return <p>You are now logged out</p>;
   }
-})
+}
 
-export default withRouter(Logout)
+Logout.propTypes = {
+  router: PropTypes.object.isRequired,
+};
+
+
+export default withRouter(Logout);

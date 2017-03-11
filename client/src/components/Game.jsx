@@ -1,25 +1,22 @@
-import React from 'react'
-import store from '../store'
+import React from 'react';
 
-//components
+// components
 import Board from './Board';
-import GameMenu from './GameMenu'
-import ChatBar from './chatBar';
+import GameMenu from './GameMenu';
 
 class Game extends React.Component {
-  componentDidMount(){
+  componentDidMount() {
     setTimeout(() => {
-      //props.inviteModalAction(false)
-    }, 5000)
+      // props.inviteModalAction(false)
+    }, 5000);
   }
-  render(){
-
+  render() {
     return (
       <div className="gameView">
-        <GameMenu {...this.props}/>
-        {this.props.deck.length > 0 && <Board {...this.props}/>}
+        <GameMenu {...this.props} />
+        {this.props.deck.length > 0 && <Board {...this.props} />}
       </div>
-    )
+    );
   }
 }
 

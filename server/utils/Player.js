@@ -1,18 +1,19 @@
-(function() {
-  let Player = function(config){
-    this.id = config.id;
-    this.name = config.name;
-    this.cards = null;
-    this.lost = false;
+(() => {
+  class Player {
+    constructor(config) {
+      this.id = config.id;
+      this.name = config.name;
+      this.cards = null;
+      this.lost = false;
 
-    //property is needed to help with disconnection
-    this.room = null
-  }
-
-  Player.prototype.addRoom = function (roomName) {
-    return this.room = roomName;
+      // property is needed to help with disconnection
+      this.room = null;
+    }
+    addRoom(roomName) {
+      this.room = roomName;
+      return this.room;
+    }
   }
 
   module.exports = Player;
-
 })();

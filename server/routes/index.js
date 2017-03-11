@@ -1,11 +1,11 @@
-const player = require('./player-router').router
-const game = require('./game-router').router
-const card = require('./card-router').router
-const api = require('./api-router').router
+const player = require('./player-router').router;
+const game = require('./game-router').router;
+const card = require('./card-router').router;
+const api = require('./api-router').router;
 
 module.exports = {
-  player, 
+  player,
   game,
   card,
-  api
-}
+  api,
+};
