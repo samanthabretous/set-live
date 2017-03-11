@@ -32,11 +32,9 @@ export default (store) => {
     });
   });
 
-  const sortCards = (cards) => {
-    return _.sortBy(cards, [(card) => {
-      return card['deck_of_cards'].cardOrder;
-    }]);
-  };
+  const sortCards = cards => (
+   _.sortBy(cards, [card => card['deck_of_cards'].cardOrder])
+  );
 
   socket.on('gameStarted', (cards) => {
     const deck = sortCards(cards);

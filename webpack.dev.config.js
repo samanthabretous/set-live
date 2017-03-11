@@ -33,6 +33,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
   },
+  watch: true,
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
