@@ -1,7 +1,8 @@
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {withRouter} from 'react-router'
-import LoginModal from '../components/LoginModal'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router';
+import LoginModal from '../components/LoginModal';
+
 import {
   formUsernameAction,
   formEmailAction,
@@ -9,20 +10,18 @@ import {
   loginFormErrorsAction,
   loginErrorAction,
   loginLoadingAction,
-  signinSocketAction,
-} from '../actions/loginActions'
+} from '../actions/loginActions';
 
-
-const mapDispatchToProps = (dispatch) => (
+const mapDispatchToProps = dispatch => (
   bindActionCreators({
     formUsernameAction,
     formEmailAction,
-    formPasswordAction, 
+    formPasswordAction,
     loginFormErrorsAction,
     loginErrorAction,
     loginLoadingAction,
   }, dispatch)
-)
+);
 
 const mapStateToState = state => ({
   username: state.login.username,
@@ -31,7 +30,7 @@ const mapStateToState = state => ({
   loginFormErrors: state.login.loginFormErrors,
   loading: state.login.loading,
   loginError: state.login.loginError,
-})
+});
 
 
-export default withRouter(connect(mapStateToState, mapDispatchToProps)(LoginModal))
+export default withRouter(connect(mapStateToState, mapDispatchToProps)(LoginModal));

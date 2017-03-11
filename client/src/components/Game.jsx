@@ -1,10 +1,8 @@
 import React from 'react';
-import store from '../store';
 
 // components
-// import Board from './Board';
+import Board from './Board';
 import GameMenu from './GameMenu';
-import ChatBar from './chatBar';
 
 class Game extends React.Component {
   componentDidMount() {
@@ -15,8 +13,8 @@ class Game extends React.Component {
   render() {
     return (
       <div className="gameView">
-        <GameMenu {...this.props}/>
-        {/*this.props.deck.length > 0 && <Board {...this.props}/>*/}
+        <GameMenu {...this.props} />
+        {this.props.deck.length > 0 && <Board {...this.props} />}
       </div>
     );
   }

@@ -1,124 +1,121 @@
 import $ from 'jquery';
 import store from '../store';
-import {socket} from '../actions/connections'
-import {SET_PLAYER_INFO} from '../actions/types'
+import { socket } from '../actions/connections';
+import { SET_PLAYER_INFO } from '../actions/types';
 
 module.exports = {
   login(isRegister, username, email, password, cb) {
-    cb = arguments[arguments.length - 1]
+    cb = arguments[arguments.length - 1];
     if (localStorage.token) {
-      if (cb) cb(true)
-      this.onChange(true)
-      return
+      if (cb) cb(true);
+      this.onChange(true);
+      return;
     }
 
     const isAuthenicated = (res) => {
-      console.log(res)
       if (res.authenticated) {
-        localStorage.token = res.token
-        socket.emit('authenticate', {token: res.token.split(' ')[1]})
-        if (cb) cb(true)
-        this.onChange(true)
+        localStorage.token = res.token;
+        socket.emit('authenticate', { token: res.token.split(' ')[1] });
+        if (cb) cb(true);
+        this.onChange(true);
       } else {
-        if (cb) cb(false)
-        this.onChange(false)
+        if (cb) cb(false);
+        this.onChange(false);
       }
-    }
-    if(isRegister){
-      signInRequest(username, password, isAuthenicated)
+    };
+    if (isRegister) {
+      signInRequest(username, password, isAuthenicated);
     } else {
-      signUpRequest(username, email, password, isAuthenicated)
+      signUpRequest(username, email, password, isAuthenicated);
     }
   },
 
   getToken() {
-    return localStorage.token
+    return localStorage.token;
   },
 
   logout(cb) {
-    delete localStorage.token
-    if (cb) cb()
-    this.onChange(false)
+    delete localStorage.token;
+    if (cb) cb();
+    this.onChange(false);
   },
 
   loggedIn() {
-    return !!localStorage.token
+    return !!localStorage.token;
   },
 
-  getPlayerSecretInfo(){
+  getPlayerSecretInfo() {
     $.ajax({
       url: '/api/playerInfo',
-      beforeSend: function (xhr) {
+      beforeSend: (xhr) => {
         xhr.setRequestHeader('Authorization', localStorage.token);
       },
     })
-    .done(data =>{
-      const {success, playerInfo} = data
-      if(success){
+    .done((data) => {
+      const { success, playerInfo } = data;
+      if (success) {
         store.dispatch({
-          type: SET_PLAYER_INFO, 
-          playerInfo 
-        })
+          type: SET_PLAYER_INFO,
+          playerInfo,
+        });
       }
-    })
+    });
   },
-  getPlayerInfo(){
-    socket.emit('getPlayerInfo', {token: localStorage.token})
+  getPlayerInfo() {
+    socket.emit('getPlayerInfo', { token: localStorage.token });
   },
-  getGameInfo(gameId){
-    socket.emit('isGameStarted', {gameId, token: localStorage.token})
+  getGameInfo(gameId) {
+    socket.emit('isGameStarted', { gameId, token: localStorage.token });
   },
   onChange() {
-  }
-}
+  },
+};
 
 const signInRequest = (username, password, cb) => {
-
-  //go to the back end and check if the user credentials are correct
+  // go to the back end and check if the user credentials are correct
   $.ajax({
-    url: '/api/login', 
+    url: '/api/login',
     type: 'POST',
     data: {
       username,
-      password
-    }
+      password,
+    },
   })
-  .done(data =>{
+  .done((data) => {
     setTimeout(() => {
       if (data) {
         cb({
           authenticated: data.success,
-          token: data.token
-        })
+          token: data.token,
+        });
       } else {
-        cb({ authenticated: false })
+        cb({ authenticated: false });
       }
-    }, 500)
-  })
-}
+    }, 500);
+  });
+};
 
 const signUpRequest = (username, email, password, cb) =>{
-  //go to back end and register player and get token
+  // go to back end and register player and get token
   $.ajax({
-    url: '/api/signup', 
+    url: '/api/signup',
     type: 'POST',
     data: {
       username,
       email,
-      password
-    }
+      password,
+    },
   })
-  .done(data =>{
+  .done((data) => {
     setTimeout(() => {
-      console.log("data",data)
       if (data) {
         cb({
           authenticated: data.success,
-          token: data.token
-        })
+          token: data.token,
+        });
       } else {
-        cb({ authenticated: false })
+        cb({ authenticated: false });
       }
-    }, 500)
-  })
-}
+    }, 500);
+  });
+};

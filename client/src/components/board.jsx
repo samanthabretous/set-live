@@ -20,27 +20,25 @@ const Board = (props) => {
   */
   const handleCardClick = (card) => {
     // check to see if card had been clicked
+    let clicked = null;
     const cardNumbers = _.map(clickedCards, 'card');
-    if (! _.includes(cardNumbers, card.card)) {
-      let clicked = [...clickedCards, card];
+    if (!_.includes(cardNumbers, card.card)) {
+      clicked = [...clickedCards, card];
     } else {
-      //remove obj from array
-      let clicked = _.filter(clickedCards, (cardClick) => card.card !== cardClick.card);
+      // remove obj from array
+      clicked = _.filter(clickedCards, cardClick => card.card !== cardClick.card);
     }
 
+    // if user has clicked on three cards
     if (clicked.length === 3) {
-      //check if set
-      //if(checkSet(clicked)){
+      // check if set
+      if (checkSet(clicked)) {
         socket.emit('set', { clickedCards: clicked, gameId });
-      //}
+      }
       addClickedCard([]);
     } else {
       addClickedCard(clicked);
-    } 
-    // if user has clicked on three cards
-    // if(clickedCards.length===3){
-    //   //check if set
-    // }
+    }
   };
 
   /*
@@ -50,13 +48,16 @@ const Board = (props) => {
   */
   const boardOfCards = () => (
     board.map((slot, i) => {
-      // define component. imported all svg images into an object. when certain attributes are triggered look inside the object and grab import information. inorder to use that infomation as a component, it had to be saved in a variable 
-       let Special = cardComponents[`${slot.shape}-${slot.shade}`]
-      
+      /* define component.
+      * imported all svg images into an object.
+      * when certain attributes are triggered look inside the object and grab import information.
+      * inorder to use that infomation as a component, it had to be saved in a variable
+      */
+       let Special = cardComponents[`${slot.shape}-${slot.shade}`];
       // render amount of shapes needed per card based on the card number attribute
       const number = [];
-      for(let j = 0; j < slot.number; j++) {
-        number.push(<Special key={j} className={`shapes ${slot.color}`}/>);
+      for (let j = 0; j < slot.number; j++) {
+        number.push(<Special key={j} className={`shapes ${slot.color}`} />);
       }
       return (
         <div
@@ -80,4 +81,4 @@ const Board = (props) => {
   );
 };
 
-export default Board
+export default Board;

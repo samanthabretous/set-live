@@ -1,33 +1,31 @@
-import { LOGIN_ERROR, SET_USER_NAME, SET_EMAIL, SET_PASSWORD, FORM_ERRORS, LOGIN_LOADING, REGISTER } from './types';
+import { LOGIN_ERROR, SET_USER_NAME, SET_EMAIL, SET_PASSWORD, FORM_ERRORS, LOGIN_LOADING } from './types';
 
 export const formUsernameAction = username => ({
   type: SET_USER_NAME,
-  username
-})
+  username,
+});
 
 export const formEmailAction = email => ({
   type: SET_EMAIL,
-  email
-})
+  email,
+});
 
 export const formPasswordAction = password => ({
   type: SET_PASSWORD,
-  password
-})
+  password,
+});
 
 export const loginErrorAction = loginError => ({
   type: LOGIN_ERROR,
-  loginError
-})
+  loginError,
+});
 
 export const loginFormErrorsAction = loginFormErrors => ({
   type: FORM_ERRORS,
-  loginFormErrors
-})
+  loginFormErrors,
+});
 
 export const loginLoadingAction = loading => ({
   type: LOGIN_LOADING,
-  loading
-})
-
-
+  loading,
+});

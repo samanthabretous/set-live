@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react';
 
-const User = React.createClass({
+class User extends Component {
   render() {
-    return <h1>User: {this.props.params.id}</h1>
+    return <h1>User: {this.props.params.id}</h1>;
   }
-})
+}
 
-export default User
+User.propTypes = {
+  params: PropTypes.object.isRequired,
+};
+
+export default User;
