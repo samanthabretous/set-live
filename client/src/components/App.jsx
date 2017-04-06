@@ -54,10 +54,10 @@ class App extends React.Component {
     );
     return (
       <div className="app">
-        <div className={this.props.params.room ? 'game_logo' : 'set_logo'}>
+        <figure className={this.props.params.room ? 'game_logo' : 'set_logo'}>
           {location.pathname !== '/' ? <Link to="/"> <SetLogo className="small_logo" /></Link> : <SetLogo className="logo" />
           }
-        </div>
+        </figure>
         <div>
 
           <div>
