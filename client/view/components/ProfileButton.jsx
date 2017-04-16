@@ -1,25 +1,9 @@
-import React, { Component, PropTypes } from 'react';
-import GSAP from 'react-gsap-enhancer';
+import React from 'react';
 
-const createAnim = ({ target }) => {
-  const box = target.find({ className: 'box' });
-  return new TimelineMax({ repeat: -1 })
-    .to(box, 1, { scale: 1.23, y: '+=120' })
-    .to(box, 1, { scale: 1, y: '-=120' })
-    .to(box, 1, { rotation: 90 }, 1);
-};
+const ProfileButton = () => (
+  <button className="home__button home_button-profile">
+    Profile
+  </button>
+);
 
-class ProfileButton extends Component {
-  componentDidMount() {
-    this.addAnimation(createAnim);
-  }
-  render() {
-    return (
-      <div className="profile_button">
-        Profile Button
-      </div>
-    );
-  }
-}
-
-export default GSAP()(ProfileButton);
+export default ProfileButton;

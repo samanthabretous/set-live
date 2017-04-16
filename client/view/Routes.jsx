@@ -11,7 +11,7 @@ import auth from './utils/auth';
 // Import the different components that will represent the different pages
 // of our website.
 // ====================
-import { AppContainer, GameContainer, LoginContainer, NavBarContainer, ProfileContainer } from './containers';
+import { App, Game, Login, Home, Profile } from './containers';
 import { HowToPlay, Logout } from './components';
 
 const redirectToLogin = (nextState, replace) => {
@@ -38,8 +38,8 @@ const redirectToProfile = (nextState, replace) => {
 
 
 export default (
-  <Route path="/" component={AppContainer} >
-    <IndexRoute component={NavBarContainer} />
+  <Route path="/" component={App} >
+    <IndexRoute component={Home} />
 
     <Route onEnter={redirectToLogin} >
       {/* Protected nested routes for the dashboard */}
@@ -47,12 +47,12 @@ export default (
         path="/game/:room"
         getComponent={(nextState, cb) => {
           require.ensure([], (require) => {
-            cb(null, GameContainer);
+            cb(null, Game);
           });
         }}
       />
-      <Route path="/play" component={ProfileContainer} />
-      <Route path="/profile" component={ProfileContainer} />
+      <Route path="/play" component={Profile} />
+      <Route path="/profile" component={Profile} />
     </Route>
 
     <Route path="/how-to-play" component={HowToPlay} />
@@ -65,7 +65,7 @@ export default (
         path="/login"
         getComponent={(nextState, cb) => {
           require.ensure([], (require) => {
-            cb(null, LoginContainer);
+            cb(null, Login);
           });
         }}
       />
@@ -73,7 +73,7 @@ export default (
         path="/register"
         getComponent={(nextState, cb) => {
           require.ensure([], (require) => {
-            cb(null, LoginContainer);
+            cb(null, Login);
           });
         }}
       />

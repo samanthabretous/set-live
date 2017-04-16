@@ -1,8 +1,25 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
-import { socket } from '../../redux/actions/connections';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { socket } from '../../../redux/actions/connections';
+import { generateRoomName } from '../../../redux/actions';
 
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    generateRoomName,
+  }, dispatch)
+);
+
+const mapStateToProps = state => ({
+  status: state.game.status,
+  username: state.login.username,
+  roomName: state.game.roomName,
+  gameId: state.game.gameId,
+  playerInfo: state.game.playerInfo,
+  players: state.game.players,
+});
 
 const Profile = (props) => {
   console.log(props.players.length ? props.players : props.players)
@@ -54,4 +71,4 @@ const Profile = (props) => {
   );
 };
 
-export default Profile;
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

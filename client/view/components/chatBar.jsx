@@ -1,23 +1,26 @@
-import React from 'react';
-import { socket } from '../actions/connections';
+import React, { Component } from 'react';
+import { socket } from '../../redux/actions/connections';
 
-const ChatBar = React.createClass({
-  getInitialState() {
-    return {
+class ChatBar extends Component {
+  constructor() {
+    super();
+    this.state = {
       messages: [],
-      socket,
+      socket: null,
       username: '',
       mess: '',
     };
-  },
+    this.handleChange = this.handleChange.bind(this);
+    this.submitMessage = this.submitMessage.bind(this);
+  }
   componentDidMount() {
     this.state.socket.on('received message', (msg) => {
       this.setState({ messages: this.state.messages.concat(msg) });
     });
-  },
+  }
   handleChange(event) {
     this.setState({ [event.target.className]: event.target.value });
-  },
+  }
   submitMessage() {
     const message = {
       body: this.state.mess,
@@ -25,7 +28,7 @@ const ChatBar = React.createClass({
     };
     this.setState({ mess: '' });
     this.state.socket.emit('new message', message);
-  },
+  }
   render() {
     const { messages } = this.state;
 
@@ -54,6 +57,7 @@ const ChatBar = React.createClass({
         <button onClick={this.handleChange}>Enter Username</button>
       </section>
     );
-  },
-});
-export default ChatBar
+  }
+}
+
+export default ChatBar;

@@ -1,100 +1,23 @@
 @import '_variables';
-@import 'svgSetLogo';
-@import 'modal';
-@import 'login';
-@import 'landingPage';
-@import 'game';
 
+.app {
+  width: 90vw;
+  height: 90vh;
+  margin: 2% auto;
+  position: relative;
+  display: flex;
+  padding-right: 5%;
+  justify-content: space-between;
+  align-items: center;
 
-*{
-  box-sizing: border-box;
-}
-
-body {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  border: 1px solid black;
-  overflow: hidden;
-  background: url('../images/spiral.png') no-repeat $yellow;
-  background-size: cover;
-  
-  .github_logo{
-    position: absolute;
-    top: -9vw;
-    right: -7vw;
-    width: 15vw;
-    height: 20vw;
-    background-color: $lightBlue;
-    transform: rotate(-45deg);
-
-    img{
-      transform: rotate(45deg);
-      width: 40%;
-      height: auto;
-      transform-origin: -4.5vw 7vw;
-    }
-
+  .logo__home {
+    // border: 3px solid black;
+    width: 55vw;
+    height: auto;
+    display: flex;
   }
 
-  .app {
-    width: 90vw;
-    height: 100vh;
-    //border: 6px solid purple;
-    margin: 0 auto;
-    margin-top: 2%;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
-    padding-right: 5vw;
- 
-    .set_logo{
-      //border: 3px solid black;
-      width: 55vw;
-      display: flex;
-      justify-content: center;
-      align-content: center;
-
-      .logo {
-        width: 100%;
-        height: auto;
-      }
-
-    }
-
-    .game_logo {
-      width: 20vw;
-
-      .small_logo {
-        width: 100%;
-        height: auto;
-      }
-    }
-    
-    .nav_bar{
-      //border: 3px dashed blue;
-      width: 20vw;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-
-      .play_button,
-      .howToPlay_button,
-      .profile_button {
-        background-color: white;
-        width: 100%;
-        height: 30vh;
-        border-radius: 5%;
-        margin: 0 5vw 2vh 0;
-        font-size: 5em;
-      }
-    }
-  }//app
-
-}//body
-
-
-
-
-
+  .logo__game {
+    width: 20vw;
+  }
+}

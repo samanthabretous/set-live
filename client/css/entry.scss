@@ -1,0 +1,45 @@
+@import '_variables';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  border: 1px solid black;
+  overflow: hidden;
+  background: url('../images/spiral.png') no-repeat $yellow;
+  background-size: cover;
+}
+
+button {
+  border: none;
+  background: none;
+}
+
+.github_logo{
+  position: absolute;
+  top: -9vw;
+  right: -7vw;
+  width: 15vw;
+  height: 20vw;
+  background-color: $lightBlue;
+  transform: rotate(-45deg);
+
+  img{
+    transform: rotate(45deg);
+    width: 40%;
+    height: auto;
+    transform-origin: -4.5vw 7vw;
+  }
+
+}
+@import 'app';
+@import 'svgSetLogo';
+@import 'home';
+@import 'modal';
+@import 'login';
+@import 'landingPage';
+@import 'game';

@@ -1,0 +1,66 @@
+.login {
+  background: $purple;
+  width: 50vw;
+  height: 50vh;
+  position: absolute;
+  z-index: 1;
+
+  fieldset {
+    color: $purple;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    legend {
+      button {
+        font-size: 2.5rem;
+        color: white;
+
+      }
+      .active {
+        color: $yellow;
+      }
+    }
+    .login__main {
+      width: 85%;
+      height: 75%;
+      margin: 0 auto;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      background: $lightGray;
+
+      .login__input-container {
+        width: 85%;
+
+        .login__input-inner{
+          display: flex;
+          font-size: 1.5rem;
+          label {
+
+          }
+          span {
+            color: $red;
+          }
+        }
+        .login__input {
+          font-size: 2rem;
+          width: 100%;
+        }
+        .error {
+          border: 2px solid $red;
+        }
+      }
+      button {
+        width: 85%;
+        height: 15%;
+        font-size: 2rem;
+        border-radius: 10px;
+        background: $yellow;
+        color: $purple;
+      }
+    }// .login__main
+  }
+}

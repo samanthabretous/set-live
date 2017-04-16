@@ -1,7 +1,7 @@
-import AppContainer from './appContainer';
-import GameContainer from './gameContainer';
-import LoginContainer from './loginContainer';
-import NavBarContainer from './navBarContainer';
-import ProfileContainer from './profileContainer';
+import App from './app/App';
+import Game from './game/Game';
+import Home from './home/Home';
+import Login from './login/Login';
+import Profile from './profile/Profile';
 
-export { AppContainer, GameContainer, LoginContainer, NavBarContainer, ProfileContainer };
+export { App, Game, Home, Login, Profile };

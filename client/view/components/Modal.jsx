@@ -9,9 +9,9 @@ class Modal extends Component {
 
   render() {
     return (
-      <div className="modal">
+      <section className="modal">
         {this.props.children}
-      </div>
+      </section>
     );
   }
 }

@@ -4,11 +4,12 @@ import 'gsap';
 import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
-import routes from './routes';
+import routes from './Routes';
 
 import ConnectionsSocketListeners from '../redux/actions/connections';
 import BoardSocketListeners from '../redux/actions/gameConnections';
-import '../css/app.scss';
+
+import '../css/entry.scss';
 
 ConnectionsSocketListeners(store);
 BoardSocketListeners(store);
