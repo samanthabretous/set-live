@@ -12,10 +12,10 @@ class Game extends React.Component {
   }
   render() {
     return (
-      <div className="gameView">
+      <section className="gameView">
         <GameMenu {...this.props} />
         {this.props.deck.length > 0 && <Board {...this.props} />}
-      </div>
+      </section>
     );
   }
 }

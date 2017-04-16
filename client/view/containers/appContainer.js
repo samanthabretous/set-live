@@ -4,21 +4,15 @@ import { withRouter } from 'react-router';
 import App from '../components/App';
 import {
   loginModalAction,
-  formUsernameAction,
-  formEmailAction,
-  formPasswordAction,
   loginErrorsAction,
   loginLoadingAction,
   signinSocketAction,
-} from '../actions/loginActions';
+} from '../../redux/actions/loginActions';
 
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
     loginModalAction,
-    formUsernameAction,
-    formEmailAction,
-    formPasswordAction,
     loginErrorsAction,
     loginLoadingAction,
     signinSocketAction,

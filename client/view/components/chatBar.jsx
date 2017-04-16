@@ -27,16 +27,14 @@ const ChatBar = React.createClass({
     this.state.socket.emit('new message', message);
   },
   render() {
-    const self = this;
-    if (this.state.messages) {
-      var messages = this.state.messages.map((msg, i) => (
-        <li key={i}><strong>{msg.user}</strong> <span>{msg.body}</span></li>
-      ));
-    }
+    const { messages } = this.state;
+
     return (
-      <div>
+      <section>
         <ul>
-          {messages}
+          {messages && messages.map(msg => (
+            <article key={msg.id}><strong>{msg.user}</strong> <span>{msg.body}</span></article>
+          ))}
         </ul>
         <input
           className="mess"
@@ -45,7 +43,7 @@ const ChatBar = React.createClass({
           value={this.state.mess}
           onChange={this.handleChange}
         />
-        <button onClick={self.submitMessage}>Send message</button><br />
+        <button onClick={this.submitMessage}>Send message</button><br />
         <input
           className="username"
           type="text"
@@ -53,8 +51,8 @@ const ChatBar = React.createClass({
           value={this.state.username}
           onChange={this.handleChange}
         />
-        <button onClick={self.handleChange}>Enter Username</button>
-      </div>
+        <button onClick={this.handleChange}>Enter Username</button>
+      </section>
     );
   },
 });

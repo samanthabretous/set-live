@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Profile from '../components/Profile';
-import { generateRoomName } from '../actions';
+import { generateRoomName } from '../../redux/actions';
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { socket } from '../actions/connections';
+import { socket } from '../../redux/actions/connections';
 
 // components
 import Modal from './Modal';
@@ -15,19 +15,19 @@ const GameMenu = (props) => {
     // isSetOnBoard(this.props.board);
   };
   return (
-    <div className="gameInfo">
+    <aside className="gameInfo">
       {/*<h1>Joined {member.name}</h1>
       <p>{players.length} players connected to Room: {roomName.roomName}</p>
       players.map((player, index)=> <p key={index}>PLAYER {index + player.name}</p>) */}
       <li><Link to="/how-to-play">About</Link></li>
-      {deck.length === 0 && <button onClick={() => startGame()}>Start New Game</button>}
+      {deck.length && <button onClick={() => startGame()}>Start New Game</button>}
       {
         roomName && modalStatus &&
           <Modal />
       }
-      {playerSet && <h1>Last Set By: {playerSet}</h1>}
+      {playerSet && <h4>Last Set By: {playerSet}</h4>}
       <button onClick={isSet}></button>
-    </div>
+    </aside>
   );
 };
 

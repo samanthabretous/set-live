@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: [
-    './client/src/app-client.js',
+    './client/view/Entry.jsx',
   ],
   output: {
     path: path.join(__dirname, '/client/public/bundle'),

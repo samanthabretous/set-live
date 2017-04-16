@@ -10,7 +10,7 @@ import {
   loginFormErrorsAction,
   loginErrorAction,
   loginLoadingAction,
-} from '../actions/loginActions';
+} from '../../redux/actions/loginActions';
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({

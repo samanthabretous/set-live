@@ -15,9 +15,9 @@ class HowToPlayButton extends React.Component {
   }
   render() {
     return (
-      <div className="howToPlay_button">
+      <button className="howToPlay_button">
         How to Play
-      </div>
+      </button>
     );
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
-import { socket } from '../actions/connections';
+import { socket } from '../../redux/actions/connections';
 
 
 const Profile = (props) => {

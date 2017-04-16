@@ -9,16 +9,11 @@ class LoginModal extends Component {
       username: '',
       email: '',
       password: '',
+      showRegisterForm: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.switchPath = this.switchPath.bind(this);
-  }
-
-  getCurrentPage() {
-    return this.props.location.pathname.indexOf('register') === -1
-      ? 'login'
-      : 'register';
   }
 
   handleChange(event) {
@@ -35,13 +30,12 @@ class LoginModal extends Component {
 
   handleSubmit() {
     const { loginFormErrorsAction, loginLoadingAction, loginErrorAction, router, location } = this.props;
-    const { username, email, password } = this.state;
+    const { username, email, password, showRegisterForm } = this.state;
 
-    const isRegistered = this.getCurrentPage() === 'login';
     // form validation
     const errors = {};
     if (isValidUsername(username)) errors.username = errorMessages.username;
-    if (!isRegistered && isValidEmail(email)) errors.email = errorMessages.email;
+    if (showRegisterForm && isValidEmail(email)) errors.email = errorMessages.email;
     if (isValidPassword) errors.password = errorMessages.password;
     loginFormErrorsAction(errors);
 
@@ -71,13 +65,16 @@ class LoginModal extends Component {
     }
   }
 
-  switchPath() {
+  switchPath(e) {
+    // e.preventDefault()
+    console.log(this.state.showRegisterForm)
     const pathTo =
-      `/${this.getCurrentPage() === 'register' ? 'login' : 'register'}`;
-    this.props.router.replace({
-      pathname: pathTo,
-      state: { modal: true },
-    });
+      `/${this.state.showRegisterForm ? 'register' : 'login'}`;
+    this.setState(prevState => ({
+      showRegisterForm: !prevState.showRegisterForm,
+    }));
+    console.log(pathTo)
+    this.props.router.push(pathTo);
   }
   showPlay() {
     this.props.router.replace({
@@ -105,19 +102,17 @@ class LoginModal extends Component {
 
   render() {
     const { loading, isRegistered } = this.props;
-    const { username, email, password } = this.state;
+    const { username, email, password, showRegisterForm } = this.state;
     return (
-      <form className="materialContainer" onSubmit={e => e.preventDefault()}>
+      <form className="login-box" onSubmit={e => e.preventDefault()}>
         <h1 className="title">LOGIN</h1>
         {this.renderInput('username', username)}
-        {!this.getCurrentPage && this.renderInput('email', email)}
+        {showRegisterForm && this.renderInput('email', email)}
         {this.renderInput('password', password)}
         <button onClick={this.switchPath}>Register</button>
         <button className="button login" onClick={this.handleSubmit}>
           <span>GO</span><i className="fa fa-check" />
         </button>
-        <a href="" className="pass-forgot">Forgot your password?</a>
-
         <div className="play">
           <button style={{ backgroundColor: 'red' }} className="playBtn" onClick={this.showPlay} />
           Play
@@ -130,7 +125,7 @@ class LoginModal extends Component {
 LoginModal.propTypes = {
   router: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.object.isRequired,
-  loginFormErrors: PropTypes.object.isRequired,
+  // loginFormErrors: PropTypes.object.isRequired,
   loginFormErrorsAction: PropTypes.func.isRequired,
   loginLoadingAction: PropTypes.func.isRequired,
   loginErrorAction: PropTypes.func.isRequired,

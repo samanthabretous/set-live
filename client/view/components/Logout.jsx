@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import auth from '../utils/auth';
-import store from '../store';
-import { RESET_LOGIN } from '../actions/types';
+import store from '../../redux/store';
+import { RESET_LOGIN } from '../../redux/actions/types';
 
 class Logout extends Component {
   componentDidMount() {

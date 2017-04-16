@@ -1,17 +1,16 @@
 import React from 'react';
-import path from 'path';
 import _ from 'lodash';
-import { socket } from '../actions/connections';
+import { socket } from '../../redux/actions/connections';
 import cardComponents from './cardComponents';
 import checkSet from '../utils/checkSet';
 
 const Board = (props) => {
   const { gameId, clickedCards, board, addClickedCard, deck } = props
 
-  /*
-  * @param {Object} card. when user clicks on card 
+  /**
+  * @param {Object} card. when user clicks on card
   * check to see if that card has been clicked on.
-  * if it has not send it to the store and add class. 
+  * if it has not send it to the store and add class.
   * else remove the clicked card from store and remove * class.
   * if three cards are clicked check to see they are a * set
   * @returns {}
@@ -39,10 +38,10 @@ const Board = (props) => {
     }
   };
 
-  /*
-  * @param {[Objects]} board. Dynamically render cards 
+  /**
+  * @param {Array.<object>} board. Dynamically render cards
   * based on the attributes recieved from the objects.
-  * @returns {[Components]}
+  * @returns {Array.<Components>}
   */
   const boardOfCards = () => (
     board.map((slot, i) => {
@@ -70,12 +69,9 @@ const Board = (props) => {
   );
 
   return (
-    <div>
-      <div>Board</div>
-      <section className="board">
-        {board && boardOfCards()}
-      </section>
-    </div>
+    <section className="board">
+      {board && boardOfCards()}
+    </section>
   );
 };
 
