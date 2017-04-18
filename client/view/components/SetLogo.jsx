@@ -10,17 +10,17 @@ class SetLogo extends Component {
   }
   render() {
     return (
-      <Link to="/"><Logo className={this.props.page ? 'logo__game' : 'logo__home'} /></Link>
+      <Link to="/" className={`logo__container ${this.props.page && 'logo__container-game'}`}><Logo className="logo"/></Link>
     );
   }
 }
 
 SetLogo.propTypes = {
-  page: PropTypes.string,
+  page: PropTypes.bool,
 };
 
 SetLogo.defaultProps = {
-  page: '',
+  page: false,
 };
 
 const svgAnimation = ({ target }) => {

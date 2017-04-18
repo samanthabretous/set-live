@@ -4,7 +4,7 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import auth from './utils/auth';
+import auth from './containers/login/auth';
 
 
 // ====================

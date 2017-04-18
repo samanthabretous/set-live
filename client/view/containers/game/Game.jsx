@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { inviteModalAction, addClickedCard } from '../../../redux/actions/gameActions';
+import { inviteModalAction, addClickedCard } from '../../../redux/gameActions';
 
 // components
 import { Board, GameMenu } from '../../components';
@@ -14,15 +14,15 @@ const mapDispatchToProps = dispatch => (
 );
 
 const appToState = state => ({
-  roomName: state.game.roomName,
-  players: state.game.players,
-  playerHasLeft: state.game.playerHasLeft,
-  board: state.game.board,
-  cards: state.game.cards,
-  clickedCards: state.game.clickedCards,
-  gameId: state.game.gameId,
-  deck: state.game.deck,
-  playerSet: state.game.playerSet,
+  roomName: state.roomName,
+  players: state.players,
+  playerHasLeft: state.playerHasLeft,
+  board: state.board,
+  cards: state.cards,
+  clickedCards: state.clickedCards,
+  gameId: state.gameId,
+  deck: state.deck,
+  playerSet: state.playerSet,
 });
 
 class Game extends React.Component {

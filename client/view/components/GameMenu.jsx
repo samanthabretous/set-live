@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { socket } from '../../redux/actions/connections';
+import { socket } from '../../redux/connections';
 
 // components
 import Modal from './Modal';

@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { socket } from '../../redux/actions/connections';
+import { socket } from '../../redux/connections';
 import cardComponents from './cardComponents';
 import checkSet from '../utils/checkSet';
 

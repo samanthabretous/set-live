@@ -2,32 +2,20 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
-import auth from '../../utils/auth';
-import {
-  loginModalAction,
-  loginErrorsAction,
-  loginLoadingAction,
-  signinSocketAction,
-} from '../../../redux/actions/loginActions';
+import auth from '../login/auth';
 // components
 import { Modal, SetLogo } from '../../components';
 
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
-    loginModalAction,
-    loginErrorsAction,
-    loginLoadingAction,
-    signinSocketAction,
+
   }, dispatch)
 );
 
 const mapStateToState = state => ({
-  loginModal: state.login.loginModal,
-  loginErrors: state.login.loginErrors,
-  loading: state.login.loading,
-  gameId: state.game.gameId,
-  deck: state.game.deck,
+  gameId: state.gameId,
+  deck: state.deck,
 });
 
 
@@ -41,6 +29,7 @@ class App extends Component {
   componentWillMount() {
     auth.onChange = this.updateAuth.bind(this);
     auth.login();
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -55,18 +44,13 @@ class App extends Component {
     }
   }
 
-  // show login/resigter modal
-  setLoginModal() {
-    this.props.router.push('/login');
-  }
-
   updateAuth(loggedIn) {
     this.setState({ loggedIn: !!loggedIn });
   }
 
   render() {
     const { location, children } = this.props;
-    console.log(this.props.router)
+    const shrinkLogo = location.pathname.includes('play') || location.pathname.includes('game');
     const isModal = (
       location.state &&
       location.state.modal &&
@@ -74,7 +58,7 @@ class App extends Component {
     );
     return (
       <main className="app">
-        <SetLogo page={this.props.params.room} />
+        <SetLogo page={shrinkLogo} />
 
         {isModal ?
           this.previousChildren :

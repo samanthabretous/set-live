@@ -1,9 +1,7 @@
 import React from 'react';
 
-const InvitePlayer = (props) => {
-  return (
-    <div>InvitePlayer</div>
-  )
-};
+const InvitePlayer = () => (
+  <div>InvitePlayer</div>
+);
 
 export default InvitePlayer;

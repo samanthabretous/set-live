@@ -52,6 +52,6 @@ app.get('/*', (req, res) => {
 // Handle socket.io
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-require('./io.js')(app, io);
+require('./socket/io.js')(app, io);
 
 module.exports = server;

@@ -2,6 +2,8 @@
 .home {
   border: 3px dashed blue;
   width: 20vw;
+  position: absolute;
+  right: 5%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;

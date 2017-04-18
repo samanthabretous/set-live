@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import store from '../../redux/store';
-import { socket } from '../../redux/actions/connections';
-import { SET_PLAYER_INFO } from '../../redux/actions/types';
+import store from '../../../redux/store';
+import { socket } from '../../socket';
+import { SET_PLAYER_INFO } from '../../../redux/game';
 
 module.exports = {
   login(isRegister, username, email, password, cb) {

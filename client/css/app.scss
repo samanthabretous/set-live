@@ -9,15 +9,32 @@
   padding-right: 5%;
   justify-content: space-between;
   align-items: center;
+  border: 3px solid purple;
 
-  .logo__home {
-    // border: 3px solid black;
+  .logo__container {
+    // border: 3px solid cyan;
     width: 55vw;
     height: auto;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 18%;
+    left: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    transition: width 650ms, height 650ms, top 600ms;
+    // transition: left 1s;
   }
 
-  .logo__game {
+  .logo__container-game {
     width: 20vw;
+    height: 12vw;
+    top: 0;
+  }
+
+  .logo {
+    position: relative;
+    z-index: 1;
   }
 }

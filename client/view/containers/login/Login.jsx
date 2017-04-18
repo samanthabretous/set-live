@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 import { checkFormValidations, isValidForm } from './loginUtils';
-import auth from '../../utils/auth';
+import auth from './auth';
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
@@ -46,7 +46,8 @@ class Login extends Component {
     }
   }
 
-  handleSubmit() {
+  handleSubmit(e) {
+    e.preventDefault();
     const { router, location } = this.props;
     const { username, email, password, showRegisterForm } = this.state;
 
@@ -71,13 +72,11 @@ class Login extends Component {
     }
   }
 
-  switchPath() {
-    const pathTo =
-      `/${this.state.showRegisterForm ? 'login' : 'register'}`;
+  switchPath(e) {
+    e.preventDefault();
     this.setState(prevState => ({
       showRegisterForm: !prevState.showRegisterForm,
     }));
-    this.props.router.push(pathTo);
   }
 
   renderInput(type, variable) {
