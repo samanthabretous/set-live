@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "DEBUG=OH_GOSH,SERVER,PASSPORT,SOCKET concurrently -k 'node_modules/.bin/nodemon server/start.js' 'node_modules/.bin/webpack --config ./webpack.dev.config.js'",
-    "heroku-postbuild": "node_modules/.bin/webpack -p --config ./webpack.prod.config.js --progress",
+    "heroku-postbuild": "node_modules/.bin/webpack --config ./webpack.prod.config.js --progress && node server/seeds/player-seed.js && node server/seeds/card-seed.js && node server/seeds/game-seed.js",
     "test": "mocha --watch"
   },
   "engines": {

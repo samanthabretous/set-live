@@ -20,7 +20,7 @@ export default (store) => {
     store.dispatch(connectionStatus('disconnected'));
   });
 
-  socket.on('authenticated', () => {
+  socket.on('authenticated', (payload) => {
     // do other things
   });
 

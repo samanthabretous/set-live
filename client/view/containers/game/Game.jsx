@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { inviteModalAction, addClickedCard } from '../../../redux/gameActions';
@@ -20,12 +20,12 @@ const appToState = state => ({
   board: state.board,
   cards: state.cards,
   clickedCards: state.clickedCards,
-  gameId: state.gameId,
+  game: state.game,
   deck: state.deck,
   playerSet: state.playerSet,
 });
 
-class Game extends React.Component {
+class Game extends Component {
   componentDidMount() {
     setTimeout(() => {
       // props.inviteModalAction(false)
@@ -34,11 +34,15 @@ class Game extends React.Component {
   render() {
     return (
       <section className="gameView">
-        <GameMenu {...this.props} />
+        {this.props.game && <GameMenu />}
         {this.props.deck.length > 0 && <Board {...this.props} />}
       </section>
     );
   }
 }
+
+Game.propTypes = {
+  game: PropTypes.objectOf(PropTypes.any),
+};
 
 export default connect(appToState, mapDispatchToProps)(Game);

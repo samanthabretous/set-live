@@ -32,12 +32,13 @@ module.exports = ((app, io) => {
       getPlayerInfo(socket, playerId);
     });
 
-    /*
+    /**
     * @param {String} payload. holds room name and username
     * @returns {Object} game room
     */
     // create and/or join a room
     socket.on('enterGameRoom', (payload) => {
+      debug(payload);
       enterGameRoom(io, socket, payload);
     });
 

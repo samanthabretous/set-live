@@ -1,14 +1,14 @@
 /** ===========================
   TYPES
 ==============================*/
-const SET_ROOM_NAME = 'set_room_name';
-
+export const GO_TO_GAME = 'go_to_game';
 /** ===========================
   ACTIONS
 ==============================*/
-export const generateRoomName = roomName => ({
-  type: SET_ROOM_NAME,
-  roomName,
+
+export const goToGame = gameInfo => ({
+  type: GO_TO_GAME,
+  gameInfo,
 });
 
 /** ===========================

@@ -13,7 +13,6 @@ export const CONNECTION_STATUS = 'update_cards';
 export const SET_ROOM_NAME = 'set_room_name';
 export const SET_PLAYER_INFO = 'set_player_info';
 export const ADD_PLAYER = 'players';
-export const GO_TO_GAME = 'go_to_game';
 export const RELOAD_GAME = 'reload_game';
 export const UPDATE_GAME = 'update_game';
 export const GAME_STARTED = 'game_started';
@@ -38,11 +37,6 @@ export const leftPlayer = playerHasLeft => ({
   playerHasLeft,
 });
 
-export const goToGame = gameInfo => ({
-  type: GO_TO_GAME,
-  gameInfo,
-});
-
 export const gameStarted = (deck, board) => ({
   type: GAME_STARTED,
   deck,
@@ -60,21 +54,6 @@ export default (store) => {
 
   socket.on('leftPlayer', (playerHasLeft) => {
     leftPlayer(playerHasLeft)
-  });
-
-  /* params {Object} gameInfo holds boolean, roomName, players*/
-  socket.on('goToGame', (gameInfo) => {
-    goToGame(gameInfo)
-  });
-
-  const sortCards = cards => (
-   _.sortBy(cards, [card => card['deck_of_cards'].cardOrder])
-  );
-
-  socket.on('gameStarted', (cards) => {
-    const deck = sortCards(cards);
-    const board = deck.splice(0, 12);
-    gameStarted(deck, board);
   });
 
   socket.on('reloadGame', (payload) => {

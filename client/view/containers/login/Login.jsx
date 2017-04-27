@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 import { checkFormValidations, isValidForm } from './loginUtils';
+import { setUsername } from '../../../redux/login';
 import auth from './auth';
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
-
+    setUsername,
   }, dispatch)
 );
 
@@ -64,6 +65,7 @@ class Login extends Component {
           return;
         }
         if (location.state && location.state.nextPathname) {
+          this.props.setUsername(username);
           router.replace(location.state.nextPathname);
         } else {
           router.replace('/play');
@@ -141,6 +143,7 @@ class Login extends Component {
 Login.propTypes = {
   router: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,
+  setUsername: PropTypes.func.isRequired,
 };
 
 export default withRouter(connect(mapStateToState, mapDispatchToProps)(Login));

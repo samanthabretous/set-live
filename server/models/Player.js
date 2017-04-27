@@ -1,81 +1,78 @@
-'use strict';
+const bcrypt = require('bcrypt-nodejs');
 
-const bcrypt = require('bcrypt-nodejs'),
-      SALT_WORK_FACTOR = 12;
+const SALT_WORK_FACTOR = 12;
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
   const Player = sequelize.define('player', {
     username: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: false
+      allowNull: false,
     },
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
     email: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: false, 
-      validate:{
+      allowNull: false,
+      validate: {
         isEmail: true,
-      }
+      },
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [6,20], 
-      }
+        len: [6, 20],
+      },
     },
     matches: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
+      defaultValue: 0,
     },
     wins: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
+      defaultValue: 0,
     },
     loses: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
+      defaultValue: 0,
     },
     image: DataTypes.STRING,
-    bio: DataTypes.TEXT
+    bio: DataTypes.TEXT,
   }, {
     classMethods: {
-      associate: function(models) {
+      associate(models) {
         // associations can be defined here
-        Player.belongsTo(models.game)
+        Player.belongsTo(models.game);
       },
 
-      //check if password is valid
-      validPassword: function(password, passwd, player, cb){
-        bcrypt.compare(password, passwd, function(err, isMatch){
-          if (err) console.log(err)
+      // check if password is valid
+      validPassword(password, passwd, player, cb) {
+        bcrypt.compare(password, passwd, (err, isMatch) => {
+          if (err) console.log(err);
           if (isMatch) {
-            return cb(null, player)
+            return cb(null, player);
           } else {
-            return cb(null, false)
+            return cb(null, false);
           }
-        })
-      }
+        });
+      },
     },
     getterMethods: {
-      fullName: function () {
-        return `${this.first_name} ${this.last_name}`
-      }
-    }
+      fullName() {
+        return `${this.first_name} ${this.last_name}`;
+      },
+    },
   });
 
-  //change the password player has enter into an encrypted password before entering into database
-  Player.hook('beforeCreate', function(player, fn){
-    var salt = bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt){
-      return salt
+  // change the password player has enter into an encrypted password before entering into database
+  Player.hook('beforeCreate', (player, fn) => {
+    const salt = bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
+      return salt;
     });
-    player.password = bcrypt.hashSync(player.password, salt) 
-    return fn
-
-  })
-
+    player.password = bcrypt.hashSync(player.password, salt);
+    return fn;
+  });
   return Player;
 };

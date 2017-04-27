@@ -19,14 +19,28 @@ const getPlayerInfo = (socket, playerId) => {
 
 const startNewGame = (io, socket, gameId) => {
   let currentGame = null;
-
   Game.findOne({
     where: {
       id: gameId,
     },
-    include: [Card],
+    include: [
+      {
+        model: Card,
+      },
+      {
+        model: DeckOfCards,
+        where: {
+          location: 'board',
+        },
+        order: 'cardOrder',
+      },
+    ],
   })
   .then((game) => {
+    console.log('============');
+    console.log('============');
+    console.log('============');
+    console.log(game);
     socket.join(game.room);
     game.update({ started: true });
     currentGame = game;

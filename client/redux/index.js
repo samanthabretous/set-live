@@ -1,17 +1,18 @@
-import { CLICKED_CARDS, MODAL_STATUS, INVITE_PLAYERS, UPDATE_CARDS, ADD_MEMBER, CONNECTION_STATUS, SET_ROOM_NAME, SET_PLAYER_INFO, ADD_PLAYER, GO_TO_GAME, RELOAD_GAME, UPDATE_GAME, GAME_STARTED, LEFT_PLAYER } from './game'
+import { CLICKED_CARDS, MODAL_STATUS, INVITE_PLAYERS, UPDATE_CARDS, ADD_MEMBER, CONNECTION_STATUS, SET_ROOM_NAME, SET_PLAYER_INFO, ADD_PLAYER,  RELOAD_GAME, UPDATE_GAME, GAME_STARTED, LEFT_PLAYER } from './game';
+import { GO_TO_GAME } from './profile';
+import { USERNAME, RESET_LOGIN } from './login';
 
 const INTIAL_STATE = {
   players: [],
+  game: null,
   playerInfo: null,
   playerHasLeft: null,
-  roomName: '',
-  gameId: null,
-  started: false,
   deck: [],
   board: [],
   clickedCards: [],
   status: 'disconnected',
   playerSet: null,
+  username: null,
 };
 
 export default function (state = INTIAL_STATE, action) {
@@ -22,15 +23,15 @@ export default function (state = INTIAL_STATE, action) {
     case CONNECTION_STATUS:
     case SET_ROOM_NAME:
     case SET_PLAYER_INFO:
+    case USERNAME:
       let key = Object.keys(action)[1];
       return Object.assign({}, state, { [key]: action[key] });
     case CLICKED_CARDS:
       return Object.assign({}, state, { clickedCards: action.payload });
     case GO_TO_GAME:
-      const { id, room } = action.gameInfo.game;
+    console.log(action.gameInfo);
       return Object.assign({}, state, {
-        gameId: id,
-        roomName: room,
+        game: action.gameInfo.game,
         players: action.gameInfo.players,
       });
     case ADD_PLAYER:
@@ -51,6 +52,9 @@ export default function (state = INTIAL_STATE, action) {
         deck: action.deck,
         playerSet: action.playerSet,
       });
+    // action comes from Logout.jsx
+    case RESET_LOGIN:
+      return Object.assign({}, state, INTIAL_STATE);
     default:
       return state;
   }

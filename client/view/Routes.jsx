@@ -43,26 +43,27 @@ export default (
 
     <Route onEnter={redirectToLogin} >
       {/* Protected nested routes for the dashboard */}
-      <Route
-        path="/game/:room"
-        getComponent={(nextState, cb) => {
-          require.ensure([], (require) => {
-            cb(null, Game);
-          });
-        }}
-      />
-      <Route path="/play" component={Profile} />
-      <Route path="/profile" component={Profile} />
+      <Route path="play" component={Profile}>
+        <Route
+          path="game/:room"
+          getComponent={(nextState, cb) => {
+            require.ensure([], (require) => {
+              cb(null, Game);
+            });
+          }}
+        />
+      </Route>
+      <Route path="profile" component={Profile} />
     </Route>
 
-    <Route path="/how-to-play" component={HowToPlay} />
-    <Route path="/logout" component={Logout} />
+    <Route path="how-to-play" component={HowToPlay} />
+    <Route path="logout" component={Logout} />
 
     <Route onEnter={redirectToProfile}>
       {/* Unauthenticated routes
         * Redirect to dashboard if player is already logged in */}
       <Route
-        path="/login"
+        path="login"
         getComponent={(nextState, cb) => {
           require.ensure([], (require) => {
             cb(null, Login);
@@ -70,7 +71,7 @@ export default (
         }}
       />
       <Route
-        path="/register"
+        path="register"
         getComponent={(nextState, cb) => {
           require.ensure([], (require) => {
             cb(null, Login);

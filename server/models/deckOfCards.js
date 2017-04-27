@@ -3,11 +3,21 @@ module.exports = (sequelize, DataTypes) => {
     cardOrder: {
       type: DataTypes.INTEGER,
     },
+    // cardId: DataTypes.INTEGER,
+    // gameId: DataTypes.INTEGER,
     location: {
       type: DataTypes.STRING,
       defaultValue: 'deck',
       validate: {
-        isIn: [['deck', 'hand', 'dead']],
+        isIn: [['deck', 'board', 'dead']],
+      },
+    },
+  }, {
+    classMethods: {
+      associate(models) {
+        // associations can be defined here
+        DeckOfCards.hasMany(models.game);
+        DeckOfCards.hasMany(models.card);
       },
     },
   });
@@ -15,4 +25,3 @@ module.exports = (sequelize, DataTypes) => {
 };
 
 // user.addProject(project, { through: { status: 'started' }})
-

@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       associate: (models) => {
         // associations can be defined here
         Card.belongsToMany(models.game, { through: 'deck_of_cards' });
+        Card.belongsTo(models.deck_of_cards);
       },
     },
     timestamps: false,

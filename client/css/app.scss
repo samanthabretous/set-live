@@ -6,13 +6,10 @@
   margin: 2% auto;
   position: relative;
   display: flex;
-  padding-right: 5%;
   justify-content: space-between;
   align-items: center;
-  border: 3px solid purple;
 
   .logo__container {
-    // border: 3px solid cyan;
     width: 55vw;
     height: auto;
     display: flex;
@@ -24,7 +21,6 @@
     margin-top: auto;
     margin-bottom: auto;
     transition: width 650ms, height 650ms, top 600ms;
-    // transition: left 1s;
   }
 
   .logo__container-game {

@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       associate: (models) => {
         // associations can be defined here
         Game.belongsToMany(models.card, { through: 'deck_of_cards' });
+        Game.belongsTo(models.deck_of_cards);
         Game.hasMany(models.player);
       },
       createGame: (room, board) => (
