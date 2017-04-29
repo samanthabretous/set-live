@@ -7,7 +7,6 @@ import Logout from './Logout';
 import Modal from './Modal';
 import Play from './Play';
 import PlayButton from './PlayButton';
-import ProfileButton from './ProfileButton';
 import SetLogo from './SetLogo';
 import User from './User';
 
@@ -21,7 +20,6 @@ export {
   Modal,
   Play,
   PlayButton,
-  ProfileButton,
   SetLogo,
   User,
 };

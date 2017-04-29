@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
-import { Link } from 'react-router';
+import { Link, withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { socket } from '../../socket';
@@ -29,6 +29,7 @@ class Profile extends Component {
     };
     this.handleRoomChange = this.handleRoomChange.bind(this);
     this.joinRoom = this.joinRoom.bind(this);
+    this.goToGameRoom = this.goToGameRoom.bind(this);
   }
   componentDidMount() {
     /** params {Object} gameInfo holds boolean, roomName, players*/
@@ -49,37 +50,38 @@ class Profile extends Component {
     });
   }
 
+  goToGameRoom() {
+    this.props.router.push(`/play/game/${game.id}`);
+  }
+
   render() {
-    const { location, players, game, playerInfo, username } = this.props;
+    const { location, game, playerInfo, username } = this.props;
     const { roomName } = this.state;
     return (
       <section className="profile">
         {playerInfo && (<div className={`profile__main ${location.pathname.includes('game') && 'profile__nav'}`}>
-          <h1>Welcome {username}</h1>
-          <h1>Total Game Wins: {playerInfo.wins}</h1>
-          <label htmlFor="roomName">Join or Create a Room To Play</label>
-          <input
-            name="roomName"
-            onChange={this.handleRoomChange}
-            className="profile__input"
-            placeholder="enter a room name..."
-          />
+          <h1 className="profile__welcome">Welcome {username}</h1>
+          <div className="profile__input-container">
+            <label
+              className="profile__input-label"
+              htmlFor="roomName"
+            >
+              Join or Create a Room To Play
+            </label>
+            <input
+              name="roomName"
+              onChange={this.handleRoomChange}
+              className="profile__input"
+              placeholder="enter a room name..."
+            />
+          </div>
           <button
-            className="btn btn-primary"
+            className="profile__enter-button"
             disabled={!roomName}
-            onClick={this.joinRoom}
+            onClick={!game ? this.joinRoom : this.goToGameRoom}
           >
             Enter Room
           </button>
-          {players[0] && <h1>{players[0].username}</h1>}
-          {players.length && _.map(players, (player, index) => (
-            <h1 key={index}>{player.username}</h1>
-          ))}
-          {game && (
-            <Link to={`/play/game/${game.id}`}>
-              Go To Game
-            </Link>
-          )}
           <Link to="/logout">Logout</Link>
         </div>)}
         {this.props.children}
@@ -89,12 +91,11 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
+  router: PropTypes.objectOf(PropTypes.any).isRequired,
   goToGame: PropTypes.func.isRequired,
   children: PropTypes.element,
   playerInfo: PropTypes.objectOf(PropTypes.any),
   location: PropTypes.objectOf(PropTypes.any),
-  gameId: PropTypes.number,
-  players: PropTypes.arrayOf(PropTypes.any),
   game: PropTypes.objectOf(PropTypes.any),
   username: PropTypes.string,
 };
@@ -108,4 +109,4 @@ Profile.defaultProps = {
   username: '',
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));

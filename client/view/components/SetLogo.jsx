@@ -10,7 +10,7 @@ class SetLogo extends Component {
   }
   render() {
     return (
-      <Link to="/" className={`logo__container ${this.props.page && 'logo__container-game'}`}><Logo className="logo"/></Link>
+      <Link to="/" className={`logo__container ${this.props.page && 'logo__container-game'}`}><Logo className="logo" /></Link>
     );
   }
 }
@@ -28,7 +28,7 @@ const svgAnimation = ({ target }) => {
   const letters = logo.findAllInChildren();
   return new TimelineMax()
     .from(logo, 1.5, { scale: 0.2 }, 'start')
-    .to(logo, 1.5, { rotation: 360, transformOrigin: '50% 50%', ease: Elastic.easeOut.config(1, 0.3) }, 'start');
+    .to(logo, 1.5, { rotation: 360, transformOrigin: '50% 50%', ease: Elastic.easeOut.config(2, 0.3) }, 'start');
 };
 
 export default GSAP(SetLogo);
