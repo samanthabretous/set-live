@@ -1,13 +1,12 @@
-module.exports = ((app, io) => {
-  const _ = require('lodash');
-  const socketioJwt = require('socketio-jwt');
-  const debug = require('debug')('SOCKET');
-  const jwt = require('jsonwebtoken');
-  const dealCards = require('../utils/game').dealCards;
-  const { getPlayerInfo, startNewGame, isGameStarted, set } = require('./aggregation');
-  const { enterGameRoom } = require('./enterGameRoom');
+const _ = require('lodash');
+const socketioJwt = require('socketio-jwt');
+const debug = require('debug')('SOCKET');
+const dealCards = require('../utils/game').dealCards;
+const { getPlayerInfo, startNewGame, isGameStarted, set } = require('./aggregation');
+const { enterGameRoom } = require('./enterGameRoom');
 
-  // passport
+module.exports = ((app, io) => {
+  // socket authentication
   const secret = 'setLiveSecurity';
 
   io.sockets.on('connection', socketioJwt.authorize({

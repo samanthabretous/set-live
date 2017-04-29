@@ -24,11 +24,7 @@ module.exports = {
         loader: 'babel?presets[]=es2015,presets[]=react!svg-react',
       },
       {
-        test: /\.(ico|jpg|png|gif|otf|eot|webp|woff(2)?|ttf|)(\?.*)?$/,
-        loaders: ['url-loader', 'file-loader'],
-      },
-      {
-        test: /\.jpe?g$|\.gif$|\.png$|^(?!.*\.inline\.svg$).*\.svg$/,
+        test: /\.jpe?g$|\.gif$|\.png$/,
         loader: 'url-loader',
       },
     ],
