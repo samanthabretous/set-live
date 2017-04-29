@@ -1,7 +1,6 @@
 /**
 * Run seeds in this order
 * player
-* card
 * game
 */
 

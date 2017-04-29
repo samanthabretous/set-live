@@ -2,18 +2,23 @@ module.exports = (sequelize, DataTypes) => {
   const Card = sequelize.define('card', {
     card: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
     },
     number: DataTypes.INTEGER,
     color: DataTypes.STRING,
     shade: DataTypes.STRING,
     shape: DataTypes.STRING,
+    location: {
+      type: DataTypes.STRING,
+      defaultValue: 'deck',
+      validate: {
+        isIn: [['deck', 'board', 'dead']],
+      },
+    },
   }, {
     classMethods: {
       associate: (models) => {
         // associations can be defined here
-        Card.belongsToMany(models.game, { through: 'deck_of_cards' });
-        Card.belongsTo(models.deck_of_cards);
+        Card.belongsTo(models.game);
       },
     },
     timestamps: false,

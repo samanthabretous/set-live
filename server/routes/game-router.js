@@ -1,6 +1,11 @@
 const router = require('express').Router();
+const { shuffle } = require('lodash');
 const debug = require('debug')('OH_GOSH');
-const Game = require('../models').game;
+const models = require('../models');
+const createCards = require('../utils/createCards');
+
+const Game = models.game;
+const Card = models.card;
 
 const getAllGames = (req, res) => {
   Game.findAll()
@@ -10,7 +15,9 @@ const getAllGames = (req, res) => {
 
 const getOneGameById = (req, res) => {
   Game.findById(req.params.id, { include: [{ all: true }] })
-  .then(game => res.send(game))
+  .then(game => {
+    res.send(game)
+  })
   .catch(err => debug(err));
 };
 
@@ -25,14 +32,28 @@ const getOneGameByRoom = (req, res) => {
   .catch(err => debug(err));
 };
 
-const createRoom = (req, res) => {
-  Game.create({
-    room: req.body.room,
-    board: req.body.board,
+const createGame = room => Game.create({ room })
+  .then((game) => {
+    createCards(game.id);
+    return Game.findById(game.id, {
+      include: [{
+        model: Card,
+      }],
+    });
   })
-  .then(game => game.addCards(range(1, 82)))
-  .then(game => res.send(game))
-  .catch(err => debug(err));
+  .then((game) => {
+    const cards = game.get('cards');
+    const currentCardOrder = [];
+    for (let i = 0; i < cards.length; i += 1) {
+      currentCardOrder.push(cards[i].id);
+    }
+    const shuffledCards = shuffle(currentCardOrder);
+    game.updateAttributes({ cardOrder: shuffledCards });
+    return game;
+  });
+
+const postRoom = (req, res) => {
+  createGame(req.body.room);
 };
 
 const deleteRoom = (req, res) => {
@@ -70,7 +91,7 @@ router.route('/id/:id')
 
 router.route('/room/:room')
   .get(getOneGameByRoom)
-  .post(createRoom);
+  .post(postRoom);
 
 
 module.exports = {
@@ -78,7 +99,8 @@ module.exports = {
   getAllGames,
   getOneGameById,
   getOneGameByRoom,
-  createRoom,
+  postRoom,
+  createGame,
   deleteRoom,
   updateRoom,
 };

@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { socket } from '../../socket';
-import { goToGame } from '../../../redux/profile';
+import { goToGame } from '../../../redux/game';
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
@@ -29,12 +29,14 @@ class Profile extends Component {
     };
     this.handleRoomChange = this.handleRoomChange.bind(this);
     this.joinRoom = this.joinRoom.bind(this);
-    this.goToGameRoom = this.goToGameRoom.bind(this);
   }
   componentDidMount() {
     /** params {Object} gameInfo holds boolean, roomName, players*/
     socket.on('goToGame', (gameInfo) => {
-      this.props.goToGame(gameInfo);
+      if (gameInfo.game.room) {
+        this.props.router.push(`/game/${gameInfo.game.id}`);
+        this.props.goToGame(gameInfo);
+      }
     });
   }
 
@@ -50,16 +52,12 @@ class Profile extends Component {
     });
   }
 
-  goToGameRoom() {
-    this.props.router.push(`/play/game/${game.id}`);
-  }
-
   render() {
     const { location, game, playerInfo, username } = this.props;
     const { roomName } = this.state;
     return (
       <section className="profile">
-        {playerInfo && (<div className={`profile__main ${location.pathname.includes('game') && 'profile__nav'}`}>
+        {playerInfo && (<div className="profile__main">
           <h1 className="profile__welcome">Welcome {username}</h1>
           <div className="profile__input-container">
             <label
@@ -78,13 +76,12 @@ class Profile extends Component {
           <button
             className="profile__enter-button"
             disabled={!roomName}
-            onClick={!game ? this.joinRoom : this.goToGameRoom}
+            onClick={this.joinRoom}
           >
             Enter Room
           </button>
           <Link to="/logout">Logout</Link>
         </div>)}
-        {this.props.children}
       </section>
     );
   }

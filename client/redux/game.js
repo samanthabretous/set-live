@@ -5,7 +5,6 @@ import { socket } from './connections';
   TYPES
 ==============================*/
 export const CLICKED_CARDS = 'clicked_cards';
-export const MODAL_STATUS = 'modal-status';
 export const INVITE_PLAYERS = 'invite_players';
 export const UPDATE_CARDS = 'update_cards';
 export const ADD_MEMBER = 'update_cards';
@@ -17,10 +16,21 @@ export const RELOAD_GAME = 'reload_game';
 export const UPDATE_GAME = 'update_game';
 export const GAME_STARTED = 'game_started';
 export const LEFT_PLAYER = 'left_player';
+export const GO_TO_GAME = 'go_to_game';
+
 
 /** ===========================
   ACTIONS
 ==============================*/
+export const goToGame = gameInfo => ({
+  type: GO_TO_GAME,
+  gameInfo,
+});
+
+export const addClickedCard = payload => ({
+  type: CLICKED_CARDS,
+  payload,
+});
 
 export const updateCards = cards => ({
   type: UPDATE_CARDS,

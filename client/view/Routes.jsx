@@ -43,16 +43,15 @@ export default (
 
     <Route onEnter={redirectToLogin} >
       {/* Protected nested routes for the dashboard */}
-      <Route path="play" component={Profile}>
-        <Route
-          path="game/:room"
-          getComponent={(nextState, cb) => {
-            require.ensure([], (require) => {
-              cb(null, Game);
-            });
-          }}
-        />
-      </Route>
+      <Route path="play" component={Profile} />
+      <Route
+        path="game/:room"
+        getComponent={(nextState, cb) => {
+          require.ensure([], (require) => {
+            cb(null, Game);
+          });
+        }}
+      />
       <Route path="profile" component={Profile} />
     </Route>
 

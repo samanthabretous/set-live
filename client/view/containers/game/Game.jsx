@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { inviteModalAction, addClickedCard } from '../../../redux/gameActions';
+import { goToGame, addClickedCard } from '../../../redux/game';
 
 // components
 import { Board, GameMenu } from '../../components';
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
-    inviteModalAction,
+    goToGame,
     addClickedCard,
   }, dispatch)
 );
@@ -27,11 +28,21 @@ const appToState = state => ({
 
 class Game extends Component {
   componentDidMount() {
-    setTimeout(() => {
-      // props.inviteModalAction(false)
-    }, 5000);
+    // user refreshes the page get game again
+    if (!this.props.game) {
+      axios.get(`/api/game/id/${this.props.params.room}`)
+      .then(({ data }) => {
+        console.log("data", data)
+        const gameInfo = {
+          game: data,
+          players: data.players
+        }
+        this.props.goToGame(gameInfo);
+      });
+    }
   }
   render() {
+    console.log(this.props);
     return (
       <section className="gameView">
         {this.props.game && <GameMenu />}
@@ -43,6 +54,11 @@ class Game extends Component {
 
 Game.propTypes = {
   game: PropTypes.objectOf(PropTypes.any),
+  goToGame: PropTypes.func.isRequired,
+};
+
+Game.defaultProps = {
+  game: null,
 };
 
 export default connect(appToState, mapDispatchToProps)(Game);
