@@ -45,12 +45,11 @@ export default (store) => {
   socket.on('receiveGameInfo', (payload) => {
     const { success, game } = payload;
     if (success) {
-      console.log(game.cards.splice(0, 12));
       const gameInfo = {
         game,
         players: game.players,
         playerInfo: game.currentPlayer[0],
-        board: game.cards.splice(0, 12),
+        board: game.cards.splice(0, game.boardLength),
       };
       store.dispatch(goToGame(gameInfo));
     }

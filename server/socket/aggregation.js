@@ -5,52 +5,7 @@ const Player = models.player;
 const Card = models.card;
 const Game = models.game;
 
-const getPlayerInfo = (socket, playerId) => {
-  Player.findById(playerId)
-  .then((player) => {
-    if (!player) {
-      socket.emit('receivePlayerInfo', { success: false, msg: 'Authentication failed. Player not found.' });
-    } else {
-      socket.emit('receivePlayerInfo', { success: true, msg: `Welcome in the member area ${player.username}!`, playerInfo: player });
-    }
-  });
-};
-
-const getGameInfo = (socket, playerId, gameId) => {
-  Game.findById(gameId, {
-    include: [
-      {
-        model: Card,
-        where: {
-          location: 'deck',
-        },
-      },
-      {
-        model: Player,
-        exclude: ['password'],
-      },
-      {
-        model: Player,
-        as: 'currentPlayer',
-        exclude: ['password'],
-        where: {
-          id: playerId,
-        },
-      },
-    ],
-    order: [[models.card, 'cardOrder', 'ASC']],
-  })
-  .then((game) => {
-    if (!game) {
-      socket.emit('receivePlayerInfo', { success: false, msg: 'Authentication failed. Player not found.' });
-    } else {
-      socket.join(game.get('room'));
-      socket.emit('receiveGameInfo', { success: true, msg: `Welcome in the member area!`, game });
-    }
-  });
-}
-
-const startNewGame = (io, socket, gameId, room) => {
+const startGame = (io, socket, gameId, room) => {
   Game.update({
     started: true,
   }, {
@@ -59,7 +14,28 @@ const startNewGame = (io, socket, gameId, room) => {
     },
   })
   .then(() => {
-    io.sockets.emit('gameStarted');
+    io.sockets.in(room).emit('gameStarted');
+  });
+};
+
+// create a whole new game within the room
+const startNewGame = (io, sockets, room) => {
+
+};
+
+const updateBoardLength = (io, socket, gameId, room, currentBoardLength) => {
+  const boardLength = currentBoardLength === 15 ? 12 : 15;
+  Game.update({
+    boardLength,
+  }, {
+    where: {
+      id: gameId,
+    },
+  })
+  .then(() => {
+    if (boardLength === 15) {
+      io.sockets.in(room).emit('addMoreCardsToBoard', { boardLength });
+    }
   });
 };
 
@@ -91,39 +67,10 @@ const set = (io, socket, payload) => {
   });
 };
 
-const isGameStarted = (socket, payload) => {
-  let game = null;
-  let cards = null;
-  let players = null;
-  const { gameId, token } = payload;
-
-  Game.findById(gameId, { include: [Card, Player] })
-  .then((currentGame) => {
-    socket.join(currentGame.room);
-    game = currentGame;
-    return currentGame.getCards();
-  })
-  .then((gameCards) => {
-    cards = gameCards;
-    return game.get('players');
-  })
-  .then((allPlayers) => {
-    players = allPlayers;
-    return game.get('started');
-  })
-  .then((started) => {
-    if (started) {
-      socket.emit('reloadGame', { cards, players, game, started });
-    } else {
-      socket.emit('goToGame', { game, players });
-    }
-  });
-};
 
 module.exports = {
-  getPlayerInfo,
-  getGameInfo,
+  startGame,
   startNewGame,
-  isGameStarted,
+  updateBoardLength,
   set,
 };

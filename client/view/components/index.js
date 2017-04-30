@@ -1,4 +1,4 @@
-import Board from './Board';
+import Board from './Board/Board';
 import GameMenu from './GameMenu';
 import HowToPlay from './HowToPlay';
 import HowToPlayButton from './HowToPlayButton';

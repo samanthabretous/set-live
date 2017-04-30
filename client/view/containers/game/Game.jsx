@@ -24,7 +24,7 @@ class Game extends Component {
     return (
       <section className="gameView">
         {game && <GameMenu />}
-        {game && game.started && <Board />}
+        {game && <Board />}
       </section>
     );
   }

@@ -1,8 +1,8 @@
 const _ = require('lodash');
 const socketioJwt = require('socketio-jwt');
 const debug = require('debug')('SOCKET');
-const dealCards = require('../utils/game').dealCards;
-const { getPlayerInfo, getGameInfo, startNewGame, isGameStarted, set } = require('./aggregation');
+const { startGame, startNewGame, updateBoardLength, set } = require('./aggregation');
+const { getPlayerInfo, getGameInfo } = require('./authAggregation');
 const { enterGameRoom } = require('./enterGameRoom');
 
 module.exports = ((app, io) => {
@@ -50,14 +50,16 @@ module.exports = ((app, io) => {
      * add cards to the game board to being game
      * @returns {Object} game room
     */
-    socket.on('startNewGame', ({ gameId, room }) => {
-      startNewGame(io, socket, gameId, room);
+    socket.on('startGame', ({ gameId, room }) => {
+      startGame(io, socket, gameId, room);
     });
 
-    /** @params {Object} payload gameId and token
-    */
-    socket.on('isGameStarted', (payload) => {
-      isGameStarted(socket, payload);
+    socket.on('startNewGame', ({ room }) => {
+      startNewGame(io, socket, room);
+    });
+
+    socket.on('updateBoardLength', ({ room, gameId }) => {
+      updateBoardLength(io, socket, gameId, room);
     });
 
     /* @params {Object} payload
@@ -71,23 +73,3 @@ module.exports = ((app, io) => {
     debug('Connected')
   });
 }); // module.exports closing
-
-
-  // DeckOfCards.findAll({
-  //   where:{
-  //     gameId: 12
-  //   },
-  //   order: ['cardOrder']
-  // })
-  // .then(deck => {
-  //   debug(deck)
-  // })
-
-// remove association with deck
- // currentGame.removeCard(card.card)
-           // currentGame.addCard(card.card, { cardOrder: index })
-        // io.of('/').in(payload.roomName).clients(function(error, clients){
-        //   if (error) throw error;
-        //   debug("clients",clients);
-        //   debug('room', socket.rooms)
-        // });

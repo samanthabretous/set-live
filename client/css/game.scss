@@ -1,7 +1,7 @@
-  .gameView {
-    display: flex;
-    margin-left: 20vw;
-  }
+.gameView {
+  display: flex;
+  margin-left: 20vw;
+
   aside {
     position: fixed;
     top: 0;
@@ -21,44 +21,51 @@
       padding: 3%;
       font-size: 1.5rem;
     }
-  }
+  } // aside
   .board {
-    width: 65vw;
-    height: 80vh;
+    width: 70vw;
+    // height: 80vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: stretch;
     border: 3px solid red;
 
-  .card {
-      width: 30%;
-      height: 25%;
+    .card {
+      width: 25%;
+      // height: 25%;
       border: 1px black solid;
       border-radius: 10px;
       background: white;
       display: flex;
       justify-content: space-around;
       align-content: center;
+      padding: 3%;
 
-    .shapes {
-      width: 30%;
-      height: auto;
-      //border: 3px solid black;
-    }
+      .shapes {
+        width: 30%;
+        height: 100%;
+        //border: 3px solid black;
+      }
 
-    .red {
-      fill: $red;
-    }
+      .red {
+        fill: $red;
+      }
 
-    .green {
-      fill: $green;
-    }
+      .green {
+        fill: $green;
+      }
 
-    .purple {
-      fill: $purple;
+      .purple {
+        fill: $purple;
+      }
+    }//card
+
+    .clicked {
+      border: 10px solid $purple;
     }
-  }
-}
+  }//board
+} //gameview
 
  .block {
     height: 100px;

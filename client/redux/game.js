@@ -17,6 +17,7 @@ export const UPDATE_GAME = 'update_game';
 export const GAME_STARTED = 'game_started';
 export const LEFT_PLAYER = 'left_player';
 export const GO_TO_GAME = 'go_to_game';
+export const CHANGE_BOARD_LENGTH = 'change_board_length';
 
 
 /** ===========================
@@ -49,6 +50,11 @@ export const leftPlayer = playerHasLeft => ({
 
 export const gameStarted = () => ({
   type: GAME_STARTED,
+});
+
+export const changeBoardLength = boardLength => ({
+  type: CHANGE_BOARD_LENGTH,
+  boardLength,
 });
 
 export default (store) => {

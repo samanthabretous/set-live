@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 6,
     },
+    boardLength: {
+      type: DataTypes.INTEGER,
+      defaultValue: 12,
+    },
   }, {
     classMethods: {
       associate: (models) => {

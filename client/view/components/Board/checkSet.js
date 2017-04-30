@@ -1,18 +1,22 @@
-// return true or false
+/**
+@return true or false
+*/
 const checkSet = (choosenCards) => {
   // should check each categories and compare them.
   // the objects are stored in an array
   const keys = Object.keys(choosenCards[0]).slice(1);
+  console.log(keys);
+  const categories = keys.filter(key => key === '')
   keys.pop();
-  const matches = keys.reduce((start, element) => {
+  const matches = categories.reduce((start, element) => {
     // when all the properties are the same
     if (choosenCards[0][element] === choosenCards[1][element] &&
         choosenCards[1][element] === choosenCards[2][element]) {
-        start++;
+      start += 1;
     } else if (choosenCards[0][element] !== choosenCards[1][element] &&
       choosenCards[1][element] !== choosenCards[2][element] &&
-      choosenCards[0][element] !== choosenCards[2][element]){
-       start++;
+      choosenCards[0][element] !== choosenCards[2][element]) {
+      start += 1;
     }
     return start;
   }, 0);

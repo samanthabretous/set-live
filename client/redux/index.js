@@ -1,4 +1,4 @@
-import { CLICKED_CARDS, UPDATE_CARDS, ADD_MEMBER, CONNECTION_STATUS, SET_ROOM_NAME, SET_PLAYER_INFO, ADD_PLAYER,  RELOAD_GAME, UPDATE_GAME, GAME_STARTED, LEFT_PLAYER, GO_TO_GAME  } from './game';
+import { CLICKED_CARDS, UPDATE_CARDS, ADD_MEMBER, CONNECTION_STATUS, SET_ROOM_NAME, SET_PLAYER_INFO, ADD_PLAYER,  RELOAD_GAME, UPDATE_GAME, GAME_STARTED, LEFT_PLAYER, GO_TO_GAME, CHANGE_BOARD_LENGTH } from './game';
 import { USERNAME, RESET_LOGIN } from './login';
 
 const INTIAL_STATE = {
@@ -20,7 +20,7 @@ export default function (state = INTIAL_STATE, action) {
     case SET_ROOM_NAME:
     case SET_PLAYER_INFO:
     case USERNAME:
-      let key = Object.keys(action)[1];
+      const key = Object.keys(action)[1];
       return Object.assign({}, state, { [key]: action[key] });
     case CLICKED_CARDS:
       return Object.assign({}, state, { clickedCards: action.payload });
@@ -36,6 +36,13 @@ export default function (state = INTIAL_STATE, action) {
           ...state.game,
           started: true,
         },
+      });
+    case CHANGE_BOARD_LENGTH:
+    const cardsToAdd = action.boardLength === 15 ? 3 : 0
+    console.log(cardsToAdd);
+    console.log(state.game.cards.splice(12, cardsToAdd));
+      return Object.assign({}, state, {
+        board: [...state.board, ...state.game.cards.splice(12, cardsToAdd)],
       });
     case ADD_PLAYER:
       return Object.assign({}, state, { players: [...state.players, action.player] });
