@@ -14,10 +14,9 @@ const mapDispatchToProps = dispatch => (
 
 const appToState = state => ({
   game: state.game,
-  roomName: state.roomName,
-  players: state.players,
   playerHasLeft: state.playerHasLeft,
   playerSet: state.playerSet,
+  playerInfo: state.playerInfo,
 });
 
 class GameMenu extends Component {
@@ -27,23 +26,30 @@ class GameMenu extends Component {
     this.startGame = this.startGame.bind(this);
   }
   componentDidMount() {
-    socket.on('gameStarted', (cards, board) => {
-      // const deck = sortCards(cards);
-      // const board = deck.splice(0, 12);
-      gameStarted(cards, board);
+    socket.on('gameStarted', () => {
+      console.log('socket received');
+      this.props.gameStarted();
     });
   }
   startGame() {
-    socket.emit('startNewGame', this.props.game.id);
+    console.log('clicked', this.props.game.id, this.props.game.room);
+    socket.emit('startNewGame', { gameId: this.props.game.id, room: this.props.game.room });
   }
   render() {
+    const { playerInfo, game } = this.props;
     return (
-      <aside className="gameInfo">
-        {/* <h1>Joined {member.name}</h1>
-        <p>{players.length} players connected to Room: {roomName.roomName}</p>
-        players.map((player, index)=> <p key={index}>PLAYER {index + player.name}</p>) */}
+      <aside>
         <Link to="/how-to-play">Instructions</Link>
-        <button onClick={this.startGame}>Start New Game</button>
+        <h2>Hi {playerInfo.username}!</h2>
+        <p>{game.players.length} players connected to Room: {game.room}</p>
+        <ul>
+          {game.players.map(player => <li key={player.id}>{player.username}</li>)}
+        </ul>
+        <button
+          className="gameMenu__start"
+          onClick={this.startGame}
+        >Start New Game</button>
+        {!game.started && <p>Invite your friends to room {game.room}</p>}
         {/*
           roomName && modalStatus &&
             <Modal />
@@ -56,6 +62,8 @@ class GameMenu extends Component {
 
 GameMenu.propTypes = {
   gameStarted: PropTypes.func.isRequired,
+  playerInfo: PropTypes.objectOf(PropTypes.any),
+  game: PropTypes.objectOf(PropTypes.any),
 };
 
 export default connect(appToState, mapDispatchToProps)(GameMenu);

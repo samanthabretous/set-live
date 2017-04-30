@@ -1,8 +1,7 @@
-import { CLICKED_CARDS, INVITE_PLAYERS, UPDATE_CARDS, ADD_MEMBER, CONNECTION_STATUS, SET_ROOM_NAME, SET_PLAYER_INFO, ADD_PLAYER,  RELOAD_GAME, UPDATE_GAME, GAME_STARTED, LEFT_PLAYER, GO_TO_GAME  } from './game';
+import { CLICKED_CARDS, UPDATE_CARDS, ADD_MEMBER, CONNECTION_STATUS, SET_ROOM_NAME, SET_PLAYER_INFO, ADD_PLAYER,  RELOAD_GAME, UPDATE_GAME, GAME_STARTED, LEFT_PLAYER, GO_TO_GAME  } from './game';
 import { USERNAME, RESET_LOGIN } from './login';
 
 const INTIAL_STATE = {
-  players: [],
   game: null,
   playerInfo: null,
   playerHasLeft: null,
@@ -15,7 +14,6 @@ const INTIAL_STATE = {
 
 export default function (state = INTIAL_STATE, action) {
   switch (action.type) {
-    case INVITE_PLAYERS:
     case UPDATE_CARDS:
     case ADD_MEMBER:
     case CONNECTION_STATUS:
@@ -29,13 +27,18 @@ export default function (state = INTIAL_STATE, action) {
     case GO_TO_GAME:
       return Object.assign({}, state, {
         game: action.gameInfo.game,
-        players: action.gameInfo.players,
         playerInfo: action.gameInfo.playerInfo,
+        board: action.gameInfo.board,
+      });
+    case GAME_STARTED:
+      return Object.assign({}, state, {
+        game: {
+          ...state.game,
+          started: true,
+        },
       });
     case ADD_PLAYER:
       return Object.assign({}, state, { players: [...state.players, action.player] });
-    case GAME_STARTED:
-      return Object.assign({}, state, { deck: action.deck, started: true, board: action.board });
     case RELOAD_GAME:
       return Object.assign({}, state, {
         deck: action.deck,

@@ -2,11 +2,10 @@
     display: flex;
     margin-left: 20vw;
   }
-  .gameInfo {
+  aside {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: -1;
     width: 20vw;
     height: 100%;
     background: $lightBlue;
@@ -14,6 +13,14 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
+
+    .gameMenu__start {
+      background: $purple;
+      color: white;
+      height: auto;
+      padding: 3%;
+      font-size: 1.5rem;
+    }
   }
   .board {
     width: 65vw;

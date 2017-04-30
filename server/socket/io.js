@@ -50,8 +50,8 @@ module.exports = ((app, io) => {
      * add cards to the game board to being game
      * @returns {Object} game room
     */
-    socket.on('startNewGame', (gameId) => {
-      startNewGame(io, socket, gameId);
+    socket.on('startNewGame', ({ gameId, room }) => {
+      startNewGame(io, socket, gameId, room);
     });
 
     /** @params {Object} payload gameId and token

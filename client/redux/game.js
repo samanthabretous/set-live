@@ -47,45 +47,38 @@ export const leftPlayer = playerHasLeft => ({
   playerHasLeft,
 });
 
-export const gameStarted = (deck, board) => ({
+export const gameStarted = () => ({
   type: GAME_STARTED,
-  deck,
-  board,
 });
 
 export default (store) => {
+
   socket.on('updateCards', (cards) => {
-    updateCards(cards)
+    updateCards(cards);
   });
 
   socket.on('addPlayer', (player) => {
-    addPlayer(player)
+    addPlayer(player);
   });
 
   socket.on('leftPlayer', (playerHasLeft) => {
-    leftPlayer(playerHasLeft)
+    leftPlayer(playerHasLeft);
   });
 
   socket.on('reloadGame', (payload) => {
-    const { cards, started, players, game } = payload;
-    const deck = sortCards(cards);
+    const { game } = payload;
     store.dispatch({
       type: RELOAD_GAME,
-      deck,
-      started,
-      players,
       game,
-      board: deck.splice(0, 12),
+      board: game.cards.splice(0, 12),
     });
   });
 
   socket.on('updateGame', (payload) => {
-    const { cards, playerSet } = payload;
-    const deck = sortCards(cards);
+    const { game, playerSet } = payload;
     store.dispatch({
       type: UPDATE_GAME,
-      deck,
-      board: deck.splice(0, 12),
+      board: game.cards.splice(0, 12),
       playerSet,
     });
   });

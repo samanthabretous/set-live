@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { goToGame, addClickedCard } from '../../../redux/game';
@@ -21,11 +20,11 @@ const appToState = state => ({
 class Game extends Component {
 
   render() {
-    console.log(this.props);
+    const { game } = this.props;
     return (
       <section className="gameView">
-        <GameMenu />
-        <Board {...this.props} />
+        {game && <GameMenu />}
+        {game && game.started && <Board />}
       </section>
     );
   }

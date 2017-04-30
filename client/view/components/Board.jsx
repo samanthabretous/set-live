@@ -89,6 +89,7 @@ class Board extends Component {
   }
   render() {
     const { board } = this.props
+    console.log(board);
     return (
       <section className="board">
         {board && this.renderCards()}

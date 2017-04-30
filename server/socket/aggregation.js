@@ -44,42 +44,22 @@ const getGameInfo = (socket, playerId, gameId) => {
     if (!game) {
       socket.emit('receivePlayerInfo', { success: false, msg: 'Authentication failed. Player not found.' });
     } else {
+      socket.join(game.get('room'));
       socket.emit('receiveGameInfo', { success: true, msg: `Welcome in the member area!`, game });
     }
   });
 }
 
-const startNewGame = (io, socket, gameId) => {
-  let currentGame = null;
-  Game.findOne({
+const startNewGame = (io, socket, gameId, room) => {
+  Game.update({
+    started: true,
+  }, {
     where: {
       id: gameId,
     },
-    include: [
-      {
-        model: Card,
-      },
-      {
-        model: DeckOfCards,
-        where: {
-          location: 'board',
-        },
-        order: 'cardOrder',
-      },
-    ],
   })
-  .then((game) => {
-    console.log('============');
-    console.log('============');
-    console.log('============');
-    console.log(game);
-    socket.join(game.room);
-    game.update({ started: true });
-    currentGame = game;
-    return game.getCards();
-  })
-  .then((cards) => {
-    io.sockets.in(currentGame.room).emit('gameStarted', cards);
+  .then(() => {
+    io.sockets.emit('gameStarted');
   });
 };
 

@@ -28,11 +28,11 @@
     top: -1vw;
     left: -2vw;
     transform: scale(.50);
+    z-index: 10;
   }
 
   .logo {
     position: relative;
-    z-index: 1;
     transform: scale(1.25);
   }
 }

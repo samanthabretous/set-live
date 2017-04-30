@@ -28,7 +28,7 @@ const getOneGameById = (req, res) => {
   .catch(err => debug(err));
 };
 
-const createGame = (room, playerId) => Game.create({ room })
+const createGame = (room) => Game.create({ room })
   .then((game) => {
     createCards(game.id, shuffle(range(1, 82)));
     return Game.findById(game.id, {
