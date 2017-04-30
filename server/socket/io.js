@@ -2,7 +2,7 @@ const _ = require('lodash');
 const socketioJwt = require('socketio-jwt');
 const debug = require('debug')('SOCKET');
 const dealCards = require('../utils/game').dealCards;
-const { getPlayerInfo, startNewGame, isGameStarted, set } = require('./aggregation');
+const { getPlayerInfo, getGameInfo, startNewGame, isGameStarted, set } = require('./aggregation');
 const { enterGameRoom } = require('./enterGameRoom');
 
 module.exports = ((app, io) => {
@@ -26,9 +26,14 @@ module.exports = ((app, io) => {
       socket.disconnect();
     });
 
-    socket.on('getPlayerInfo', () => {
+    socket.on('getPlayerInfo', ({ token }) => {
       const playerId = socket.decoded_token.id;
       getPlayerInfo(socket, playerId);
+    });
+
+    socket.on('getGameInfo', ({ gameId, token }) => {
+      const playerId = socket.decoded_token.id;
+      getGameInfo(socket, playerId, gameId);
     });
 
     /**

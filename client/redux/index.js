@@ -6,7 +6,6 @@ const INTIAL_STATE = {
   game: null,
   playerInfo: null,
   playerHasLeft: null,
-  deck: [],
   board: [],
   clickedCards: [],
   status: 'disconnected',
@@ -28,10 +27,10 @@ export default function (state = INTIAL_STATE, action) {
     case CLICKED_CARDS:
       return Object.assign({}, state, { clickedCards: action.payload });
     case GO_TO_GAME:
-    console.log(action.gameInfo);
       return Object.assign({}, state, {
         game: action.gameInfo.game,
         players: action.gameInfo.players,
+        playerInfo: action.gameInfo.playerInfo,
       });
     case ADD_PLAYER:
       return Object.assign({}, state, { players: [...state.players, action.player] });

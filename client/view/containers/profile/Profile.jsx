@@ -30,6 +30,7 @@ class Profile extends Component {
     this.handleRoomChange = this.handleRoomChange.bind(this);
     this.joinRoom = this.joinRoom.bind(this);
   }
+
   componentDidMount() {
     /** params {Object} gameInfo holds boolean, roomName, players*/
     socket.on('goToGame', (gameInfo) => {

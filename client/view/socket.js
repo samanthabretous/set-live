@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
 import { connectionStatus, addMember, roomStatus, setPlayerInfo } from '../redux/connections';
+import { goToGame } from '../redux/game';
 
 // connect socket with token authentication
 export const socket = io.connect(null, {
@@ -38,6 +39,18 @@ export default (store) => {
     const { success, playerInfo } = payload;
     if (success) {
       store.dispatch(setPlayerInfo(playerInfo));
+    }
+  });
+
+  socket.on('receiveGameInfo', (payload) => {
+    const { success, game } = payload;
+    if (success) {
+      const gameInfo = {
+        game,
+        players: game.players,
+        playerInfo: game.currentPlayer,
+      };
+      store.dispatch(goToGame(gameInfo));
     }
   });
 

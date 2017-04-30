@@ -65,7 +65,7 @@ module.exports = {
     socket.emit('getPlayerInfo', { token: localStorage.token });
   },
   getGameInfo(gameId) {
-    socket.emit('isGameStarted', { gameId, token: localStorage.token });
+    socket.emit('getGameInfo', { gameId, token: localStorage.token });
   },
   onChange() {
   },

@@ -13,16 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 6,
     },
-    cardOrder: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
-      defaultValue: [],
-    }
   }, {
     classMethods: {
       associate: (models) => {
         // associations can be defined here
         Game.hasMany(models.player);
-        Game.hasMany(models.card)
+        Game.hasMany(models.player, { as: 'currentPlayer' });
+        Game.hasMany(models.card);
       },
       createGame: (room, board) => (
         this.build({

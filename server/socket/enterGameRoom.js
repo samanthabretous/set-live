@@ -12,6 +12,7 @@ const enterGameRoom = (io, socket, payload) => {
     where: {
       username: payload.username,
     },
+    exclude: ['password'],
   })
   .then((foundPlayer) => {
     // save the player to be used later in the Promise chain
@@ -33,7 +34,7 @@ const enterGameRoom = (io, socket, payload) => {
   .then((game) => {
     if (!game) {
       // game does not exist already then
-      return createGame(payload.roomName);
+      return createGame(payload.roomName, socketPlayer.get('id'));
     } else {
       return game;
     }
@@ -56,7 +57,7 @@ const enterGameRoom = (io, socket, payload) => {
       io.sockets.in(payload.roomName).emit('addPlayer', socketPlayer);
 
       // send a message to player and let them know how many more people they can invite
-      socket.emit('goToGame', { game, players: allPlayers });
+      socket.emit('goToGame', { game, players: allPlayers , playerInfo: socketPlayer });
     } else {
       // if room is full. tell player
       socket.emit('roomFull', true);

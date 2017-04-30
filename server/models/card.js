@@ -11,9 +11,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: 'deck',
       validate: {
-        isIn: [['deck', 'board', 'dead']],
+        isIn: [['deck', 'dead']],
       },
     },
+    cardOrder: DataTypes.INTEGER,
   }, {
     classMethods: {
       associate: (models) => {

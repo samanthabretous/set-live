@@ -1,58 +1,52 @@
 const router = require('express').Router();
-const { shuffle } = require('lodash');
+const { shuffle, range } = require('lodash');
 const debug = require('debug')('OH_GOSH');
 const models = require('../models');
 const createCards = require('../utils/createCards');
 
 const Game = models.game;
-const Card = models.card;
-
-const getAllGames = (req, res) => {
-  Game.findAll()
-    .then(games => res.send(games))
-    .catch(err => debug(err));
-};
 
 const getOneGameById = (req, res) => {
-  Game.findById(req.params.id, { include: [{ all: true }] })
-  .then(game => {
-    res.send(game)
+  Game.findById(req.params.id, {
+    include: [
+      {
+        model: models.card,
+        where: {
+          location: 'deck',
+        },
+      },
+      {
+        model: models.player,
+        exclude: ['password'],
+      },
+    ],
+    order: [[models.card, 'cardOrder', 'ASC']],
   })
-  .catch(err => debug(err));
-};
-
-const getOneGameByRoom = (req, res) => {
-  Game.findOne({
-    where: {
-      room: req.params.room,
-    },
-    include: [{ all: true }],
-  })
-  .then(game => res.send(game))
-  .catch(err => debug(err));
-};
-
-const createGame = room => Game.create({ room })
   .then((game) => {
-    createCards(game.id);
+    res.send(game);
+  })
+  .catch(err => debug(err));
+};
+
+const createGame = (room, playerId) => Game.create({ room })
+  .then((game) => {
+    createCards(game.id, shuffle(range(1, 82)));
     return Game.findById(game.id, {
-      include: [{
-        model: Card,
-      }],
+      include: [
+        {
+          model: models.card,
+          order: 'cardOrder ASC',
+        },
+        {
+          model: models.player,
+          exclude: ['password'],
+        },
+      ],
+      order: [[models.card, 'cardOrder', 'ASC']],
     });
-  })
-  .then((game) => {
-    const cards = game.get('cards');
-    const currentCardOrder = [];
-    for (let i = 0; i < cards.length; i += 1) {
-      currentCardOrder.push(cards[i].id);
-    }
-    const shuffledCards = shuffle(currentCardOrder);
-    game.updateAttributes({ cardOrder: shuffledCards });
-    return game;
   });
 
-const postRoom = (req, res) => {
+const postRoom = (req) => {
   createGame(req.body.room);
 };
 
@@ -65,42 +59,15 @@ const deleteRoom = (req, res) => {
   .catch(err => debug(err));
 };
 
-const updateRoom = (req, res) => {
-  Game.update(
-    {
-      board: req.body.board,
-    },
-    {
-      where: {
-        id: req.params.id,
-      },
-    })
-  .then(id => Game.findById(
-    parseInt(id)),
-    { include: [{ all: true }] })
-  .then(updatedGame => res.send(updatedGame));
-};
-
-router.route('/')
-  .get(getAllGames);
-
 router.route('/id/:id')
   .get(getOneGameById)
   .delete(deleteRoom)
-  .put(updateRoom);
 
 router.route('/room/:room')
-  .get(getOneGameByRoom)
   .post(postRoom);
 
 
 module.exports = {
   router,
-  getAllGames,
-  getOneGameById,
-  getOneGameByRoom,
-  postRoom,
   createGame,
-  deleteRoom,
-  updateRoom,
 };

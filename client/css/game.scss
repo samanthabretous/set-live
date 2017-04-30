@@ -1,8 +1,19 @@
   .gameView {
     display: flex;
+    margin-left: 20vw;
   }
   .gameInfo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
     width: 20vw;
+    height: 100%;
+    background: $lightBlue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
   }
   .board {
     width: 65vw;

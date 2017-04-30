@@ -14,10 +14,11 @@ const mapDispatchToProps = dispatch => (
 
 const appToState = state => ({
   game: state.game,
+  roomName: state.roomName,
+  players: state.players,
+  playerHasLeft: state.playerHasLeft,
+  playerSet: state.playerSet,
 });
-
-// components
-import Modal from './Modal';
 
 class GameMenu extends Component {
   constructor() {
@@ -41,8 +42,8 @@ class GameMenu extends Component {
         {/* <h1>Joined {member.name}</h1>
         <p>{players.length} players connected to Room: {roomName.roomName}</p>
         players.map((player, index)=> <p key={index}>PLAYER {index + player.name}</p>) */}
-        <li><Link to="/how-to-play">About</Link></li>
-        <button onClick={() => this.startGame()}>Start New Game</button>
+        <Link to="/how-to-play">Instructions</Link>
+        <button onClick={this.startGame}>Start New Game</button>
         {/*
           roomName && modalStatus &&
             <Modal />
