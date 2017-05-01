@@ -40,31 +40,41 @@ const updateBoardLength = (io, socket, gameId, room, currentBoardLength) => {
 };
 
 const set = (io, socket, payload) => {
-  const { clickedCards, gameId } = payload;
-  let game = null;
-  let player = null;
-  Game.findById(gameId, {
-    include: Card,
-  })
-  .then((currentGame) => {
-    game = currentGame;
-    return currentGame.getCards();
+  const { clickedCards, gameId, room } = payload;
+  let cards = null;
+  Card.update({
+    location: 'dead',
+  }, {
+    where: {
+      $or: [
+        { id: clickedCards[0].id },
+        { id: clickedCards[1].id },
+        { id: clickedCards[2].id },
+      ],
+    },
   })
   .then(() => {
-    _.map(clickedCards, (card) => {
-      // remove association with game
-      game.removeCard(card.card);
+    Game.update({
+      boardLength: 12,
+    }, {
+      where: { id: gameId },
     });
+    return Card.findAll({
+      where: {
+        gameId,
+        location: 'deck',
+      },
+      order: [['cardOrder', 'ASC']],
+    });
+  })
+  .then((deck) => {
+    cards = deck;
     return Player.findById(socket.decoded_token.id);
   })
-  .then((socketPlayer) => {
-    player = socketPlayer;
-    socketPlayer.increment('matches');
+  .then((player) => {
+    io.sockets.in(room).emit('updateCards', { cards, playerSet: player.username });
   })
-  .then(() => game.getCards())
-  .then((cards) => {
-    io.sockets.in(game.room).emit('updateGame', { cards, playerSet: player.username });
-  });
+  .catch(err => console.log(err));
 };
 
 

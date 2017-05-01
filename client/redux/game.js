@@ -56,36 +56,3 @@ export const changeBoardLength = boardLength => ({
   type: CHANGE_BOARD_LENGTH,
   boardLength,
 });
-
-export default (store) => {
-
-  socket.on('updateCards', (cards) => {
-    updateCards(cards);
-  });
-
-  socket.on('addPlayer', (player) => {
-    addPlayer(player);
-  });
-
-  socket.on('leftPlayer', (playerHasLeft) => {
-    leftPlayer(playerHasLeft);
-  });
-
-  socket.on('reloadGame', (payload) => {
-    const { game } = payload;
-    store.dispatch({
-      type: RELOAD_GAME,
-      game,
-      board: game.cards.splice(0, 12),
-    });
-  });
-
-  socket.on('updateGame', (payload) => {
-    const { game, playerSet } = payload;
-    store.dispatch({
-      type: UPDATE_GAME,
-      board: game.cards.splice(0, 12),
-      playerSet,
-    });
-  });
-};

@@ -1,4 +1,4 @@
-import { CLICKED_CARDS, UPDATE_CARDS, ADD_MEMBER, CONNECTION_STATUS, SET_ROOM_NAME, SET_PLAYER_INFO, ADD_PLAYER,  RELOAD_GAME, UPDATE_GAME, GAME_STARTED, LEFT_PLAYER, GO_TO_GAME, CHANGE_BOARD_LENGTH } from './game';
+import { CLICKED_CARDS, UPDATE_CARDS, CONNECTION_STATUS, SET_ROOM_NAME, SET_PLAYER_INFO, ADD_PLAYER, GAME_STARTED, GO_TO_GAME, CHANGE_BOARD_LENGTH } from './game';
 import { USERNAME, RESET_LOGIN } from './login';
 
 const INTIAL_STATE = {
@@ -8,14 +8,24 @@ const INTIAL_STATE = {
   board: [],
   clickedCards: [],
   status: 'disconnected',
-  playerSet: null,
   username: null,
 };
 
 export default function (state = INTIAL_STATE, action) {
   switch (action.type) {
+    case CHANGE_BOARD_LENGTH:
+      const cardsToAdd = action.boardLength === 15 ? 3 : 0;
+      return Object.assign({}, state, {
+        board: [...state.board, ...state.game.cards.splice(12, cardsToAdd)],
+      });
     case UPDATE_CARDS:
-    case ADD_MEMBER:
+      return Object.assign({}, state, {
+        board: action.cards.splice(0, 12),
+        game: {
+          ...state.game,
+          cards: action.cards,
+        },
+      });
     case CONNECTION_STATUS:
     case SET_ROOM_NAME:
     case SET_PLAYER_INFO:
@@ -37,29 +47,8 @@ export default function (state = INTIAL_STATE, action) {
           started: true,
         },
       });
-    case CHANGE_BOARD_LENGTH:
-    const cardsToAdd = action.boardLength === 15 ? 3 : 0
-    console.log(cardsToAdd);
-    console.log(state.game.cards.splice(12, cardsToAdd));
-      return Object.assign({}, state, {
-        board: [...state.board, ...state.game.cards.splice(12, cardsToAdd)],
-      });
     case ADD_PLAYER:
       return Object.assign({}, state, { players: [...state.players, action.player] });
-    case RELOAD_GAME:
-      return Object.assign({}, state, {
-        deck: action.deck,
-        started: action.started,
-        players: action.players,
-        gameId: action.game.id,
-        board: action.board,
-      });
-    case UPDATE_GAME:
-      return Object.assign({}, state, {
-        board: action.board,
-        deck: action.deck,
-        playerSet: action.playerSet,
-      });
     // action comes from Logout.jsx
     case RESET_LOGIN:
       return Object.assign({}, state, INTIAL_STATE);

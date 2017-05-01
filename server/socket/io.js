@@ -62,11 +62,11 @@ module.exports = ((app, io) => {
       updateBoardLength(io, socket, gameId, room);
     });
 
-    /* @params {Object} payload
+    /* @params {Object} clickedCards, gameId, room
     * return {Object} playerInfo, updatedDeck
     */
     socket.on('set', (payload) => {
-      set(socket, payload);
+      set(io, socket, payload);
     });
 
     // when a new client window is connected

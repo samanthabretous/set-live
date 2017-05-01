@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import checkSet from './checkSet';
 import renderCards from './renderCards';
-import { socket } from '../../../redux/connections';
-import { addClickedCard } from '../../../redux/game';
+import { socket } from '../../socket';
+import { addClickedCard, updateCards } from '../../../redux/game';
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
     addClickedCard,
+    updateCards,
   }, dispatch)
 );
 
@@ -24,9 +25,20 @@ class Board extends Component {
     super();
     this.state = {
       showResults: false,
+      playerSet: null,
     };
     this.handleCardClick = this.handleCardClick.bind(this);
-    this.showIfSetOrNot = this.showIfSetOrNot.bind(this);
+  }
+  componentDidMount() {
+    socket.on('updateCards', ({ cards, playerSet }) => {
+      this.props.updateCards(cards);
+      this.setState({ playerSet, showResults: true });
+
+      // this is so there is a quick flash as to who got the last set
+      setTimeout(() => {
+        this.setState({ showResults: false, playerSet: null });
+      }, 1500);
+    });
   }
   /**
   * @param {Object} card. when user clicks on card
@@ -56,23 +68,23 @@ class Board extends Component {
       addClickedCard([]);
     };
     // if user has clicked on three cards, check set
-    if (clicked.length === 3 && checkSet(clicked)) {
-      console.log('set', clickedCards);
-      socket.emit('set', { clickedCards: clicked, gameId: game.id });
+    if (clicked.length === 3 /*&& checkSet(clicked)*/) {
+      console.log('set', clicked);
+      socket.emit('set', { clickedCards: clicked, gameId: game.id, room: game.room });
       clearClickedCards();
     } else if (clicked.length === 3) {
       clearClickedCards();
+      this.setState({ showResults: true });
+      setTimeout(() => {
+        this.setState({ showResults: false });
+      }, 1500);
     } else {
       addClickedCard(clicked);
     }
   }
-
-
-  showIfSetOrNot() {
-
-  }
   render() {
     const { game, board } = this.props;
+    const { showResults, playerSet } = this.state;
     return (
       <section className="board">
         {game.started
@@ -81,7 +93,8 @@ class Board extends Component {
             <h2>Invite your friends to Join</h2>
             <h1>{game.room}</h1>
           </div>)}
-        {this.state.showResults && <p>Not a set</p>}
+        {showResults && playerSet && <p className="flash_message">Set by {this.state.playerSet}</p>}
+        {showResults && <p className="flash_message">Not a set</p>}
       </section>
     );
   }
@@ -89,6 +102,7 @@ class Board extends Component {
 
 Board.propTypes = {
   addClickedCard: PropTypes.func.isRequired,
+  updateCards: PropTypes.func.isRequired,
   board: PropTypes.arrayOf(PropTypes.object).isRequired,
   clickedCards: PropTypes.arrayOf(PropTypes.any),
   game: PropTypes.objectOf(PropTypes.any).isRequired,
