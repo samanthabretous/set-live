@@ -36,6 +36,9 @@ class Profile extends Component {
     socket.on('goToGame', (gameInfo) => {
       if (gameInfo.game.room) {
         this.props.router.push(`/game/${gameInfo.game.id}`);
+        if (gameInfo.players) {
+          gameInfo.game.players = gameInfo.players;
+        }
         this.props.goToGame(gameInfo);
       }
     });

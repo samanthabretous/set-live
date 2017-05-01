@@ -35,6 +35,7 @@ export default function (state = INTIAL_STATE, action) {
     case CLICKED_CARDS:
       return Object.assign({}, state, { clickedCards: action.payload });
     case GO_TO_GAME:
+    console.log(action.gameInfo);
       return Object.assign({}, state, {
         game: action.gameInfo.game,
         playerInfo: action.gameInfo.playerInfo,

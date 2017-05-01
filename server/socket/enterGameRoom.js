@@ -51,16 +51,15 @@ const enterGameRoom = (io, socket, payload) => {
     // make sure there is space left in the game
     if (playersInGameTotal < maxPlayers) {
       // add player to room and let other players in room know there is a new player
-      game.addPlayers([socketPlayer.id]);
+      game.addPlayer([socketPlayer.id]);
 
       const allPlayers = playersInGameTotal
         ? game.get('players').concat(socketPlayer)
         : [socketPlayer];
 
       socket.join(payload.roomName);
-      io.sockets.in(payload.roomName).emit('addPlayer', socketPlayer);
       // send a message to player and let them know how many more people they can invite
-      socket.emit('goToGame', { game, players: allPlayers, playerInfo: socketPlayer, board: game.cards.splice(0, 12) });
+      io.sockets.in(payload.roomName).emit('goToGame', { game, players: allPlayers, playerInfo: socketPlayer, board: game.cards.splice(0, 12) });
     } else {
       // if room is full. tell player
       socket.emit('roomFull', true);
