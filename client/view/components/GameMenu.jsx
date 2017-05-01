@@ -57,31 +57,32 @@ class GameMenu extends Component {
     const { playerInfo, game, board } = this.props;
     return (
       <aside>
-        <Link to="/how-to-play">Instructions</Link>
-        <h2>Hi {playerInfo.username}!</h2>
-        <p>{game.players.length} players connected to Room: {game.room}</p>
-        <ul>
-          {game.players.map(player => <li key={player.id}>
-            {player.username === playerInfo.username ? 'YOU' : player.username}
-          </li>)}
-        </ul>
+        <h2 className="username">Hi {playerInfo.username}!</h2>
+        <div className="players">
+          <h1>{game.room}</h1>
+          <p className="players__connected">{game.players.length} players connected</p>
+          <ul className="players__list">
+            {game.players.map(player => <li key={player.id}>
+              {player.username === playerInfo.username ? 'YOU' : player.username}
+            </li>)}
+          </ul>
+        </div>
+
         <button
           className="gameMenu__start"
           onClick={this.startGame}
         >{game.started ? 'Create New Game' : 'Start Game'}</button>
-        {!game.started && <p>Invite your friends to room {game.room}</p>}
         <button
           disabled={board.length > 12}
           onClick={this.addCards}
+          className="gameMenu__addCards"
         >
-          Add More Cards to board
+          Add 3 More Cards
         </button>
-        <Link to="/logout">Logout</Link>
-        {/*
-          roomName && modalStatus &&
-            <Modal />
-        */}
-        {/* playerSet && <h4>Last Set By: {playerSet}</h4>*/}
+        <div className="gameMenu__links">
+          <Link to="/how-to-play">Instructions</Link>
+          <Link to="/logout">Logout</Link>
+        </div>
       </aside>
     );
   }

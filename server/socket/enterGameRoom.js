@@ -28,7 +28,11 @@ const enterGameRoom = (io, socket, payload) => {
           model: Player,
           exclude: ['password'],
         },
+        {
+          model: models.card,
+        },
       ],
+      order: [[models.card, 'cardOrder', 'ASC']],
     });
   })
   .then((game) => {
@@ -55,7 +59,6 @@ const enterGameRoom = (io, socket, payload) => {
 
       socket.join(payload.roomName);
       io.sockets.in(payload.roomName).emit('addPlayer', socketPlayer);
-
       // send a message to player and let them know how many more people they can invite
       socket.emit('goToGame', { game, players: allPlayers, playerInfo: socketPlayer, board: game.cards.splice(0, 12) });
     } else {

@@ -35,7 +35,6 @@ const createGame = (room) => Game.create({ room })
       include: [
         {
           model: models.card,
-          order: 'cardOrder ASC',
         },
         {
           model: models.player,

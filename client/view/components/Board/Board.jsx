@@ -68,8 +68,7 @@ class Board extends Component {
       addClickedCard([]);
     };
     // if user has clicked on three cards, check set
-    if (clicked.length === 3 /*&& checkSet(clicked)*/) {
-      console.log('set', clicked);
+    if (clicked.length === 3 && checkSet(clicked)) {
       socket.emit('set', { clickedCards: clicked, gameId: game.id, room: game.room });
       clearClickedCards();
     } else if (clicked.length === 3) {
@@ -86,10 +85,10 @@ class Board extends Component {
     const { game, board } = this.props;
     const { showResults, playerSet } = this.state;
     return (
-      <section className="board">
+      <section className={`${game.started ? 'board' : 'invite'}`}>
         {game.started
           ? renderCards(board, this.handleCardClick)
-          : (<div>
+          : (<div className="invite__modal">
             <h2>Invite your friends to Join</h2>
             <h1>{game.room}</h1>
           </div>)}

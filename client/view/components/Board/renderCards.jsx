@@ -20,7 +20,7 @@ const renderCards = (board, handleCardClick) => board.map((slot, i) => {
   }
   return (
     <button
-      className={`card ${slot.clicked && 'clicked'}`}
+      className={`card ${board.length === 15 && 'card15'} ${slot.clicked && 'clicked'}`}
       key={slot.id}
       onClick={() => handleCardClick(slot)}
     >
