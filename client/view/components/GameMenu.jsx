@@ -56,7 +56,7 @@ class GameMenu extends Component {
   render() {
     const { playerInfo, game, board } = this.props;
     return (
-      <aside>
+      <aside className="gameMenu">
         <h2 className="username">Hi {playerInfo.username}!</h2>
         <div className="players">
           <h1>{game.room}</h1>

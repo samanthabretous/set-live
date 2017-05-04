@@ -1,0 +1,58 @@
+.gameView {
+  display: flex;
+  margin-left: 20vw;
+  color: $purple;
+
+  .board {
+    width: 70vw;
+    height: 80vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: stretch;
+
+    .card {
+      width: 23%;
+      height: 25%;
+      border: 1px black solid;
+      border-radius: 10px;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      align-content: center;
+      padding: 3%;
+      transition: height .25 linear, width .25 linear;
+    }//card12
+
+    .card15 {
+      height: 23%;
+      width: 20%;
+    }
+
+    .shapes {
+      width: 30%;
+      height: 100%;
+      //border: 3px solid black;
+    }
+
+    .red {
+      fill: $red;
+    }
+
+    .green {
+      fill: $green;
+    }
+
+    .purple {
+      fill: $purple;
+    }
+
+    .clicked {
+      border: 10px solid $purple;
+    }
+  }//board
+} //gameview
+
+.flash_message {
+  
+}

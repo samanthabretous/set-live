@@ -93,7 +93,7 @@ class Board extends Component {
             <h1>{game.room}</h1>
           </div>)}
         {showResults && playerSet && <p className="flash_message">Set by {this.state.playerSet}</p>}
-        {showResults && <p className="flash_message">Not a set</p>}
+        {showResults && !playerSet && <p className="flash_message">Not a set</p>}
       </section>
     );
   }

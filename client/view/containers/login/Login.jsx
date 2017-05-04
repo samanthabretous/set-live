@@ -20,9 +20,9 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      username: 'test1',
+      username: '',
       email: '',
-      password: 'password1',
+      password: '',
       loginErrors: {},
       errors: {},
       showRegisterForm: false,
